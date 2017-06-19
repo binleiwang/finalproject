@@ -1,4 +1,3 @@
-//
 //  HashTable.h
 //  Robot
 //
@@ -11,12 +10,14 @@
 
 
 #include <string>
+#include <vector>
 #include "Customer.h"
 #include "List.h"
 using namespace std;
 
 class HashTable {
 public:
+    HashTable() : Table(SIZE) {};
     int hash(string key);
     int countBucket(int index);
     int searchData(Customer c);
@@ -27,7 +28,7 @@ public:
 private:
     //Let's say we have about 25 customers
     static const int SIZE = 50;
-    List<Customer> Table[SIZE];
+    vector <List<Customer> > Table;
 };
 
 #endif /* HashTable_h */

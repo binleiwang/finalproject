@@ -141,11 +141,7 @@ public:
     //stored in the BST
 };
 
-
-
 /******************************************insertData********************************/
-
-
 
 template<typename bstdata>
 void BST<bstdata>::insertData(bstdata value)
@@ -191,9 +187,6 @@ void BST<bstdata>::insertData(NodePtr root, bstdata value)
     }
 }
 
-
-
-
 /****************************Print functions*******************************/
 
 template<typename bstdata>
@@ -231,7 +224,6 @@ void BST<bstdata>::inOrderPrint(ostream& out, NodePtr root)
     
 }
 
-
 template<typename bstdata>
 void BST<bstdata>::preOrderPrint(ostream& out, NodePtr root)
 {
@@ -247,7 +239,6 @@ void BST<bstdata>::preOrderPrint(ostream& out, NodePtr root)
     }
 }
 
-
 template<typename bstdata>
 void BST<bstdata>::postOrderPrint(ostream& out, NodePtr root)
 {
@@ -259,7 +250,6 @@ void BST<bstdata>::postOrderPrint(ostream& out, NodePtr root)
     postOrderPrint(out,root->right);
     out<<root->data;
 }
-
 
 /********************************search************************************/
 
@@ -301,14 +291,10 @@ bool BST<bstdata>::search(NodePtr root, bstdata value)
         {
             return false;
         }
-    }
-    
+    }    
 }
 
-
-
 /****************************************minimum and maximum*************************************/
-
 
 template<typename bstdata>
 bstdata BST<bstdata>::minimum()
@@ -318,7 +304,6 @@ bstdata BST<bstdata>::minimum()
 }
 //returns the minimum value in the BST
 //pre: !empty()
-
 
 template<typename bstdata>
 bstdata BST<bstdata>::minimum(NodePtr root)
@@ -340,9 +325,6 @@ bstdata BST<bstdata>::minimum(NodePtr root)
     }
 }
 
-
-
-
 template<typename bstdata>
 bstdata BST<bstdata>::maximum()
 {
@@ -352,8 +334,7 @@ bstdata BST<bstdata>::maximum()
 
 template<typename bstdata>
 bstdata BST<bstdata>::maximum(NodePtr root)
-{
-    
+{    
     if (root->right!=NULL)
     {
         return maximum(root->right);
@@ -365,9 +346,7 @@ bstdata BST<bstdata>::maximum(NodePtr root)
     
 }
 
-
 /*****************************************deletion**********************************/
-
 
 template<typename bstdata>
 void BST<bstdata>::removeData(bstdata value)
@@ -377,7 +356,6 @@ void BST<bstdata>::removeData(bstdata value)
 }
 //removes the specified value from the tree
 //pre: value is located in the tree
-
 
 template<typename bstdata>
 typename BST<bstdata>::NodePtr BST<bstdata>::deleteData(NodePtr root, bstdata value)
@@ -425,7 +403,6 @@ typename BST<bstdata>::NodePtr BST<bstdata>::deleteData(NodePtr root, bstdata va
 //recursive helper function to removeData
 //removes value from the tree
 
-
 /**************************************size****************************************/
 
 template<typename bstdata>
@@ -451,9 +428,7 @@ void BST<bstdata>::size(NodePtr root, int& size)
 //calculates the size of the tree
 //stores the result in size
 
-
 /**********************************height*************************************/
-
 
 template<typename bstdata>
 int BST<bstdata>::height()
@@ -461,8 +436,6 @@ int BST<bstdata>::height()
     return height(root);
 }
 //returns the height of the tree
-
-
 
 template<typename bstdata>
 int BST<bstdata>::height(NodePtr root)
@@ -474,10 +447,6 @@ int BST<bstdata>::height(NodePtr root)
 //recursive helper function to the height function
 //returns the height of the tree
 
-
-
-
-
 /***********************************Constructors and destructors**************************/
 
 template<typename bstdata>
@@ -485,8 +454,6 @@ BST<bstdata>::BST()
 {
     root = NULL;
 }
-
-
 
 template<typename bstdata>
 BST<bstdata>::BST(const BST &bst)
@@ -514,16 +481,11 @@ void BST<bstdata>::makeCopy(NodePtr copy)
     makeCopy(copy->right);
 }
 
-
-
-
 template<typename bstdata>
 BST<bstdata>::~BST()
 {
     freeNode(root);
 }
-
-
 
 template<typename bstdata>
 void BST<bstdata>::freeNode(NodePtr root)
@@ -538,8 +500,6 @@ void BST<bstdata>::freeNode(NodePtr root)
     delete N;
 }
 
-
-
 /****************************************additional access************************************/
 
 template<typename bstdata>
@@ -548,15 +508,10 @@ bool BST<bstdata>::empty()
     return root==NULL;
 }
 
-
-
 template<typename bstdata>
 bstdata BST<bstdata>::getRoot()
 {
     return root->data;
 }
-
-
-
 
 #endif /* BST_H_ */

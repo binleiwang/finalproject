@@ -8,7 +8,6 @@
 #ifndef HashTable_h
 #define HashTable_h
 
-
 #include <string>
 #include <vector>
 #include "Customer.h"

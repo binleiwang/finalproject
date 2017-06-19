@@ -6,7 +6,6 @@
 //  Copyright © 2017 Stephen Hung. All rights reserved.
 //
 
-
 #include "HashTable.h"
 #include "Customer.h"
 #include <assert.h>

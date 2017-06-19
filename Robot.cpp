@@ -20,9 +20,8 @@ Robot::Robot()
 	purpose = " ";
 	user = " ";
 	weight = 0.0;
-	rating = 0;
+	rating = 0.0;
 	qtyInStock = 25;
-	url = " ";
 }
 
 //Access functions
@@ -47,58 +46,58 @@ string Robot::get_user(){
 double Robot:: get_weight(){
 	return weight;
 }
-int Robot::get_rating(){
+double Robot::get_rating(){
 	return rating;
 }
 int Robot:: get_quantity(){
 	return qtyInStock;
 }
-string Robot::get_moreInfo(){
-	return url;
-}
 
 //Manipulation procedures
-void Robot::set_name(string a){
-	name = a;
+void Robot::set_name(string called){
+	name = called;
 }
-void Robot::set_asin(string b){
-	asin = b;
+void Robot::set_asin(string number){
+	asin = number;
 }
-void Robot::set_price(double c){
-	price = c;
+void Robot::set_price(double cost){
+	price = cost;
 }
-void Robot::set_manufacture(string d){
-	manufacturer = d;
+void Robot::set_manufacture(string made){
+	manufacturer = made;
 }
-void Robot::set_purpose(string e){
-	purpose = e;
+void Robot::set_purpose(string use){
+	purpose = use;
 }
-void Robot::set_user(string f){
-	user = f;
+void Robot::set_user(string type){
+	user = type;
 }
-void Robot::set_weight(double g){
-	weight = g;
+void Robot::set_weight(double pounds){
+	weight = pounds;
 }
-void Robot::set_rating(int h){
-	rating = h;
+void Robot::set_rating(int rate){
+	rating = rate;
 }
-void Robot::set_moreInfo(string i){
-	url = i;
+void Robot::set_quantity(int amount)
+{
+	qtyInStock = qtyInStock - amount;
 }
 
 //Additional dunctions
 ostream& operator<<(ostream& os, const Robot& robot)
 {
-	os << endl;
 	os << "Information of robot " << robot.name << endl;
-	os << "1. ASIN: " << robot.asin << endl;
-	os << "2. Price: " << robot.price << endl;
-	os << "3. Manufacture: " << robot.manufacturer << endl;
-	os << "4. Purpose: " << robot.purpose << endl;
-	os << "5. User: " << robot.user << endl;
-	os << "6. Weight: " << robot.weight << endl;
-	os << "7. Rating: " << robot.rating << endl;
-	os << "8. For more information: " << robot.url << endl << endl;
+	os << "- ASIN: " << robot.asin << endl;
+	os << setprecision(2) << fixed;
+	os << "- Price: " << robot.price << endl;
+	os << "- Manufacture: " << robot.manufacturer << endl;
+	os << "- Purpose: " << robot.purpose << endl;
+	os << "- User: " << robot.user << endl;
+	os << setprecision(1) << fixed;
+	os << "- Weight: " << robot.weight << endl;
+	os << setprecision(1) << fixed;
+	os << "- Rating: " << robot.rating << endl;
+	os << "- Quantity: " << robot.qtyInStock << endl << endl;
 
 	return os;
 }
@@ -110,9 +109,9 @@ bool Robot::operator==(const Robot& robot){
 bool Robot::operator<(const Robot& robot){
 	bool status;
 	if(name < robot.name)
-			status = true;
+		status = true;
 	else if(name == robot.name && asin < robot.asin)
-			status = true;
+		status = true;
 	else
 		status = false;
 

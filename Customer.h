@@ -25,23 +25,29 @@ private:
     List<Order> orders;
     
 public:
+    //constructor
     Customer();
+    
+    //access functions
     string getFirst() const;
     string getLast() const;
     string getAddress() const;
     string getCity() const;
     string getState() const;
     int getZip() const;
+    
+    //manipulation procedures
     void setFirst(string);
     void setLast(string);
     void setAddress(string);
     void setCity(string);
     void setState(string);
     void setZip(int);
+    
+    //additional functions
     friend ostream& operator<<(ostream& os, const Customer& c);
     bool operator==(const Customer& c);
 };
 #endif /* Customer_h */
-
 
 //Lack of getter and setter for ORDERS

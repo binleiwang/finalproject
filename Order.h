@@ -27,6 +27,7 @@ private:
 public:
 	/*Constructors*/
 	Order();
+	
 	/**Access Functions*/
 	string getName();
 	double getPrice();
@@ -34,6 +35,7 @@ public:
 	int getPriorityVal();
 	char getOption();
 	time_t getDate();
+	
 	/**Manipulation Procedures*/
 	void setName(Robot R); //should be (Robot R) name = R.getName();
 	void setPrice(Robot R);
@@ -46,11 +48,8 @@ public:
 				// and it adds R.getPrice() to the current order price total.
 
 	/**Additional Functions*/
-
 	bool operator<(const Order& O);
-
 	bool operator>(const Order& O);
-
 };
 
 #endif /* ORDER_H_ */

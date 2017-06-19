@@ -64,6 +64,11 @@ void Order::setDate(time_t tm) {
 	orderTime = time(&tm); //function to display current time
 }
 
+void Order::addRobot(Robot R) {
+	items.insertEnd(R);
+	price += R.getPrice();
+}
+
 /**Additional Functions*/
 bool Order::operator==(const Order& O) {
 	return priorityVal == O.priorityVal;

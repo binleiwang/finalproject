@@ -41,6 +41,9 @@ public:
 	void setPriorityVal(int priority);
 	void setOption(char o);
 	void setDate(time_t tm);
+	
+	void addRobot(Robot R); // this function calls insertEnd() on List<Robot> items
+				// and it adds R.getPrice() to the current order price total.
 
 	/**Additional Functions*/
 

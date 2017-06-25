@@ -12,22 +12,25 @@
 #include <iostream>
 #include <ctime>
 #include "Robot.h"
+#include "List.h"
 
 using namespace std;
 
 class Order {
 private:
-	List<Robot> cart;
 	string name;
-	double price; //will link with Robot
-	int orderNum; //like A001 ?
+	double price;
+	double totalPrice;
+	int orderNum;
 	int priorityVal;
 	char opt;
+	bool status;
 	time_t orderTime;
+
+	List<Robot> cart;
 public:
 	/*Constructors*/
 	Order();
-	
 	/**Access Functions*/
 	string getName();
 	double getPrice();
@@ -35,21 +38,29 @@ public:
 	int getPriorityVal();
 	char getOption();
 	time_t getDate();
-	
+	bool getStatus();
+	double getTotal();//for total price before tax and handling
+	string shippingType();//to print out type of shipping
+	double shippingFee();
+
 	/**Manipulation Procedures*/
 	void setName(Robot R); //should be (Robot R) name = R.getName();
 	void setPrice(Robot R);
 	void setOrderNum(int num);
-	void setPriorityVal(int priority);
+	void setPriorityVal(char opt);
 	void setOption(char o);
 	void setDate(time_t tm);
-	
-	void addRobot(Robot R); // this function calls insertEnd() on List<Robot> items
-				// and it adds R.getPrice() to the current order price total.
-
+	void setStatus(bool s);
+	void setTotal(List<Robot>cart);
+	void addRobot(Robot R);
+	//void setTotalPrice();
 	/**Additional Functions*/
+	friend ostream& operator<<(ostream& os, const Order& O);
+	bool operator==(const Order& O);
 	bool operator<(const Order& O);
 	bool operator>(const Order& O);
+	bool operator>=(const Order& O);
+
 };
 
 #endif /* ORDER_H_ */

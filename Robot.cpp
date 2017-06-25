@@ -101,35 +101,3 @@ ostream& operator<<(ostream& os, const Robot& robot)
 
 	return os;
 }
-
-bool Robot::operator==(const Robot& robot){
-	return (name == robot.name && asin==robot.asin);
-}
-
-bool Robot::operator<(const Robot& robot){
-	bool status;
-	if(name < robot.name)
-		status = true;
-	else if(name == robot.name && asin < robot.asin)
-		status = true;
-	else
-		status = false;
-
-	return status;
-}
-
-bool Robot::operator>(const Robot& robot)
-{
-	bool status;
-	if(name > robot.name)
-		status = true;
-	else if(name ==  robot.name)
-	{
-		if(asin > robot.asin)
-			status = true;
-		else
-			status = false;
-	}
-
-	return status;
-}

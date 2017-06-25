@@ -66,13 +66,19 @@ void EmployeeInterface::employeeRights()
 	cout << "4. Add New Robot" << endl;
 	cout << "5. Remove Robot" << endl << endl;
 
-	char option;
+	int option;
 	string answer;
 	string choice;
 
 	do{
 		cout << "Please chose an option between 1 and 5: ";
 		cin >> option;
+
+		while(option < 1 || option > 5){
+			cout << "Invalid choice." << endl;
+			cout << "Only chose between 1 and 5. Enter again: ";
+			cin >> option;
+		}
 
 		switch(option){
 		case 1:
@@ -188,9 +194,9 @@ void EmployeeInterface::addNewRobot()
 
 	cout << "Inserting " << rNew->get_name() << "...\n";
 	//insert in the name tree
-	//nameTree.insertData(*rNew);
+	nameTree.insertData(*rNew);
 	//insert in the asin tree
-	//asinTree.insertData(*rNew);
+	asinTree.insertData(*rNew);
 }
 
 void EmployeeInterface::removeRobot()
@@ -229,7 +235,7 @@ void EmployeeInterface::removeRobot()
 		// ***      else return some dummy value (null).
 		if (nameTree.search(rTemp))
 		{
-			//tAsin = nameTree.getKey(rTemp); // ex: get ASIN using name
+			//tAsin = nameTree->getKey(rTemp); // ex: get ASIN using name
 			rTemp.set_asin(tASIN);
 		}
 	}

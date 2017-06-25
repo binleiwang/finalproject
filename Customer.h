@@ -22,6 +22,7 @@ private:
     string city;
     string state;
     int zip;
+    string email;
     List<Order> orders;
     
 public:
@@ -35,6 +36,7 @@ public:
     string getCity() const;
     string getState() const;
     int getZip() const;
+    string getEmail() const;
     
     //manipulation procedures
     void setFirst(string);
@@ -43,6 +45,7 @@ public:
     void setCity(string);
     void setState(string);
     void setZip(int);
+    void setEmail(string)
     
     //additional functions
     friend ostream& operator<<(ostream& os, const Customer& c);

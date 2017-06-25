@@ -17,7 +17,7 @@ using namespace std;
 
 class Order {
 private:
-	List<Robot> items;
+	List<Robot> cart;
 	string name;
 	double price; //will link with Robot
 	int orderNum; //like A001 ?

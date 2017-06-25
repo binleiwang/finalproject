@@ -54,9 +54,6 @@ public:
 
 	/**Additional Functions*/
 	friend ostream& operator<<(ostream& os, const Robot& robot);
-	bool operator==(const Robot& robot);
-	bool operator<(const Robot& robot);
-	bool operator>(const Robot& robot);
 };
 
 #endif /* ROBOT_H_ */

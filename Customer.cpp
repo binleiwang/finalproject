@@ -17,6 +17,7 @@ Customer::Customer()
     city = "";
     state = "";
     zip = 0;
+    email = "";
 }
 
 void Customer::setFirst(string s)
@@ -49,6 +50,10 @@ void Customer::setZip(int i)
     zip = i;
 }
 
+void Customer::setEmail(string info)
+{
+    email = info;
+
 string Customer::getFirst() const
 {
     return first_name;
@@ -79,6 +84,11 @@ int Customer::getZip() const
     return zip;
 }
 
+string Customer::getEmail() const
+{
+    return first_name;
+}
+    
 bool Customer::operator ==(const Customer& c)
 {
     return (first_name == c.first_name && last_name == c.last_name);

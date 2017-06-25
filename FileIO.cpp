@@ -62,13 +62,7 @@ void FileIO::readFromFile(Robot &robot, BST<Robot> &bst1, BST<Robot> &bst2)
 
 		getline(inputFile, empty);
 
-		bst1.insertData(robot);
-		//bst2.insertData(robot);
+		bst1.PriInsert(robot);
+		bst2.SecInsert(robot);
 	}
-
-	//open output file
-	//outputFile.open(outfileName.c_str());
-
-	//write to file
-	//bst.inOrderPrint(outputFile);
 }

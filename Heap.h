@@ -25,7 +25,7 @@ public:
 	Heap();
 	int getSize();
 	void insert(const H & newData);
-	H showOrder(int index);
+	void showOrder(int index);
 	H deleteMax();
 	H deleteOrder(int);
 	void printOrders();
@@ -36,8 +36,8 @@ Heap<H>::Heap() {
 	size = 0;
 }
 template<class H>
-H Heap<H>::showOrder(int index) {
-	return order[index];
+void Heap<H>::showOrder(int index) {
+	cout << order[index];
 }
 
 template<class H>

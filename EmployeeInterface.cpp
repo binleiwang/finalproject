@@ -188,9 +188,9 @@ void EmployeeInterface::addNewRobot()
 
 	cout << "Inserting " << rNew->get_name() << "...\n";
 	//insert in the name tree
-	nameTree.insertData(*rNew);
+	//nameTree.insertData(*rNew);
 	//insert in the asin tree
-	asinTree.insertData(*rNew);
+	//asinTree.insertData(*rNew);
 }
 
 void EmployeeInterface::removeRobot()
@@ -229,7 +229,7 @@ void EmployeeInterface::removeRobot()
 		// ***      else return some dummy value (null).
 		if (nameTree.search(rTemp))
 		{
-			//tAsin = nameTree->getKey(rTemp); // ex: get ASIN using name
+			//tAsin = nameTree.getKey(rTemp); // ex: get ASIN using name
 			rTemp.set_asin(tASIN);
 		}
 	}

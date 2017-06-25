@@ -4,7 +4,6 @@
  *  Created on: Jun 18, 2017
  *      Author: My Nguyen
  */
-
 #include "CustomerInterface.h"
 
 #include <iostream>
@@ -31,7 +30,8 @@ CustomerInterface::CustomerInterface(BST<Robot> bst1, BST<Robot> bst2, Hashtable
 	customers = customer;
 }
 
-void CustomerInterface::welcome() {
+void CustomerInterface::welcome() 
+{
 	cout << "Welcome to our robot store!  " << endl << endl;
 	cout << "1. Search for a product" << endl;
 	cout << setw(9) << "-Find and display one record using the primary key"
@@ -64,7 +64,8 @@ void CustomerInterface::searchByKey()
 		cin >> choice;
 	}
 
-	switch (option) {
+	switch (option) 
+	{
 	case 5:
 		quitShopping();
 		break;
@@ -105,16 +106,21 @@ void CustomerInterface::search()
 	char method;
 	string choice;
 	string name, number;
+	
 	do {
 		cout << "Do you want to search for the product by name or asin? ";
 		cin >> choice;
-		if (choice == "name") {
+		
+		if (choice == "name") 
+		{
 			cout << "Please enter name of the robot: ";
 			cin >> name;
 			//call search function in BST to search by name
 			//status = namebst.search(number);
 			//display the product info if it's found
-		} else {
+		} 
+		else 
+		{
 			cout << "Please enter asin number of the robot: ";
 			cin >> number;
 			//call search function in BST to search by asin
@@ -122,12 +128,13 @@ void CustomerInterface::search()
 			//display the product info if it's found
 		}
 
-		if (status == true) {
-			//displayByPrimaryKey();
+		if (status == true) 
+		{
 			cout << "Do you want to purchase this product? ";
 			cin >> purchase;
 
-			if (purchase == "yes") {
+			if (purchase == "yes") 
+			{
 				//call function in Heap to add robot to the priority queue
 				//order.addRobot(name);
 				cout << "The product is your added to your order list." << endl << endl;
@@ -137,13 +144,14 @@ void CustomerInterface::search()
 				cout << "S - Standard" << endl;
 				cin >> method;
 				//call function in Heap to set method option
-				//order.setPriorityVal(option);
+				order.setPriorityVal(option);
 				cout << endl << endl;
 			}
 			else
 				cout << "The product wasn't added to your order." << endl << endl;
 		}
-		else {
+		else 
+		{
 			cout << "We currently do not have this product in our store. " << endl;
 		}
 
@@ -153,9 +161,8 @@ void CustomerInterface::search()
 	} while (answer == "yes" || answer == "Yes");
 
 	//call function in Heap to add order
-	//heap.heapInsert(order);
+	heap.heapInsert(order);
 	cout << endl << endl;
-
 }
 
 void CustomerInterface::placeOrder()
@@ -170,25 +177,25 @@ void CustomerInterface::placeOrder()
 	cout << "You can make a purchase now. " << endl;
 	cout << "Please enter your name: ";
 	cin >> firstname >> lastname;
-	//customers.setFirst(firstname);
-	//customers.setLast(lastname);
+	customers.setFirst(firstname);
+	customers.setLast(lastname);
 	cin.ignore();
 	cout << "Please enter your address: ";
 	getline(cin, address);
-	//custmomers.setAddress(address);
+	custmomers.setAddress(address);
 	getline(cin, city);
-	//customers.setCity(city);
+	customers.setCity(city);
 	getline(cin, state);
-	//customers.setState(state);
+	customers.setState(state);
 	cin >> zip;
 	cin.ignore();
-	//customers.setZip(zip);
+	customers.setZip(zip);
 	cout << "Please enter yout email: ";
 	getline(cin, email);
-	//customers.setEmail(email);
+	customers.setEmail(email);
 
 	//call function in HashTable to add customer info
-	//table.insertData(customers);
+	table.insertData(customers);
 
 }
 void CustomerInterface::viewPurchase() {

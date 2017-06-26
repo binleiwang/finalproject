@@ -12,7 +12,8 @@
 #include <cstdlib>
 #include <string>
 #include "Robot.h"
-#include "BST.h"
+#include "AST.h"
+#include "NMT.h"
 #include "Heap.h"
 #include "HashTable.h"
 
@@ -21,15 +22,16 @@ using namespace std;
 class CustomerInterface {
 
 private:
-	BST<Robot> namebst;
-	BST<Robot> asinbst;
-	Hashtable table;
-	Heap heap;
-	Order orders;
-	Customer customers;
+	NMT *namebst;
+	AST *asinbst;
+	HashTable *table;
+	Heap<Order> *heap;
+	Order *newOrder;
+	Customer *customer;
 
 public:
-	CustomerInterface(BST<Robot> bst1, BST<Robot> bst2, Hashtable hash, Heap heap1, Order order, Customer customer, Robot robot);
+	CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Order *order, Customer *customer, Robot *robot);
+
 	void welcome();
 	void searchByKey();
 	void search();

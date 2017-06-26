@@ -12,7 +12,8 @@
 #include <cstdlib>
 #include <string>
 #include "Robot.h"
-#include "BST.h"
+#include "AST.h"
+#include "NMT.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ private:
 
 public:
 	FileIO();
-	void readFromFile(Robot &robot, BST<Robot> &bst1,  BST<Robot> &bst2);
+	void readFromFile(Robot *robot, NMT *bst1,  AST *bst2);
 
 };
 

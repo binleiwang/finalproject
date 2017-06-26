@@ -13,7 +13,7 @@ template<class H>
 class Heap {
 private:
 	vector<H > order;
-	int size = order.size();
+	int size;
 	int leftChild(int parent);
 	int rightChild(int parent);
 	int parent(int child);
@@ -24,7 +24,7 @@ private:
 public:
 	Heap();
 	int getSize();
-	void insert(const H & newData);
+	void insert(H newData);
 	void showOrder(int index);
 	H deleteMax();
 	H deleteOrder(int);
@@ -33,11 +33,11 @@ public:
 };
 template<class H>
 Heap<H>::Heap() {
-	size = 0;
+	size = order.size();
 }
 template<class H>
 void Heap<H>::showOrder(int index) {
-	cout << order[index];
+	cout << order[index] << endl;
 }
 
 template<class H>
@@ -96,7 +96,7 @@ void Heap<H>::heapDecreaseKey(int root, int last) {
 }
 
 template<class H>
-void Heap<H>::insert(const H & newData) {
+void Heap<H>::insert(H newData) {
 	order.push_back(newData);
 	heapIncreaseKey(order[size], size);
 	++size;

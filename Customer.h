@@ -45,7 +45,7 @@ public:
     void setCity(string);
     void setState(string);
     void setZip(int);
-    void setEmail(string)
+    void setEmail(string);
     
     //additional functions
     friend ostream& operator<<(ostream& os, const Customer& c);

@@ -4,7 +4,6 @@
  *  Created on: Jun 18, 2017
  *      Author: My Nguyen
  */
-
 #include "CustomerInterface.h"
 
 #include <iostream>
@@ -12,7 +11,8 @@
 #include <string>
 #include "FileIO.h"
 #include "Robot.h"
-#include "BST.h"
+#include "AST.h"
+#include "NMT.h"
 #include "Order.h"
 #include "HashTable.h"
 #include "Customer.h"
@@ -21,17 +21,18 @@
 
 using namespace std;
 
-CustomerInterface::CustomerInterface(BST<Robot> bst1, BST<Robot> bst2, Hashtable hash, Heap heap1, Order order, Customer customer, Robot robot)
+CustomerInterface::CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Order *order, Customer *c, Robot *robot)
 {
 	namebst = bst1;
 	asinbst = bst2;
 	table = hash;
 	heap = heap1;
-	orders = order;
-	customers = customer;
+	newOrder = order;
+	customer = c;
 }
 
-void CustomerInterface::welcome() {
+void CustomerInterface::welcome() 
+{
 	cout << "Welcome to our robot store!  " << endl << endl;
 	cout << "1. Search for a product" << endl;
 	cout << setw(9) << "-Find and display one record using the primary key"
@@ -52,100 +53,112 @@ void CustomerInterface::welcome() {
 
 void CustomerInterface::searchByKey()
 {
-	string choice;
-	int option;
+	string choice = "";
+	int menuNum;
+	//char option;
 
 	cout << "Please chose an option between 1 and 5 in the menu: ";
-	cin >> option;
-
-	while(option < 1 || option > 5){
+	cin >> menuNum;
+	while(menuNum < 1 || menuNum > 5){
 		cout << "Invalid choice." << endl;
 		cout << "Only chose between 1 and 5. Enter again: ";
-		cin >> option;
+		cin >> menuNum;
 	}
 
-	do{
-		switch (option) {
-		case 5:
-			quitShopping();
-			break;
-		case 4:
-		case 3:
-			cout << "Please chose a product first." << endl;
-			cout << "Please chose option 1 or 2 from the menu ";
-			cin >> option;
-			break;
-		case 2:
-			cout << "\nDo you want to see list of robots by name or by asin? ";
+	switch (menuNum)
+	{
+	case 5:
+		quitShopping();
+		break;
+	case 4:
+	case 3:
+		cout << "Please chose a product first." << endl;
+		cout << "Please chose option 1 or 2 from the menu: ";
+		cin >> menuNum;
+		break;
+	case 2:
+		cout << "\nDo you want to see list of robots by name or by asin? ";
+		cin >> choice;
+
+		while(choice != "name" && choice != "asin"){
+			cout << "Invalid entry or typo. Please enter again(name or asin) ";
 			cin >> choice;
+		}
 
-			while (choice != "name" || choice != "asin") {
-				cout
-						<< "Invalid entry or typo. Please enter again(name or asin) ";
-				cin >> choice;
-			}
+		if(choice == "name")
+			namebst->printMenu(cout);
+		 //call function in BST to display a tree by name with only a few information
+		 else if (choice == "asin")
+			asinbst->printMenu(cout);
+		 ////call function in BST to display a tree by name with only a few information
 
-			/*if(choice == "name")
-			 //call function in BST to display a tree by name with only a few information
-			 else(choice == "asin")
-			 ////call function in BST to display a tree by name with only a few information
-			 */
-			search();
-			break;
-		case 1:
-			search();
-			break;
-		} // end switch
-	} while (option == 1 || option == 2);
+		//search();
+		break;
+	case 1:
+		search();
+		break;
+	} // end switch
 }
 
 void CustomerInterface::search()
 {
-	bool status;
+	bool status = false;
 	string answer;
 	string purchase;
 	char option;
-	char method;
 	string choice;
 	string name, number;
+	Robot *rTemp = new Robot;
+	
 	do {
 		cout << "Do you want to search for the product by name or asin? ";
 		cin >> choice;
-		if (choice == "name") {
+		
+		if (choice == "name") 
+		{
 			cout << "Please enter name of the robot: ";
-			cin >> name;
-			//call search function in BST to search by name
-			//status = namebst.search(number);
-			//display the product info if it's found
-		} else {
+			cin.ignore();
+			getline(cin, name);
+			rTemp->set_name(name);
+			status = namebst->search(*rTemp);
+		} 
+		else
+		{
 			cout << "Please enter asin number of the robot: ";
 			cin >> number;
-			//call search function in BST to search by asin
-			//status = asinbst.search(number);
-			//display the product info if it's found
+			rTemp->set_asin(number);
+			status = asinbst->search(*rTemp);
 		}
 
-		if (status == true) {
+		if (status == true) 
+		{
+
 			cout << "Do you want to purchase this product? ";
 			cin >> purchase;
 
-			if (purchase == "yes") {
+			newOrder = new Order;
+
+			if (purchase == "yes") 
+			{
 				//call function in Heap to add robot to the priority queue
-				//order.addRobot(name);
+				*rTemp = namebst->getRobot(*rTemp);
+				newOrder->addRobot(*rTemp);
 				cout << "The product is your added to your order list." << endl << endl;
 				cout << "Chose your shipping method:" << endl;
 				cout << "O - Over night" << endl;
 				cout << "R - Rush" << endl;
 				cout << "S - Standard" << endl;
-				cin >> method;
+				cin >> option;
 				//call function in Heap to set method option
-				//order.setPriorityVal(option);
+				newOrder->setPriorityVal(option);
 				cout << endl << endl;
+				// if / else: if the options are equal, call tme functon
 			}
 			else
 				cout << "The product wasn't added to your order." << endl << endl;
 		}
-		else {
+		else 
+		{
 			cout << "We currently do not have this product in our store. " << endl;
 		}
 
@@ -154,10 +167,16 @@ void CustomerInterface::search()
 
 	} while (answer == "yes" || answer == "Yes");
 
-	//call function in Heap to add order
-	//heap.heapInsert(order);
-	cout << endl << endl;
+	if (answer == "no" || answer == "NO")
+	{
+		placeOrder();
+		viewPurchase();
+	}
 
+
+	//call function in Heap to add order
+	heap->insert(*newOrder);
+	cout << endl << endl;
 }
 
 void CustomerInterface::placeOrder()
@@ -166,38 +185,39 @@ void CustomerInterface::placeOrder()
 	string address, city, state;
 	int zip;
 
+	cout << "Here is you order list: " << endl;
+	//call function in Order.h to display the order list
+
 	cout << "You can make a purchase now. " << endl;
 	cout << "Please enter your name: ";
 	cin >> firstname >> lastname;
-	//customers.setFirst(firstname);
-	//customers.setLast(lastname);
+	customer->setFirst(firstname);
+	customer->setLast(lastname);
 	cin.ignore();
 	cout << "Please enter your address: ";
 	getline(cin, address);
-	//custmomers.setAddress(address);
+	customer->setAddress(address);
 	getline(cin, city);
-	//customers.setCity(city);
+	customer->setCity(city);
 	getline(cin, state);
-	//customers.setState(state);
+	customer->setState(state);
 	cin >> zip;
 	cin.ignore();
-	//customers.setZip(zip);
+	customer->setZip(zip);
 	cout << "Please enter yout email: ";
 	getline(cin, email);
-	//customers.setEmail(email);
+	customer->setEmail(email);
 
 	//call function in HashTable to add customer info
-	//table.insertData(customers);
+	table->insertData(*customer);
 
 }
 void CustomerInterface::viewPurchase() {
-	cout << "Here is you order list: " << endl;
-	//call function in Heap.h to display the order list
-	//heap.showOrder(int index);
+	cout << newOrder;
 }
 
 void CustomerInterface::quitShopping() {
-	cout << "The receipt is sent to " << customers.getEmail() << endl;
+	cout << "The receipt is sent to " << customer->getEmail() << endl;
 	cout << "Thank you for shopping at our store." << endl;
 	cout << "Have a great day!!!" << endl << endl;
 }

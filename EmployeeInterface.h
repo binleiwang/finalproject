@@ -12,23 +12,24 @@
 #include <string>
 #include "List.h"
 #include "Heap.h"
-#include "BST.h"
+#include "AST.h"
+#include "NMT.h"
 #include "Robot.h"
 using namespace std;
 
 class EmployeeInterface {
 
 private:
-	Heap heap;
-	vector<Order> orders; // TBD if need this, or if access orders a different way.
-	BST<Robot> nameTree;
-	BST<Robot> asinTree;
+	Heap<Order> *heap;
+	//vector<Order> orders; // TBD if need this, or if access orders a different way.
+	NMT *nameTree;
+	AST *asinTree;
 	bool checkName(string t);
 	bool checkAsin(string t);
 
 public:
-	//EmployeeInterface();
-	EmployeeInterface(Heap h, BST<Robot> t1, BST<Robot> t2);
+	EmployeeInterface();
+	EmployeeInterface(Heap<Order> *h, NMT *t1, AST *t2);
 	void welcome();
 	void employeeRights();
     void viewOrders(); // print orders from the heap in order of priority

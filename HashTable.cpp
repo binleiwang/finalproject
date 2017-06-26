@@ -15,7 +15,7 @@
 int HashTable::hash(string key)
 {
     int index, sum = 0;
-    for(int i = 0; i < key.length(); i++)
+    for(unsigned int i = 0; i < key.length(); i++)
         sum += (int) key[i];
     index = sum % SIZE;
     return index;

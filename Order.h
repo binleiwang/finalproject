@@ -32,16 +32,16 @@ public:
 	/*Constructors*/
 	Order();
 	/**Access Functions*/
-	string getName();
-	double getPrice();
-	int getOrderNum();
-	int getPriorityVal();
-	char getOption();
-	time_t getDate();
-	bool getStatus();
-	double getTotal();//for total price before tax and handling
-	string shippingType();//to print out type of shipping
-	double shippingFee();
+	string getName() const;
+	double getPrice() const;
+	int getOrderNum() const;
+	int getPriorityVal() const;
+	char getOption() const;
+	time_t getDate() const;
+	bool getStatus() const;
+	double getTotal() const;//for total price before tax and handling
+	string shippingType() const;//to print out type of shipping
+	double shippingFee() const;
 
 	/**Manipulation Procedures*/
 	void setName(Robot R); //should be (Robot R) name = R.getName();

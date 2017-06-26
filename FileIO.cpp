@@ -10,7 +10,8 @@
 #include <string>
 #include "FileIO.h"
 #include "Robot.h"
-#include "BST.h"
+#include "AST.h"
+#include "NMT.h"
 #include <fstream>
 
 using namespace std;
@@ -21,7 +22,7 @@ FileIO::FileIO() {
 	outfileName = "outputFile.txt";
 }
 
-void FileIO::readFromFile(Robot &robot, BST<Robot> &bst1, BST<Robot> &bst2)
+void FileIO::readFromFile(Robot *robot, NMT *bst1, AST *bst2)
 {
 	ofstream outputFile;
 	ifstream inputFile;
@@ -39,30 +40,32 @@ void FileIO::readFromFile(Robot &robot, BST<Robot> &bst1, BST<Robot> &bst2)
 	while(!inputFile.eof())
 	{
 		getline(inputFile,name);
-		robot.set_name(name);
+		robot->set_name(name);
 		getline(inputFile, asin);
-		robot.set_asin(asin);
+		robot->set_asin(asin);
 		inputFile >> price;
-		robot.set_price(price);
+		robot->set_price(price);
 
 		inputFile.ignore();
 
 		getline(inputFile, manufacture);
-		robot.set_manufacture(manufacture);
+		robot->set_manufacture(manufacture);
 		getline(inputFile, purpose);
-		robot.set_purpose(purpose);
+		robot->set_purpose(purpose);
 		getline(inputFile, user);
-		robot.set_user(user);
+		robot->set_user(user);
 		inputFile >> weight;
-		robot.set_weight(weight);
+		robot->set_weight(weight);
 		inputFile >> rate;
-		robot.set_rating(rate);
+		robot->set_rating(rate);
 
 		inputFile.ignore();
 
 		getline(inputFile, empty);
 
-		bst1.PriInsert(robot);
-		bst2.SecInsert(robot);
+		// temporary until we get new BST functions
+		bst1->insertData(*robot);
+		//bst1->PriInsert(robot);
+		bst2->insertData(*robot);
 	}
 }

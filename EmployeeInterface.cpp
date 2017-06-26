@@ -5,25 +5,28 @@
  *      Author: My Nguyen
  */
 #include "CustomerInterface.h"
-
+#include "EmployeeInterface.h"
 #include <iostream>
 #include <cstdlib>
 #include <string>
 #include <cmath>
 #include "FileIO.h"
 #include "Robot.h"
-#include "BST.h"
+#include "AST.h"
+#include "NMT.h"
 #include "HashTable.h"
 #include "Customer.h"
 #include "Heap.h"
 
-/*EmployeeInterface::EmployeeInterface()
+EmployeeInterface::EmployeeInterface()
 {
-	//heap = new Heap; // temp
-	//orders = new vector<Order> ordersTemp; // temp for testing
-}*/
+	asinTree = new AST;
+	nameTree = new NMT;
+	heap = new Heap<Order>;
+	//orders = new vector<Order> ordersTemp;
+}
 
-EmployeeInterface::EmployeeInterface(Heap h, BST<Robot> t1, BST<Robot> t2)
+EmployeeInterface::EmployeeInterface(Heap<Order> *h, NMT *t1, AST *t2)
 {
 	heap = h;
 	//orders = &(heap.getOrders());
@@ -38,14 +41,14 @@ EmployeeInterface::EmployeeInterface(Heap h, BST<Robot> t1, BST<Robot> t2)
 
 bool EmployeeInterface::checkName(string t)
 {
-	for (int i = 0; i < t.length(); i++)
+	for (unsigned int i = 0; i < t.length(); i++)
 		t[i] = toupper(t[i]);
 	return t == "N" || t == "NAME";
 }
 
 bool EmployeeInterface::checkAsin(string t)
 {
-	for (int i = 0; i < t.length(); i++)
+	for (unsigned int i = 0; i < t.length(); i++)
 		t[i] = toupper(t[i]);
 	return t == "A" || t == "ASIN";
 }
@@ -66,21 +69,21 @@ void EmployeeInterface::employeeRights()
 	cout << "4. Add New Robot" << endl;
 	cout << "5. Remove Robot" << endl << endl;
 
-	int option;
+	int menuNum;
+	//char option;
 	string answer;
 	string choice;
 
-	do{
+	do {
 		cout << "Please chose an option between 1 and 5: ";
-		cin >> option;
-
-		while(option < 1 || option > 5){
+		cin >> menuNum;
+		while(menuNum < 1 || menuNum > 5){
 			cout << "Invalid choice." << endl;
 			cout << "Only chose between 1 and 5. Enter again: ";
-			cin >> option;
+			cin >> menuNum;
 		}
 
-		switch(option){
+		switch(menuNum){
 		case 1:
 			viewOrders();
 			break;
@@ -109,13 +112,14 @@ void EmployeeInterface::employeeRights()
 
 		cout << endl << endl;
 
-	}while (answer == "yes" || answer == "Yes");
+	} while (answer == "yes" || answer == "Yes");
 }
 
 void EmployeeInterface::viewOrders()
 {
 	cout << "Printing orders:\n";
-	for (int i = 0; i < orders->size(); i++);
+	heap->printOrders();
+
 		// temp until print is added
 		//orders->at(i).print(); // need a way to print an order, either << or print()in Order.h
 		//print all order in the Heap
@@ -124,6 +128,7 @@ void EmployeeInterface::viewOrders()
 void EmployeeInterface::shipOrder()
 {
 	cout << "Shipping order...\n";
+	heap->deleteMax();
 	//shipping each order in the Heap
 	//orders->at(0).print();
 	//after shipping, delete that order from the Heap
@@ -149,7 +154,7 @@ void EmployeeInterface::addNewRobot()
 	Robot *rNew;
 	rNew = new Robot;
 	string temp;
-
+	cin.ignore();
 	cout << "Name: ";
 	getline(cin, temp);
 	rNew->set_name(temp);
@@ -194,9 +199,9 @@ void EmployeeInterface::addNewRobot()
 
 	cout << "Inserting " << rNew->get_name() << "...\n";
 	//insert in the name tree
-	nameTree.insertData(*rNew);
+	nameTree->insertData(*rNew);
 	//insert in the asin tree
-	asinTree.insertData(*rNew);
+	asinTree->insertData(*rNew);
 }
 
 void EmployeeInterface::removeRobot()
@@ -205,7 +210,8 @@ void EmployeeInterface::removeRobot()
 	cout << "Deleting robots from the database." << endl;
 
 	cout << "Would you like to delete by NAME or ASIN?\n";
-	cin >> temp;
+	cin.ignore();
+	getline(cin, temp);
 
 	while (!checkName(temp) && !checkAsin(temp))
 	{
@@ -222,6 +228,7 @@ void EmployeeInterface::removeRobot()
 	string tASIN;
 	if (byName)
 	{
+		cin.ignore();
 		cout << "Please enter the name of the robot you wish to delete:\n";
 		getline(cin, tName);
 		rTemp.set_name(tName);
@@ -233,9 +240,9 @@ void EmployeeInterface::removeRobot()
 		//          if name is found, return its ASIN
 		//          if ASIN is found, return its name
 		// ***      else return some dummy value (null).
-		if (nameTree.search(rTemp))
+		if (nameTree->search(rTemp))
 		{
-			//tAsin = nameTree->getKey(rTemp); // ex: get ASIN using name
+			tASIN = nameTree->getOtherKey(rTemp);
 			rTemp.set_asin(tASIN);
 		}
 	}
@@ -244,14 +251,14 @@ void EmployeeInterface::removeRobot()
 		cout << "Please enter the ASIN of the robot you wish to delete:\n";
 		getline(cin, tASIN);
 		rTemp.set_asin(tASIN);
-		if (asinTree.search(rTemp))
+		if (asinTree->search(rTemp))
 		{
-			// tName = asinTree->getKey(rTemp); // ex: get name using ASIN
+			tName = asinTree->getOtherKey(rTemp);
 			rTemp.set_name(tName);
 		}
 	}
 	cout << "Deleting " << tName << " #" << tASIN << " from the database.\n";
-	nameTree.removeData(rTemp);
-	asinTree.removeData(rTemp);
+	nameTree->removeData(rTemp);
+	asinTree->removeData(rTemp);
 }
 

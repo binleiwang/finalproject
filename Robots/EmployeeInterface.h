@@ -31,6 +31,7 @@ public:
 	EmployeeInterface();
 	EmployeeInterface(Heap<Order> *h, NMT *t1, AST *t2);
 	void welcome();
+	void menu();
 	void employeeRights();
     void viewOrders(); // print orders from the heap in order of priority
     void shipOrder(); // ships the #1 priority order. (delete root of heap)

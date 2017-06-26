@@ -174,6 +174,7 @@ void EmployeeInterface::addNewRobot()
 	getline(cin, temp);
 	rNew->set_name(temp);
 	//temp.erase();
+	cout << ".";
 
 	cout << "ASIN (like an ID number): ";
 	getline(cin, temp);

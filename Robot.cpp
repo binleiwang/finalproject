@@ -102,7 +102,7 @@ ostream& operator<<(ostream& os, const Robot& robot)
 	return os;
 }
 
-bool Robot::operator==(const Robot& robot){
+/*bool Robot::operator==(const Robot& robot){
 	return (name == robot.name && asin==robot.asin);
 }
 
@@ -132,4 +132,4 @@ bool Robot::operator>(const Robot& robot)
 	}
 
 	return status;
-}
+}*/

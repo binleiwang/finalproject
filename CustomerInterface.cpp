@@ -34,6 +34,10 @@ CustomerInterface::CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap
 void CustomerInterface::welcome() 
 {
 	cout << "Welcome to our robot store!  " << endl << endl;
+}
+
+void CustomerInterface::menu()
+{
 	cout << "1. Search for a product" << endl;
 	cout << setw(9) << "-Find and display one record using the primary key"
 			<< endl;
@@ -55,7 +59,9 @@ void CustomerInterface::searchByKey()
 {
 	string choice = "";
 	int menuNum;
-	//char option;
+	
+	//display menu
+	menu();
 
 	cout << "Please chose an option between 1 and 5 in the menu: ";
 	cin >> menuNum;
@@ -63,8 +69,9 @@ void CustomerInterface::searchByKey()
 		cout << "Invalid choice." << endl;
 		cout << "Only chose between 1 and 5. Enter again: ";
 		cin >> menuNum;
+		cout << endl;
 	}
-
+	do{
 	switch (menuNum)
 	{
 	case 5:
@@ -73,6 +80,7 @@ void CustomerInterface::searchByKey()
 	case 4:
 	case 3:
 		cout << "Please chose a product first." << endl;
+		menu();
 		cout << "Please chose option 1 or 2 from the menu: ";
 		cin >> menuNum;
 		break;
@@ -81,23 +89,24 @@ void CustomerInterface::searchByKey()
 		cin >> choice;
 
 		while(choice != "name" && choice != "asin"){
-			cout << "Invalid entry or typo. Please enter again(name or asin) ";
+			cout << "\nInvalid entry or typo. Please enter again(name or asin) ";
 			cin >> choice;
 		}
 
 		if(choice == "name")
 			namebst->printMenu(cout);
 		 //call function in BST to display a tree by name with only a few information
-		 else if (choice == "asin")
+		 else
 			asinbst->printMenu(cout);
-		 ////call function in BST to display a tree by name with only a few information
+		 //call function in BST to display a tree by name with only a few information
 
-		//search();
+		search();
 		break;
 	case 1:
 		search();
 		break;
 	} // end switch
+	}while(menuNum == 1 || menuNum == 2);
 }
 
 void CustomerInterface::search()
@@ -116,7 +125,7 @@ void CustomerInterface::search()
 		
 		if (choice == "name") 
 		{
-			cout << "Please enter name of the robot: ";
+			cout << "\nPlease enter name of the robot: ";
 			cin.ignore();
 			getline(cin, name);
 			rTemp->set_name(name);
@@ -124,7 +133,7 @@ void CustomerInterface::search()
 		} 
 		else
 		{
-			cout << "Please enter asin number of the robot: ";
+			cout << "\nPlease enter asin number of the robot: ";
 			cin >> number;
 			rTemp->set_asin(number);
 			status = asinbst->search(*rTemp);
@@ -133,7 +142,7 @@ void CustomerInterface::search()
 		if (status == true) 
 		{
 
-			cout << "Do you want to purchase this product? ";
+			cout << "\nDo you want to purchase this product? ";
 			cin >> purchase;
 
 			newOrder = new Order;
@@ -172,8 +181,7 @@ void CustomerInterface::search()
 		placeOrder();
 		viewPurchase();
 	}
-
-
+	
 	//call function in Heap to add order
 	heap->insert(*newOrder);
 	cout << endl << endl;
@@ -185,7 +193,7 @@ void CustomerInterface::placeOrder()
 	string address, city, state;
 	int zip;
 
-	cout << "Here is you order list: " << endl;
+	//cout << "Here is you order list: " << endl;
 	//call function in Order.h to display the order list
 
 	cout << "You can make a purchase now. " << endl;

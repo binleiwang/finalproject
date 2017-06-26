@@ -58,7 +58,7 @@ void EmployeeInterface::welcome()
 	cout << "Welcome to the employee control panel!" << endl << endl;
 }
 
-void EmployeeInterface::employeeRights()
+void EmployeeInterface::menu()
 {
 	cout << "Options:\n";
 	cout << "1. View Orders by Priority" << endl;
@@ -69,12 +69,18 @@ void EmployeeInterface::employeeRights()
 	cout << "4. Add New Robot" << endl;
 	cout << "5. Remove Robot" << endl;
 	cout << "6. Exit Employee Menu" << endl << endl;
+}
 
+void EmployeeInterface::employeeRights()
+{
 	int menuNum;
 	string answer;
 	string choice;
 
 	do {
+		//display menu
+		menu();
+		
 		cout << "Please chose an option between 1 and 6: ";
 		getline(cin, answer);
 		menuNum = atoi(answer.c_str());

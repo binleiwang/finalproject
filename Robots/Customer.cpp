@@ -110,7 +110,6 @@ void Customer::insertOrder(Order o)
 	cout << "In Customer, inserting an order...\n";
 	cout << o;
 	orders.insertEnd(o); // problem here
-	cout << "Success!" << endl;
 }
 
 List<Order> Customer::getOrders()

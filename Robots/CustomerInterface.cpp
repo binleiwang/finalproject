@@ -60,11 +60,11 @@ void CustomerInterface::printOptions()
 
 void CustomerInterface::searchByKey()
 {
-	cout << "Please chose an option between 1 and 5 in the menu: ";
+	cout << "Please choose an option between 1 and 5 in the menu: ";
 	promptUserInput();
 	while(menuNum < 1 || menuNum > 5){
 		cout << "Invalid choice." << endl;
-		cout << "Only chose between 1 and 5. Enter again: ";
+		cout << "Only choose between 1 and 5. Enter again: ";
 		promptUserInput();
 	}
 
@@ -79,7 +79,7 @@ void CustomerInterface::searchByKey()
 	case 3:
 		cout << "Please chose a product first." << endl;
 		cout << "Please chose option 1 or 2 from the menu: ";
-		promptUserInput();
+		searchByKey();
 		break;
 	case 2:
 		cout << "\nDo you want to see list of robots by name or by asin? ";
@@ -112,18 +112,19 @@ void CustomerInterface::search()
 	string temp;
 	string choice;
 	string name;
-	Robot *rTemp = new Robot;
+	newOrder = new Order;
 	
 	do {
 		cout << "Do you want to search for the product by name or asin? ";
 		choice.clear();
 		getline(cin, choice);
-		
+		Robot *rTemp = new Robot;
 		if (choice == "name") 
 		{
 			cout << "Please enter name of the robot: ";
 			name.clear();
 			getline(cin, name);
+
 			rTemp->set_name(name);
 			status = namebst->search(*rTemp);
 			if (status)
@@ -143,14 +144,13 @@ void CustomerInterface::search()
 		{
 			cout << *rTemp;
 			cout << "\nDo you want to purchase this product? ";
-			cin >> purchase;
-
-			newOrder = new Order;
+			getline(cin, purchase);
 
 			if (purchase == "yes") 
 			{
 				//call function in Heap to add robot to the priority queue
 				*rTemp = namebst->getRobot(*rTemp);
+				cout << "adding a robot to newOrder.\n";
 				newOrder->addRobot(*rTemp);
 				cout << "The product is your added to your order list." << endl << endl;
 				cout << "Chose your shipping method:" << endl;
@@ -162,7 +162,7 @@ void CustomerInterface::search()
 				//call function in Heap to set method option
 				newOrder->setPriorityVal(option);
 				cout << endl << endl;
-				// if / else: if the options are equal, call tme functon
+				// if / else: if the options are equal, call time functon
 			}
 			else
 				cout << "The product wasn't added to your order." << endl << endl;
@@ -180,7 +180,10 @@ void CustomerInterface::search()
 	if (answer == "no" || answer == "NO")
 	{
 		if (newOrder->getSize() == 0)
+		{
+			cout << "newOrder has size 0!\n";
 			return;
+		}
 		else
 		{
 			placeOrder();
@@ -198,28 +201,33 @@ void CustomerInterface::placeOrder()
 {
 	string firstname, lastname, email;
 	string address, city, state;
+	string temp;
 	int zip;
 
-	cout << "Here is you order list: " << endl;
+	//cout << "Here is you order list: " << endl;
 	//call function in Order.h to display the order list
 
-	cout << "You can make a purchase now. " << endl;
-	cout << "Please enter your name: ";
-	cin >> firstname >> lastname;
+	cout << "Please enter your purchase information: " << endl;
+	cout << "First name: ";
+	getline(cin, firstname);
+	cout << "\nLast name: ";
+	getline(cin, lastname);
 	customer->setFirst(firstname);
 	customer->setLast(lastname);
-	cin.ignore();
-	cout << "Please enter your address: ";
+	cout << "Street address: ";
 	getline(cin, address);
 	customer->setAddress(address);
+	cout << "\nCity: ";
 	getline(cin, city);
 	customer->setCity(city);
+	cout << "\nState: ";
 	getline(cin, state);
 	customer->setState(state);
-	cin >> zip;
-	cin.ignore();
+	cout << "\nZip: ";
+	getline(cin, temp);
+	zip = atoi(temp.c_str());
 	customer->setZip(zip);
-	cout << "Please enter your email: ";
+	cout << "Email: ";
 	getline(cin, email);
 	customer->setEmail(email);
 
@@ -228,7 +236,10 @@ void CustomerInterface::placeOrder()
 
 }
 void CustomerInterface::viewPurchase() {
-	cout << newOrder;
+	if (newOrder->getSize() > 0)
+		cout << newOrder;
+	else
+		cout << "You haven't yet made a purchase.\n";
 }
 
 void CustomerInterface::quitShopping() {

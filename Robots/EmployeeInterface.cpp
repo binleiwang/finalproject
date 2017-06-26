@@ -96,7 +96,7 @@ void EmployeeInterface::employeeRights()
 			break;
 		case 3:
 			cout << "Do you want to see list inventory by name or by asin? ";
-			cin >> choice;
+			getline(cin, choice);
 
 			if(choice == "name")
 				listRobotsName();
@@ -118,7 +118,7 @@ void EmployeeInterface::employeeRights()
 		}
 
 		cout << "Do you want to chose another option? ";
-		cin >> answer;
+		getline(cin, answer);
 
 		cout << endl << endl;
 
@@ -170,7 +170,6 @@ void EmployeeInterface::addNewRobot()
 	Robot *rNew;
 	rNew = new Robot;
 	string temp;
-	cin.ignore();
 	cout << "Name: ";
 	getline(cin, temp);
 	rNew->set_name(temp);
@@ -226,7 +225,6 @@ void EmployeeInterface::removeRobot()
 	cout << "Deleting robots from the database." << endl;
 
 	cout << "Would you like to delete by NAME or ASIN?\n";
-	cin.ignore();
 	getline(cin, temp);
 
 	while (!checkName(temp) && !checkAsin(temp))
@@ -234,7 +232,7 @@ void EmployeeInterface::removeRobot()
 		temp.erase();
 		cout << "There was an error with your input...\n";
 		cout << "Please enter name, n, asin, or a: \n";
-		cin >> temp;
+		getline(cin, temp);
 	}
 	bool byName = checkName(temp);
 	temp.erase();
@@ -244,7 +242,6 @@ void EmployeeInterface::removeRobot()
 	string tASIN;
 	if (byName)
 	{
-		cin.ignore();
 		cout << "Please enter the name of the robot you wish to delete:\n";
 		getline(cin, tName);
 		rTemp.set_name(tName);

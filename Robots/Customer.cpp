@@ -115,6 +115,7 @@ void Customer::insertOrder(Order o)
 
 List<Order> Customer::getOrders()
 {
+	cout << "In Customer::getOrders.\n";
 	return orders;
 }
 //Lack of getter and setter for ORDERS

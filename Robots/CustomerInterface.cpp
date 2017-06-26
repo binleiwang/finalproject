@@ -233,23 +233,33 @@ void CustomerInterface::placeOrder() // Order *
 	table->insertData(*customer);
 	Order o;
 	o = *newOrder;
-	customer->insertOrder(o); // PROBLEM HERE
+	customer->insertOrder(o);
 
-	orders = customer->getOrders();
-	cout << "PRINTING ORDERS\n";
-	Order tempO;
-	orders.beginIterator();
-
-	for (int i = 0; i < orders.getLength(); i++)
+	//orders = customer->getOrders();  // PROBLEM HERE
+	List<Order> newOrdersList(customer->getOrders());
+	newOrdersList.beginIterator();
+	for (int i = 0; i < newOrdersList.getLength(); i++)
 	{
-		cout << "In CUST INT printing...\n";
-		tempO = orders.getIterator();
-		cout << "I would print here.\n";
-		cout << tempO;
-		cout << endl;
-		if (i < orders.getLength() - 1)
-			orders.advanceIterator();
+		cout << "In CustomerInterface, printing an order list:\n";
+		o = newOrdersList.getIterator();
+		cout << o << endl;
+		if (i < newOrdersList.getLength() - 1)
+			newOrdersList.advanceIterator();
 	}
+//	cout << "PRINTING ORDERS\n";
+//	Order tempO;
+//	orders.beginIterator();
+//
+//	for (int i = 0; i < orders.getLength(); i++)
+//	{
+//		cout << "In CUST INT printing...\n";
+//		tempO = orders.getIterator();
+//		cout << "I would print here.\n";
+//		cout << tempO;
+//		cout << endl;
+//		if (i < orders.getLength() - 1)
+//			orders.advanceIterator();
+//	}
 
 }
 void CustomerInterface::viewPurchase() {

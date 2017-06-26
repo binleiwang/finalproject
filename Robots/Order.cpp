@@ -15,7 +15,7 @@
 using namespace std;
 /*Constructors*/
 Order::Order() {
-
+	size = 0;
 	name = "";
 	price = 0.0;
 	orderNum = 0;
@@ -50,6 +50,9 @@ double Order::getTotal() const {
 }
 bool Order::getStatus() const {
 	return status;
+}
+int Order::getSize() const {
+	return size;
 }
 double Order::shippingFee() const {
 	if (getOption() == 'O' || getOption() == 'o')

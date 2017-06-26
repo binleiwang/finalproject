@@ -25,6 +25,7 @@ private:
 	int priorityVal;
 	char opt;
 	bool status;
+	int size;
 	time_t orderTime;
 
 	List<Robot> cart;
@@ -42,6 +43,7 @@ public:
 	double getTotal() const;//for total price before tax and handling
 	string shippingType() const;//to print out type of shipping
 	double shippingFee() const;
+	int getSize() const;
 
 	/**Manipulation Procedures*/
 	void setName(Robot R); //should be (Robot R) name = R.getName();

@@ -33,7 +33,6 @@ int main()
 
 	file.readFromFile(&robot, &nameTree, &asinTree);
 
-	//nameTree.inOrderPrint(cout); // works
 	// when you search for an item,
 	// it prints to screen 2 times, once for each tree (or it did before i removed the code)
 	// i moved print to its own function, but it wont work within th eBST class.

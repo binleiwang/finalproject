@@ -121,6 +121,8 @@ void CustomerInterface::search()
 			getline(cin, name);
 			rTemp->set_name(name);
 			status = namebst->search(*rTemp);
+			if (status)
+				*rTemp = namebst->getRobot(*rTemp);
 		} 
 		else
 		{
@@ -128,11 +130,14 @@ void CustomerInterface::search()
 			cin >> number;
 			rTemp->set_asin(number);
 			status = asinbst->search(*rTemp);
+			if (status)
+				*rTemp = namebst->getRobot(*rTemp);
 		}
 
 		if (status == true) 
 		{
-
+			cout << "***TESTING PRINT IN CUSTINT.cpp SEARCH:***\n";
+			cout << *rTemp;
 			cout << "Do you want to purchase this product? ";
 			cin >> purchase;
 

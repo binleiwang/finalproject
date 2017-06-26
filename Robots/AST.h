@@ -1,16 +1,12 @@
-/*
- * NMT.h
- *
- *  Created on: Jun 25, 2017
- *      Author: Lucy
- */
-
-#ifndef NMT_H_
-#define NMT_H_
 /**
  * Binlei Wang
  * CIS 22C, Lab 7
  */
+
+
+#ifndef AST_H_
+#define AST_H_
+
 #include <cstddef>
 #include <iostream>
 #include <cstdlib>
@@ -19,7 +15,7 @@
 #include "Robot.h"
 using namespace std;
 
-class NMT {
+class AST {
 private:
     struct Node {
         Robot data;
@@ -47,10 +43,10 @@ private:
     Robot findRobot(NodePtr root, string asin);
 public:
 
-    NMT();
-    NMT(Robot robot);
-    NMT(const NMT &bst);
-    ~NMT();
+    AST();
+    AST(Robot robot);
+    AST(const AST &bst);
+    ~AST();
     Robot minimum();
     Robot maximum();
     bool empty();
@@ -66,4 +62,4 @@ public:
     Robot getRobot(Robot robot);
     void printItem();
 };
-#endif /* NMT_H_ */
+#endif /* AST_H_ */

@@ -469,6 +469,7 @@ int List<listdata>::getIndex()
 		temp = temp->nextnode;
 		i++;
 	}
+	return i;
 }
 
 template <class listdata>

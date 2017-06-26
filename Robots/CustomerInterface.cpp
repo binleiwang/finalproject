@@ -34,6 +34,10 @@ CustomerInterface::CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap
 void CustomerInterface::welcome() 
 {
 	cout << "Welcome to our robot store!  " << endl << endl;
+}
+
+void CustomerInterface::printOptions()
+{
 	cout << "1. Search for a product" << endl;
 	cout << setw(9) << "-Find and display one record using the primary key"
 			<< endl;
@@ -71,6 +75,8 @@ void CustomerInterface::searchByKey()
 		quitShopping();
 		break;
 	case 4:
+		viewPurchase();
+		break;
 	case 3:
 		cout << "Please chose a product first." << endl;
 		cout << "Please chose option 1 or 2 from the menu: ";
@@ -87,16 +93,14 @@ void CustomerInterface::searchByKey()
 
 		if(choice == "name")
 			namebst->printMenu(cout);
-		 //call function in BST to display a tree by name with only a few information
 		 else if (choice == "asin")
 			asinbst->printMenu(cout);
-		 ////call function in BST to display a tree by name with only a few information
-
-		//search();
 		break;
 	case 1:
 		search();
 		break;
+	default:
+		quitShopping();
 	} // end switch
 }
 
@@ -136,9 +140,8 @@ void CustomerInterface::search()
 
 		if (status == true) 
 		{
-			cout << "***TESTING PRINT IN CUSTINT.cpp SEARCH:***\n";
 			cout << *rTemp;
-			cout << "Do you want to purchase this product? ";
+			cout << "\nDo you want to purchase this product? ";
 			cin >> purchase;
 
 			newOrder = new Order;
@@ -150,9 +153,9 @@ void CustomerInterface::search()
 				newOrder->addRobot(*rTemp);
 				cout << "The product is your added to your order list." << endl << endl;
 				cout << "Chose your shipping method:" << endl;
-				cout << "O - Over night" << endl;
-				cout << "R - Rush" << endl;
-				cout << "S - Standard" << endl;
+				cout << "O - Over night ($10.99)" << endl;
+				cout << "R - Rush ($6.99)" << endl;
+				cout << "S - Standard ($3.99)" << endl;
 				cin >> option;
 				//call function in Heap to set method option
 				newOrder->setPriorityVal(option);
@@ -174,8 +177,13 @@ void CustomerInterface::search()
 
 	if (answer == "no" || answer == "NO")
 	{
-		placeOrder();
-		viewPurchase();
+		if (newOrder->getSize() == 0)
+			return;
+		else
+		{
+			placeOrder();
+			viewPurchase();
+		}
 	}
 
 
@@ -209,7 +217,7 @@ void CustomerInterface::placeOrder()
 	cin >> zip;
 	cin.ignore();
 	customer->setZip(zip);
-	cout << "Please enter yout email: ";
+	cout << "Please enter your email: ";
 	getline(cin, email);
 	customer->setEmail(email);
 

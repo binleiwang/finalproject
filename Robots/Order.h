@@ -22,10 +22,11 @@ private:
 	double price;
 	double totalPrice;
 	int orderNum;
-	int priorityVal;
+	int size;
+	int priorityVal, numR;
 	char opt;
 	bool status;
-	int size;
+	//int size;
 	time_t orderTime;
 
 	List<Robot> cart;

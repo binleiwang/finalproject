@@ -5,16 +5,18 @@
  *      Author: kathy
  */
 
-#include "Order.h"
+
 #include <string>
 #include <iostream>
 #include <ctime>
 #include "Robot.h"
 #include "List.h"
+#include "Order.h"
 
 using namespace std;
-/*Constructors*/
 Order::Order() {
+	//size = 0;
+	numR = 0;
 	size = 0;
 	name = "";
 	price = 0.0;
@@ -25,7 +27,6 @@ Order::Order() {
 	status = false;
 	totalPrice = 0.0;
 }
-/**Access Functions*/
 
 string Order::getName() const {
 	return name;
@@ -52,7 +53,8 @@ bool Order::getStatus() const {
 	return status;
 }
 int Order::getSize() const {
-	return size;
+	//return size;
+	return 0;
 }
 double Order::shippingFee() const {
 	if (getOption() == 'O' || getOption() == 'o')
@@ -64,21 +66,14 @@ double Order::shippingFee() const {
 }
 string Order::shippingType() const {
 	string t;
-	if (getOption() == 'O' || getOption() == 'o') {
-		//cout << "Your order will be delivered in 1 day.\n";
+	if (getOption() == 'O' || getOption() == 'o')
 		t = "Overnight shipping";
-	}
-
-	else if (getOption() == 'R' || getOption() == 'r') { //option for 3 days shipping
-	//cout << "Your order will be delivered in 2-3 days.\n";
+	else if (getOption() == 'R' || getOption() == 'r')
 		t = "Rush shipping";
-	} else {
-		//cout << "Your order will be delivered in 5-7 days.\n";
+	else
 		t = "Standard shipping";
-	}
 	return t;
 }
-/**Manipulation Procedures*/
 void Order::setName(Robot R) {
 	name = R.get_name();
 }

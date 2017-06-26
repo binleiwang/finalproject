@@ -28,7 +28,8 @@ private:
 	Heap<Order> *heap;
 	Order *newOrder;
 	Customer *customer;
-
+	string choice, number;
+	int menuNum;
 public:
 	CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Order *order, Customer *customer, Robot *robot);
 
@@ -39,7 +40,8 @@ public:
 	void placeOrder();
 	void viewPurchase();
 	void quitShopping();
-
+	void promptUserInput();
+	void getAsinInput();
 };
 
 #endif /* CUSTOMERINTERFACE_H_ */

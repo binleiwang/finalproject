@@ -29,6 +29,9 @@ CustomerInterface::CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap
 	heap = heap1;
 	newOrder = order;
 	customer = c;
+	choice = "";
+	menuNum = 0;
+	number = "";
 }
 
 void CustomerInterface::welcome() 
@@ -57,16 +60,12 @@ void CustomerInterface::printOptions()
 
 void CustomerInterface::searchByKey()
 {
-	string choice = "";
-	int menuNum;
-	//char option;
-
 	cout << "Please chose an option between 1 and 5 in the menu: ";
-	cin >> menuNum;
+	promptUserInput();
 	while(menuNum < 1 || menuNum > 5){
 		cout << "Invalid choice." << endl;
 		cout << "Only chose between 1 and 5. Enter again: ";
-		cin >> menuNum;
+		promptUserInput();
 	}
 
 	switch (menuNum)
@@ -80,17 +79,17 @@ void CustomerInterface::searchByKey()
 	case 3:
 		cout << "Please chose a product first." << endl;
 		cout << "Please chose option 1 or 2 from the menu: ";
-		cin >> menuNum;
+		promptUserInput();
 		break;
 	case 2:
 		cout << "\nDo you want to see list of robots by name or by asin? ";
-		cin >> choice;
-
+		choice.clear();
+		getline(cin, choice);
 		while(choice != "name" && choice != "asin"){
 			cout << "Invalid entry or typo. Please enter again(name or asin) ";
-			cin >> choice;
+			choice.clear();
+			getline(cin, choice);
 		}
-
 		if(choice == "name")
 			namebst->printMenu(cout);
 		 else if (choice == "asin")
@@ -110,18 +109,20 @@ void CustomerInterface::search()
 	string answer;
 	string purchase;
 	char option;
+	string temp;
 	string choice;
-	string name, number;
+	string name;
 	Robot *rTemp = new Robot;
 	
 	do {
 		cout << "Do you want to search for the product by name or asin? ";
-		cin >> choice;
+		choice.clear();
+		getline(cin, choice);
 		
 		if (choice == "name") 
 		{
 			cout << "Please enter name of the robot: ";
-			cin.ignore();
+			name.clear();
 			getline(cin, name);
 			rTemp->set_name(name);
 			status = namebst->search(*rTemp);
@@ -131,7 +132,7 @@ void CustomerInterface::search()
 		else
 		{
 			cout << "Please enter asin number of the robot: ";
-			cin >> number;
+			getAsinInput();
 			rTemp->set_asin(number);
 			status = asinbst->search(*rTemp);
 			if (status)
@@ -156,7 +157,8 @@ void CustomerInterface::search()
 				cout << "O - Over night ($10.99)" << endl;
 				cout << "R - Rush ($6.99)" << endl;
 				cout << "S - Standard ($3.99)" << endl;
-				cin >> option;
+				getline(cin, temp);
+				option = temp.c_str()[0];
 				//call function in Heap to set method option
 				newOrder->setPriorityVal(option);
 				cout << endl << endl;
@@ -171,7 +173,7 @@ void CustomerInterface::search()
 		}
 
 		cout << "Do you want to search another product? ";
-		cin >> answer;
+		getline(cin, answer);
 
 	} while (answer == "yes" || answer == "Yes");
 
@@ -230,8 +232,24 @@ void CustomerInterface::viewPurchase() {
 }
 
 void CustomerInterface::quitShopping() {
-	cout << "The receipt is sent to " << customer->getEmail() << endl;
-	cout << "Thank you for shopping at our store." << endl;
-	cout << "Have a great day!!!" << endl << endl;
+	if (newOrder->getSize() > 0)
+		cout << "The receipt is sent to " << customer->getEmail() << endl;
+	cout << "Exiting the customer interface.\n";
 }
 
+void CustomerInterface::promptUserInput()
+{
+	getline(cin, choice);
+	menuNum = atoi(choice.c_str());
+}
+
+void CustomerInterface::getAsinInput()
+{
+	getline(cin, number);
+	size_t position = 0;
+	for (position = number.find(" "); position != string::npos; position =
+			number.find(" ", position)) {
+		number.replace(position, 1, "");
+	}
+	cout << "***Trimmed number[" << number << "]***\n";
+}

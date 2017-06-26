@@ -71,13 +71,11 @@ void EmployeeInterface::employeeRights()
 	cout << "6. Exit Employee Menu" << endl << endl;
 
 	int menuNum;
-	//char option;
 	string answer;
 	string choice;
 
 	do {
 		cout << "Please chose an option between 1 and 6: ";
-		cin.ignore();
 		getline(cin, answer);
 		menuNum = atoi(answer.c_str());
 		answer.clear();

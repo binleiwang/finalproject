@@ -150,7 +150,7 @@ void CustomerInterface::search()
 			{
 				//call function in Heap to add robot to the priority queue
 				*rTemp = namebst->getRobot(*rTemp);
-				cout << "adding a robot to newOrder.\n\n";
+				cout << "adding a robot to newOrder...\n\n";
 				newOrder->addRobot(*rTemp);
 				cout << "The product is your added to your order list." << endl << endl;
 				cout << "Chose your shipping method:" << endl;

@@ -53,6 +53,7 @@ void Customer::setZip(int i)
 void Customer::setEmail(string info)
 {
     email = info;
+}
 
 string Customer::getFirst() const
 {

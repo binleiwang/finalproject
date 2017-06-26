@@ -67,7 +67,8 @@ void EmployeeInterface::employeeRights()
 	cout << setw(6) << "-List data sorted by primary key" << endl;
 	cout << setw(6) << "-List data sorted by secondary key" << endl;
 	cout << "4. Add New Robot" << endl;
-	cout << "5. Remove Robot" << endl << endl;
+	cout << "5. Remove Robot" << endl;
+	cout << "6. Exit Employee Menu" << endl << endl;
 
 	int menuNum;
 	//char option;
@@ -75,12 +76,17 @@ void EmployeeInterface::employeeRights()
 	string choice;
 
 	do {
-		cout << "Please chose an option between 1 and 5: ";
-		cin >> menuNum;
-		while(menuNum < 1 || menuNum > 5){
+		cout << "Please chose an option between 1 and 6: ";
+		cin.ignore();
+		getline(cin, answer);
+		menuNum = atoi(answer.c_str());
+		answer.clear();
+		while(menuNum < 1 || menuNum > 6){
 			cout << "Invalid choice." << endl;
-			cout << "Only chose between 1 and 5. Enter again: ";
-			cin >> menuNum;
+			cout << "Only chose between 1 and 6. Enter again: ";
+			getline(cin, answer);
+			menuNum = atoi(answer.c_str());
+			answer.clear();
 		}
 
 		switch(menuNum){
@@ -105,6 +111,12 @@ void EmployeeInterface::employeeRights()
 		case 5:
 			removeRobot();
 			break;
+		case 6:
+			quit();
+			break;
+		default:
+			quit();
+			break;
 		}
 
 		cout << "Do you want to chose another option? ";
@@ -127,8 +139,14 @@ void EmployeeInterface::viewOrders()
 
 void EmployeeInterface::shipOrder()
 {
-	cout << "Shipping order...\n";
-	heap->deleteMax();
+	if (heap->getSize() == 0)
+		cout << "Unable to ship an order, because there are no orders!\n";
+	else
+	{
+		cout << "Shipping order...\n";
+		heap->deleteMax();
+	}
+
 	//shipping each order in the Heap
 	//orders->at(0).print();
 	//after shipping, delete that order from the Heap
@@ -262,3 +280,6 @@ void EmployeeInterface::removeRobot()
 	asinTree->removeData(rTemp);
 }
 
+void EmployeeInterface::quit() {
+	cout << "Exiting the employee menu.\n";
+}

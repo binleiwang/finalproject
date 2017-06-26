@@ -39,6 +39,7 @@ public:
     void addNewRobot(); // add a new robot to the database
     void removeRobot(); // delete an existing robot from the database
     					// does not affect current orders
+    void quit();
 };
 
 

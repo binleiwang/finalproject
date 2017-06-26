@@ -104,5 +104,18 @@ ostream &operator <<(ostream &os, const Customer& c)
     os << "Zip Code: " << c.zip << endl;
     return os;
 }
+
+void Customer::insertOrder(Order o)
+{
+	cout << "In Customer, inserting an order...\n";
+	cout << o;
+	orders.insertEnd(o); // problem here
+	cout << "Success!" << endl;
+}
+
+List<Order> Customer::getOrders()
+{
+	return orders;
+}
 //Lack of getter and setter for ORDERS
 //Remind the members to take care of print() function in List(with otream parameter)

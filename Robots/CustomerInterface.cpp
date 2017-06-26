@@ -13,7 +13,6 @@
 #include "Robot.h"
 #include "AST.h"
 #include "NMT.h"
-#include "Order.h"
 #include "HashTable.h"
 #include "Customer.h"
 #include "Heap.h"
@@ -21,13 +20,13 @@
 
 using namespace std;
 
-CustomerInterface::CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Order *order, Customer *c, Robot *robot)
+CustomerInterface::CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Customer *c, Robot *robot)
 {
 	namebst = bst1;
 	asinbst = bst2;
 	table = hash;
 	heap = heap1;
-	newOrder = order;
+	newOrder = new Order;
 	customer = c;
 	choice = "";
 	menuNum = 0;
@@ -112,14 +111,13 @@ void CustomerInterface::search()
 	string temp;
 	string choice;
 	string name;
-	newOrder = new Order;
-	
+	newOrder = buildNewOrder();
 	do {
 		cout << "Do you want to search for the product by name or asin? ";
 		choice.clear();
 		getline(cin, choice);
 		Robot *rTemp = new Robot;
-		if (choice == "name") 
+		if (checkName(choice))
 		{
 			cout << "Please enter name of the robot: ";
 			name.clear();
@@ -130,7 +128,7 @@ void CustomerInterface::search()
 			if (status)
 				*rTemp = namebst->getRobot(*rTemp);
 		} 
-		else
+		else if (checkAsin(choice))
 		{
 			cout << "Please enter asin number of the robot: ";
 			getAsinInput();
@@ -179,6 +177,7 @@ void CustomerInterface::search()
 
 	if (answer == "no" || answer == "NO")
 	{
+		cout << "SIZE: " << newOrder->getSize() << "\n";
 		if (newOrder->getSize() == 0)
 		{
 			cout << "newOrder has size 0!\n";
@@ -197,7 +196,7 @@ void CustomerInterface::search()
 	cout << endl << endl;
 }
 
-void CustomerInterface::placeOrder()
+void CustomerInterface::placeOrder() // Order *
 {
 	string firstname, lastname, email;
 	string address, city, state;
@@ -230,14 +229,32 @@ void CustomerInterface::placeOrder()
 	cout << "Email: ";
 	getline(cin, email);
 	customer->setEmail(email);
-
 	//call function in HashTable to add customer info
 	table->insertData(*customer);
+	Order o;
+	o = *newOrder;
+	customer->insertOrder(o); // PROBLEM HERE
+
+	orders = customer->getOrders();
+	cout << "PRINTING ORDERS\n";
+	Order tempO;
+	orders.beginIterator();
+
+	for (int i = 0; i < orders.getLength(); i++)
+	{
+		cout << "In CUST INT printing...\n";
+		tempO = orders.getIterator();
+		cout << "I would print here.\n";
+		cout << tempO;
+		cout << endl;
+		if (i < orders.getLength() - 1)
+			orders.advanceIterator();
+	}
 
 }
 void CustomerInterface::viewPurchase() {
-	if (newOrder->getSize() > 0)
-		cout << newOrder;
+	if (orders.getLength() > 0)
+		cout << "there is an order\n";
 	else
 		cout << "You haven't yet made a purchase.\n";
 }
@@ -262,5 +279,23 @@ void CustomerInterface::getAsinInput()
 			number.find(" ", position)) {
 		number.replace(position, 1, "");
 	}
-	cout << "***Trimmed number[" << number << "]***\n";
+}
+
+bool CustomerInterface::checkName(string t)
+{
+	for (unsigned int i = 0; i < t.length(); i++)
+		t[i] = toupper(t[i]);
+	return t == "N" || t == "NAME";
+}
+
+bool CustomerInterface::checkAsin(string t)
+{
+	for (unsigned int i = 0; i < t.length(); i++)
+		t[i] = toupper(t[i]);
+	return t == "A" || t == "ASIN";
+}
+
+Order *CustomerInterface::buildNewOrder()
+{
+	return new Order;
 }

@@ -30,6 +30,7 @@ public:
     Customer();
     
     //access functions
+    List<Order> getOrders();
     string getFirst() const;
     string getLast() const;
     string getAddress() const;
@@ -46,6 +47,7 @@ public:
     void setState(string);
     void setZip(int);
     void setEmail(string);
+    void insertOrder(Order o);
     
     //additional functions
     friend ostream& operator<<(ostream& os, const Customer& c);

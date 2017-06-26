@@ -45,6 +45,7 @@ public:
 	string shippingType() const;//to print out type of shipping
 	double shippingFee() const;
 	int getSize() const;
+	void setSize();
 
 	/**Manipulation Procedures*/
 	void setName(Robot R); //should be (Robot R) name = R.getName();

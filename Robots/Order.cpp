@@ -8,6 +8,7 @@
 
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include <ctime>
 #include "Robot.h"
 #include "List.h"
@@ -53,8 +54,7 @@ bool Order::getStatus() const {
 	return status;
 }
 int Order::getSize() const {
-	//return size;
-	return 0;
+	return size;
 }
 double Order::shippingFee() const {
 	if (getOption() == 'O' || getOption() == 'o')
@@ -100,8 +100,13 @@ void Order::setDate(time_t tm) {
 void Order::setStatus(bool s) {
 	status = s;
 }
+
+void Order::setSize() {
+	size = cart.getLength();
+}
 void Order::addRobot(Robot R) {
 	cart.insertEnd(R);
+	size++;
 	price += R.get_price();
 }
 void Order::setTotal(List<Robot> cart) {
@@ -109,7 +114,8 @@ void Order::setTotal(List<Robot> cart) {
 	cart.beginIterator();
 	for (int i = 0; i < cart.getLength(); i++) {
 		tol += cart.getIterator().get_price();
-		cart.advanceIterator();
+		if (i < cart.getLength() - 1)
+			cart.advanceIterator();
 	}
 	totalPrice = tol;
 }
@@ -123,8 +129,8 @@ ostream& operator<<(ostream& os, const Order& O) {
 	}
 
 	os << "Shipping option: " << O.shippingType();
-	os << "    Status:" << O.getStatus() << endl;
-	os << "Price before tax and handling: " << O.getTotal() << endl;
+	os << "    Status:" << boolalpha << O.getStatus() << endl;
+	os << "Price before tax and handling: " << fixed << setprecision(2) << O.getTotal() << endl;
 	os << "Shipping fee: " << O.shippingFee() << endl;
 	os << "Total price: " << (O.getTotal() + O.shippingFee()) * 1.09 << endl;
 	return os;

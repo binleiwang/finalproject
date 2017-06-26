@@ -38,7 +38,7 @@ int main()
 	string input = "x";
 
 	file.readFromFile(&robot, &nameTree, &asinTree);
-	CustomerInterface c(&nameTree, &asinTree, &customers, &orders, &singleOrder, &singleCustomer, &robot);
+	CustomerInterface c(&nameTree, &asinTree, &customers, &orders, &singleCustomer, &robot);
 	EmployeeInterface e(&orders, &nameTree, &asinTree);
 
 	// when you search for an item,

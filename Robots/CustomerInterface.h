@@ -16,6 +16,7 @@
 #include "NMT.h"
 #include "Heap.h"
 #include "HashTable.h"
+#include "Order.h"
 
 using namespace std;
 
@@ -29,10 +30,13 @@ private:
 	Order *newOrder;
 	Customer *customer;
 	string choice, number;
+	List<Order> orders;
 	int menuNum;
+	bool checkName(string t);
+	bool checkAsin(string t);
 public:
-	CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Order *order, Customer *customer, Robot *robot);
-
+	CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Customer *customer, Robot *robot);
+	Order *buildNewOrder();
 	void welcome();
 	void printOptions();
 	void searchByKey();

@@ -1,22 +1,13 @@
-/*
- * List.h
- *
- *  Created on: Apr 25, 2017
- *      Edited: May 8, 2017
- *      Author: Lucy McLaurin
- *       Class: 22C Spring 2017
- */
-
 #ifndef LIST_H_
 #define LIST_H_
 
 #include <iostream>
 #include <string>
-#include <cstddef> //for NULL
+#include <cstddef>
 #include <assert.h>
 using namespace std;
 
-template <class listdata> // list stores generic list data, not any specific C++ type
+template <class listdata>
 class List {
 private:
     struct Node {
@@ -25,158 +16,44 @@ private:
         Node* previousnode;
         Node(listdata newdata) : data(newdata), nextnode(NULL), previousnode(NULL) {}
     };
-
     typedef struct Node* NodePtr;
-
     NodePtr begin;
     NodePtr end;
     NodePtr iterator;
-
     int length;
-
     void reverse(NodePtr node);
-    //Helper function for the public printReverse() function.
-    //Recursively prints the data in a List in reverse.
-
     bool isSorted(NodePtr node);
-    //Helper function for the public isSorted() function.
-    //Recursively determines whether a list is sorted in ascending order.
-
     int binarySearch(int low, int high, listdata data);
-    //Recursively search the list by dividing the search space in half
-    //Returns the index of the element, if it is found in the List
-    //Returns -1 if the element is not in the List
-
 public:
-
-    /**Constructors and Destructors*/
-
     List();
-    //Default constructor; initializes and empty list
-    //Postcondition: Creates an empty linked list with all pointers set to NULL.
-
     ~List();
-    //Destructor. Frees memory allocated to the list
-    //Postcondition: Deletes the list.
-
     List<listdata>(const List<listdata>&);
-    // Copy constructor: Creates a separate copy of the list.
-
-    /**Accessors*/
-
     listdata getBegin() const;
-    //Returns the first element in the list
-    //Precondition: There must be at least 1 node in the list.
-
     listdata getEnd() const;
-    //Returns the last element in the list
-    //Precondition: There must be at least 1 node in the list.
-
     void beginIterator();
-    // Iterator points to the beginning of the list.
-
     listdata getIterator();
-    // Precondition: iterator != NULL
-    // Returns the data contained in whatever iterator points to.
-
     void advanceIterator();
-    // Precondition: iterator != NULL
-    // Moves the iterator forward 1 node.
-
     void reverseIterator();
-    // Precondition: iterator != NULL
-    // Moves the iterator back 1 node.
-
     bool offEnd();
-    // Tests iterator to see if it's pointing to something.
-
     bool empty() const;
-    //Determines whether a list is empty.
-
     int getLength() const;
-    //Returns the size of the list
-
-    /**Manipulation Procedures*/
-
     void deleteEnd();
-    //Removes the value of the last element in the list
-    //Precondition: There must be at least 1 node in the list.
-    //Postcondition: Last element is deleted; 2nd to last element is the new end.
-
     void deleteBegin();
-    //Removes the value of the first element in the list
-    //Precondition: There must be at least 1 node in the list.
-    //Postcondition: First element deleted, 2nd element is now 1st.
-
     void deleteList();
-
     void insertEnd(listdata data);
-    //Inserts a new element at the end of the list
-    //If the list is empty, the new element becomes both first and last
-    //Postcondition: Insert 1 node at the end of the list. End now points to this new node.
-
     void insertBegin(listdata data);
-    //Inserts a new element at the start of the list
-    //If the list is empty, the new element becomes both first and last
-    //Postcondition: Begin points to the newly created node, and 2nd node is previous 1st.
-
     void insertIterator(listdata data);
-    // Precondition: iterator != NULL
-    // Postcondition: New node inserted after what iterator points to.
-
     void deleteIterator();
-    // Precondition: iterator != NULL
-    // Postcondition: Deletes the node iterator is pointing to, sets iterator to NULL.
-
-    /**Additional List Operations*/
-
     void print() const;
-    //Prints to the console the value of each element in the list sequentially
-    //and separated by a blank space
-    //Prints nothing if the list is empty
-
     void printNumberedList() const;
-    // Prints linked list with #s in front, 1 item per line
-
     List<listdata> operator=(const List &list);
-
     bool operator==(const List &list);
-    // Tests two lists to determine whether their contents are equal
-    // Postcondition: returns true if lists are equal and false otherwise
-
     void printReverse();
-    //Wrapper function that calls the reverse helper function to print a list in reverse
-    //prints nothing if the List is empty
-
     bool isSorted();
-    //Wrapper function that calls the isSorted helper function to determine whether
-    //a list is sorted in ascending order.
-    //We will consider that a list is trivially sorted if it is empty.
-    //Therefore, no precondition is needed for this function
-
     int getIndex();
-    //Indicates the index of the Node where the iterator is currently pointing
-    //Nodes are numbered from 1 to size of the list
-    //Pre: length != 0
-    //Pre: !offEnd()
-
     void advanceToIndex(int index);
-    //Moves the iterator to the node whose index number is specified in the parameter
-    //Pre: length != 0
-    //Pre: index <= length
-
     int linearSearch(listdata data);
-    //Searchs the list, element by element, from the start of the List to the end of the List
-    //Returns the index of the element, if it is found in the List
-    //Calls the above indexing functions in its implementation
-    //Returns -1 if the element is not in the List
-    //Pre: length != 0
-
     int binarySearch(listdata data);
-    //Returns the index where data is located in the List
-    //Calls the private helper function binarySearch to perform the search
-    //Pre: length != 0
-    //Pre: List is sorted (must test on a sorted list)
 };
 
 template <class listdata>
@@ -202,6 +79,8 @@ List<listdata>::~List() {
 template <class listdata>
 void List<listdata>::deleteList()
 {
+	if (length == 0)
+		return;
     NodePtr after = begin;
     NodePtr before;
     while (after != NULL) {
@@ -210,6 +89,7 @@ void List<listdata>::deleteList()
         delete after;
         after = before;
     }
+    length = 0;
 }
 
 // Copy Constructor
@@ -429,8 +309,11 @@ listdata List<listdata>::getBegin() const
 template <class listdata>
 listdata List<listdata>::getEnd() const
 {
-	assert(!empty());
-	return end->data;
+	listdata data;
+	if (length > 0)
+		return end->data;
+	else
+		return data;
 }
 
 template <class listdata>

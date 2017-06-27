@@ -37,6 +37,7 @@ private:
 	bool checkName(string t);
 	bool checkAsin(string t);
 	bool checkMenuOpt();
+	void searchTest();
 public:
 	CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Robot *robot);
 	Order *buildNewOrder();

@@ -118,6 +118,10 @@ bool Robot::operator<(const Robot& robot){
 	return status;
 }
 
+bool Robot::operator!=(const Robot& robot){
+	return (name != robot.name && asin!=robot.asin);
+}
+
 bool Robot::operator>(const Robot& robot)
 {
 	bool status;

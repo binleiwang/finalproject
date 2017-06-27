@@ -6,6 +6,8 @@
 #include <assert.h>
 #include <iomanip>
 #include "Robot.h"
+#include <vector>
+#include "List.h"
 using namespace std;
 
 class NMT {
@@ -34,7 +36,11 @@ private:
     void size(NodePtr root, int& size);
     int height(NodePtr root);
     void printMenu(ostream& out, NodePtr root);
+    void printMiniMenu(ostream &out, NodePtr root);
     Robot findRobot(NodePtr root, string asin);
+    bool smartSearch(NodePtr root, Robot robot);
+    void buildQuery(NodePtr root, string query);
+
 public:
 
     NMT();
@@ -52,8 +58,13 @@ public:
     void removeData(Robot robot);
     void Print(ostream& out);
     void printMenu(ostream& out);
+    void printMiniMenu(ostream& out);
     string getOtherKey(Robot robot);
     Robot getRobot(Robot robot);
     void printItem(ostream& out);
+    bool smartSearch(Robot robot);
+    void buildQuery(Robot robot);
+    List<Robot> queryResult;
+    string capitalize(string s);
 };
 #endif /* NMT_H_ */

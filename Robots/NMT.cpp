@@ -1,8 +1,5 @@
 #include "NMT.h"
 
-/******************************************insertData********************************/
-
-
 void NMT::insertData(Robot robot)
 {
 	if (root==NULL)
@@ -14,7 +11,6 @@ void NMT::insertData(Robot robot)
 		insertData(root, robot);
 	}
 }
-
 
 void NMT::insertData(NodePtr root, Robot robot)
  {
@@ -35,14 +31,8 @@ void NMT::insertData(NodePtr root, Robot robot)
 	}
 }
 
-
-
-/****************************Print functions*******************************/
-
-
-void NMT::Print(ostream& out)
-{
-    Print(out,root);
+void NMT::Print(ostream& out) {
+	Print(out, root);
 }
 
 void NMT::Print(ostream& out, NodePtr root) {
@@ -63,26 +53,20 @@ void NMT::Print(ostream& out, NodePtr root) {
 }
 
 
-void NMT::printMenu(ostream& out)
-{
-	printMenu(out,root);
+void NMT::printMenu(ostream& out) {
+	printMenu(out, root);
 }
 
-void NMT::printMenu(ostream& out, NodePtr root)
-{
-    if(root==NULL)
-    {
-        return;
-    }
-    printMenu(out,root->left);
-    out<<"Name: "<<root->data.get_name()<<endl;
-    out<<"Asin: "<<root->data.get_asin()<<endl;
-    out<<"Purpose: "<<root->data.get_purpose()<<endl << endl;
-    printMenu(out,root->right);
+void NMT::printMenu(ostream& out, NodePtr root) {
+	if (root == NULL) {
+		return;
+	}
+	printMenu(out, root->left);
+	out << "Name: " << root->data.get_name() << endl;
+	out << "Asin: " << root->data.get_asin() << endl;
+	out << "Purpose: " << root->data.get_purpose() << endl << endl;
+	printMenu(out, root->right);
 }
-
-
-/********************************search************************************/
 
 bool NMT::search(Robot robot)
  {
@@ -156,8 +140,6 @@ Robot NMT::findRobot(NodePtr root, string name)
 	}
 }
 
-/****************************************minimum and maximum*************************************/
-
 Robot NMT::minimum()
 {
     assert(!empty());
@@ -177,14 +159,11 @@ Robot NMT::minimum(NodePtr root)
 	}
 }
 
-
-
 Robot NMT::maximum()
 {
     assert(!empty());
     return maximum(root);
 }
-
 
 Robot NMT::maximum(NodePtr root)
  {
@@ -195,10 +174,6 @@ Robot NMT::maximum(NodePtr root)
 	}
 }
 
-
-/*****************************************deletion**********************************/
-
-
 void NMT::removeData(Robot robot)
 {
     if (empty())
@@ -208,7 +183,6 @@ void NMT::removeData(Robot robot)
     else
     	root = deleteData(root, robot);
 }
-
 
 typename NMT::NodePtr NMT::deleteData(NodePtr root, Robot robot)
  {
@@ -239,10 +213,6 @@ typename NMT::NodePtr NMT::deleteData(NodePtr root, Robot robot)
 	return root;
 }
 
-
-
-/**************************************size****************************************/
-
 int NMT::size()
 {
 	int size=0;
@@ -261,10 +231,6 @@ void NMT::size(NodePtr root, int& size)
     }
 }
 
-
-/**********************************height*************************************/
-
-
 int NMT::height()
 {
 	return height(root);
@@ -276,9 +242,6 @@ int NMT::height(NodePtr root)
         return -1;
     return max(height(root->left),height(root->right))+1;
 }
-
-
-/***********************************Constructors and destructors**************************/
 
 NMT::NMT()
 {
@@ -309,12 +272,10 @@ void NMT::makeCopy(NodePtr copy)
     makeCopy(copy->right);
 }
 
-
 NMT::~NMT()
 {
     freeNode(root);
 }
-
 
 void NMT::freeNode(NodePtr root)
 {
@@ -327,9 +288,6 @@ void NMT::freeNode(NodePtr root)
     freeNode(root->right);
     delete N;
 }
-
-
-/****************************************additional access************************************/
 
 bool NMT::empty()
 {
@@ -350,4 +308,75 @@ string NMT::getOtherKey(Robot robot)
 Robot NMT::getRobot(Robot robot)
 {
 	return findRobot(root, robot.get_name());
+}
+
+void NMT::printMiniMenu(ostream& out) {
+	printMiniMenu(out, root);
+}
+
+void NMT::printMiniMenu(ostream& out, NodePtr root) {
+	if (root == NULL) {
+		return;
+	}
+	printMiniMenu(out, root->left);
+	out << "Name: " << root->data.get_name();
+	out << " || ASIN: " << root->data.get_asin() << endl;
+	out << "Purpose: " << root->data.get_purpose() << endl << endl;
+	printMiniMenu(out, root->right);
+}
+
+bool NMT::smartSearch(Robot robot)
+{
+	string query = robot.get_name();
+	cout << "In smartSearch. searching for [" << query << "]\n";
+	return smartSearch(root, robot);
+}
+
+bool NMT::smartSearch(NodePtr root, Robot robot)
+{
+	string query = robot.get_name();
+	string name = root->data.get_name();
+	size_t found = name.find(query);
+	cout << "checking [" << name << "] vs [" << query << "]\n";
+	cout << "Found: " << found << " npos: " << string::npos << endl;
+	if (root->left != NULL)
+		smartSearch(root->left, robot);
+	if (root->right != NULL)
+		smartSearch(root->right, robot);
+	if (found != string::npos) {
+		cout << "in smartSearch, found a match:" << name << endl;
+		return true;
+	}
+	else
+		return false;
+}
+
+void NMT::buildQuery(NodePtr root, string query)
+ {
+	string target = capitalize(query);
+	string name = capitalize(root->data.get_name());
+	size_t found = name.find(target);
+	//cout << "checking [" << name << "] vs [" << target << "]\n";
+	if (root->left != NULL)
+		buildQuery(root->left, query);
+	if (root->right != NULL)
+		buildQuery(root->right, query);
+	if (found != string::npos) {
+		queryResult.insertEnd(root->data);
+		return;
+	}
+	 else
+		 return;
+}
+
+void NMT::buildQuery(Robot robot)
+{
+	buildQuery(root, robot.get_name());
+}
+
+string NMT::capitalize(string s)
+{
+	for (unsigned int i = 0; i < s.length(); i++)
+		s[i] = toupper(s[i]);
+	return s;
 }

@@ -45,15 +45,15 @@ void CustomerInterface::welcome()
 
 void CustomerInterface::printOptions()
 {
-	cout << "1. Search for a product" << endl;
+	cout << "1 - Search for a product" << endl;
 	cout << setw(9) << "    - Find and display one record using the primary key (name)"
 			<< endl;
 	cout << setw(9) << "    - Find and display one record using the secondary key (ASIN - Amazon ID Number)"
 			<< endl;
-	cout << "2. List Database of Products" << endl;
+	cout << "2 - List Database of Products" << endl;
 	cout << setw(9) << "    - List data sorted by primary key" << endl;
 	cout << setw(9) << "    - List data sorted by secondary key" << endl;
-	cout << "5. Quit" << endl << endl;
+	cout << "Q - Quit" << endl << endl;
 }
 
 void CustomerInterface::searchByKey()
@@ -87,10 +87,35 @@ void CustomerInterface::searchByKey()
 			asinbst->printMenu(cout);
 		break;
 	case '1':
-		search();
+		searchTest();
+		//search();
 		break;
 	default:
 		quitShopping();
+	}
+}
+
+void CustomerInterface::searchTest()
+{
+	Robot rTemp;
+	string query;
+	List<Robot> rList;
+	rList.deleteList();
+	namebst->queryResult.deleteList();
+	cout << "Name to search: ";
+	getline(cin, query);
+	rTemp.set_name(query);
+	//namebst->printMiniMenu(cout);
+	namebst->buildQuery(rTemp);
+	rList = namebst->queryResult;
+	if (rList.getLength() > 0)
+		rList.beginIterator();
+	for (int i = 1; i <= rList.getLength(); i++)
+	{
+		rTemp = rList.getIterator();
+		cout << i << ": " << rTemp.get_name() << " || " << rTemp.get_asin() << endl;
+		if (i < rList.getLength())
+			rList.advanceIterator();
 	}
 }
 
@@ -105,6 +130,7 @@ void CustomerInterface::search()
 
 	newOrder = buildNewOrder();
 	do {
+		namebst->printMenu(cout);
 		cout << "Do you want to search for the product by name or asin? ";
 		choice.clear();
 		getline(cin, choice);

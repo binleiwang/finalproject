@@ -132,7 +132,7 @@ ostream& operator<<(ostream& os, Order& O) {
 	os << "Order number: " << O.orderNum << endl;
 	O.cart.beginIterator();
 	for (int i = 0; i < O.cart.getLength(); i++) {
-		os << "Product " << i + 1 << ": " << O.cart.getIterator().get_name() << endl;
+		os << "Item " << i + 1 << ": " << O.cart.getIterator().get_name() << endl;
 		os << "Price: $" << O.cart.getIterator().get_price() << endl;
 		O.cart.advanceIterator();
 	}

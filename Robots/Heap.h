@@ -18,9 +18,6 @@ private:
 	int rightChild(int parent);
 	int parent(int child);
 	void swap(H & a, H & b);
-	void heapIncreaseKey(H & newdata, int i);
-	void heapDecreaseKey(int first, int last);
-	void buildHeap();
 public:
 	Heap();
 	int getSize();
@@ -29,7 +26,9 @@ public:
 	H deleteMax();
 	H deleteOrder(int);
 	void printOrders();
-
+	void buildHeap(); //
+	void heapIncreaseKey(H & newdata, int i); // maxHeapify
+	void heapDecreaseKey(int first, int last); // bubble down?
 };
 template<class H>
 Heap<H>::Heap() {
@@ -111,7 +110,8 @@ H Heap<H>::deleteMax() {
 	order.pop_back();
 	heapDecreaseKey(0, size - 1);
 	--size;
-	buildHeap();
+	//buildHeap(); // TEST
+	heapIncreaseKey(order[size-1], size-1);
 	return temp;
 }
 //This function is used to delete a random Order (which is not processed)
@@ -140,7 +140,7 @@ void Heap<H>::printOrders() {
 		cout << "List is empty";
 	else {
 		for (int i = 0; i < size; i++)
-			cout << order[i] << " ";
+			cout << order[i] << endl;
 	}
 	cout << endl;
 }

@@ -2,7 +2,6 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
-#include "ConsoleColor.h"
 #include "FileIO.h"
 #include "List.h"
 #include "AST.h"
@@ -23,7 +22,6 @@ void goodbye();
 
 int main()
 {
-	//cout << red << "TEST" << yellow << "TEST" << green << "TEST" << blue << "TEST" << "TEST" << white << "TEST" << endl; // no worky
 	welcome();
 	FileIO file;
 	Robot robot;
@@ -109,25 +107,25 @@ void goodbye()
 {
 	cout << "Thank you for shopping at our store." << endl;
 	cout << "Have a great day!!!" << endl << endl;
-	cout << "          ________" << endl;
-	cout << "     _,.-Y  |  |  Y-._" << endl;
-	cout << "    .-~\"   ||  |  |  |   \"-." << endl;
-	cout << "    I\" \"\"==\"|\" !\"\"! \"|\"[]\"\"|     _____" << endl;
-	cout << "    L__  [] |..------|:   _[----I\" .-{\"-." << endl;
-	cout << "   I___|  ..| l______|l_ [__L]_[I_/r(=}=-P" << endl;
-	cout << "  [L______L_[________]______j~  '-=c_]/=-^" << endl;
-	cout << "    \\_I_j.--.\\==I|I==_/.--L_]" << endl;
-	cout << "    [_((==)[`-----\"](==)j" << endl;
-	cout << "    I--I\"~~\"\"\"~~\"I--I" << endl;
-	cout << "    |[]|         |[]|" << endl;
-	cout << "    l__j         l__j" << endl;
-	cout << "    |!!|         |!!|" << endl;
-	cout << "    |..|         |..|" << endl;
-	cout << "    ([])         ([])" << endl;
-	cout << "    ]--[         ]--[" << endl;
-	cout << "    [_L]         [_L]  -Row  (the Ascii-Wizard of Oz)" << endl;
-	cout << "   /|..|\\       /|..|\\" << endl;
-	cout << "  `=}--{='     `=}--{='" << endl;
-	cout << " .-^--r-^-.   .-^--r-^-." << endl;
-	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+//	cout << "          ________" << endl;
+//	cout << "     _,.-Y  |  |  Y-._" << endl;
+//	cout << "    .-~\"   ||  |  |  |   \"-." << endl;
+//	cout << "    I\" \"\"==\"|\" !\"\"! \"|\"[]\"\"|     _____" << endl;
+//	cout << "    L__  [] |..------|:   _[----I\" .-{\"-." << endl;
+//	cout << "   I___|  ..| l______|l_ [__L]_[I_/r(=}=-P" << endl;
+//	cout << "  [L______L_[________]______j~  '-=c_]/=-^" << endl;
+//	cout << "    \\_I_j.--.\\==I|I==_/.--L_]" << endl;
+//	cout << "    [_((==)[`-----\"](==)j" << endl;
+//	cout << "    I--I\"~~\"\"\"~~\"I--I" << endl;
+//	cout << "    |[]|         |[]|" << endl;
+//	cout << "    l__j         l__j" << endl;
+//	cout << "    |!!|         |!!|" << endl;
+//	cout << "    |..|         |..|" << endl;
+//	cout << "    ([])         ([])" << endl;
+//	cout << "    ]--[         ]--[" << endl;
+//	cout << "    [_L]         [_L]  -Row  (the Ascii-Wizard of Oz)" << endl;
+//	cout << "   /|..|\\       /|..|\\" << endl;
+//	cout << "  `=}--{='     `=}--{='" << endl;
+//	cout << " .-^--r-^-.   .-^--r-^-." << endl;
+//	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 }

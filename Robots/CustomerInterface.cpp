@@ -141,40 +141,49 @@ void CustomerInterface::search()
 	namebst->printMiniMenuFormatted(cout);
 	newOrder = buildNewOrder();
 	do {
-
+		Robot *rTemp = new Robot;
 		cout << "Do you want to search for the product by name or ASIN (ID#)? ";
 		choice.clear();
 		getline(cin, choice);
-		Robot *rTemp = new Robot;
-		if (checkName(choice)) {
-			cout << "Please enter a name to search for: ";
-			name.clear();
-			getline(cin, name);
 
-			rTemp->set_name(name);
-			//status = namebst->search(*rTemp);
-			if (status)
-				*rTemp = namebst->getRobot(*rTemp);
-		} else if (checkAsin(choice)) {
-			cout << "Please enter ASIN number of the robot: ";
-			getAsinInput();
-			rTemp->set_asin(number);
-			status = asinbst->search(*rTemp);
-			if (status)
-				*rTemp = namebst->getRobot(*rTemp);
+		 while (!checkName(choice) && !checkAsin(choice))
+		{
+			 cout << "There was a problem with your input...\n";
+			 cout << "Type ASIN or name: ";
+			 getline(cin, choice);
 		}
+			if (checkName(choice)) {
+				cout << "Please enter a name to search for: ";
+				name.clear();
+				getline(cin, name);
+				rTemp->set_name(name);
+				status = namebst->search(*rTemp);
+				if (status)
+				*rTemp = namebst->getRobot(*rTemp);
+			} else if (checkAsin(choice)) {
+				cout << "Please enter ASIN number of the robot: ";
+				getAsinInput();
+				rTemp->set_asin(number);
+				status = asinbst->search(*rTemp);
+				if (status)
+				{
+					name = asinbst->getOtherKey(*rTemp);
+					rTemp->set_name(name);
+					*rTemp = namebst->getRobot(*rTemp);
+				}
 
+			}
 		if (status == true) {
 			cout << *rTemp;
-			cout << "\nDo you want to purchase this product? ";
+			cout << "Do you want to purchase this product? ";
 			getline(cin, choice);
 
 			if (choice == "yes") {
 				//call function in Heap to add robot to the priority queue
 				*rTemp = namebst->getRobot(*rTemp);
-				cout << "adding a robot to newOrder.\n";
+				cout << "Adding " << rTemp->get_name() << " to your order.\n";
 				newOrder->addRobot(*rTemp);
-// update QTY of robot!!
+				// update QTY of robot!!
 			} else
 				cout << "The product wasn't added to your order." << endl
 						<< endl;
@@ -183,7 +192,7 @@ void CustomerInterface::search()
 					<< endl;
 		}
 
-		cout << "Do you want to search another product? ";
+		cout << "Do you want to search for another product? ";
 		getline(cin, choice);
 
 	} while (choice == "yes" || choice == "Yes");

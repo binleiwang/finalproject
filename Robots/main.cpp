@@ -26,7 +26,7 @@ bool quitProgram(string input);
 
 int main()
 {
-	cout << "Hi\n";
+	cout << "Test\n";
 	FileIO file;
 	Robot robot;
 	NMT nameTree;

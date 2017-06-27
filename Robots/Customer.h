@@ -37,7 +37,6 @@ public:
     string getCity() const;
     string getState() const;
     int getZip() const;
-    string getEmail() const;
     
     //manipulation procedures
     void setFirst(string);
@@ -46,7 +45,6 @@ public:
     void setCity(string);
     void setState(string);
     void setZip(int);
-    void setEmail(string);
     void insertOrder(Order o);
     
     //additional functions

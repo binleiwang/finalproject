@@ -9,6 +9,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include "Order.h"
 #include "FileIO.h"
 #include "Robot.h"
 #include "AST.h"
@@ -20,18 +21,22 @@
 
 using namespace std;
 
-CustomerInterface::CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Customer *c, Robot *robot)
+static int orderNum = 1000;
+
+CustomerInterface::CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Robot *robot)
 {
 	namebst = bst1;
 	asinbst = bst2;
 	table = hash;
 	heap = heap1;
 	newOrder = new Order;
-	customer = c;
+	customer = NULL;
 	choice = "";
 	menuNum = 0;
+	menuOpt = 'z';
 	number = "";
-}
+	temp = "";
+} // need REF to newOrder (Order *)
 
 void CustomerInterface::welcome() 
 {
@@ -41,46 +46,33 @@ void CustomerInterface::welcome()
 void CustomerInterface::printOptions()
 {
 	cout << "1. Search for a product" << endl;
-	cout << setw(9) << "-Find and display one record using the primary key"
+	cout << setw(9) << "    - Find and display one record using the primary key (name)"
 			<< endl;
-	cout << setw(9) << "-Find and display one record using the secondary key"
+	cout << setw(9) << "    - Find and display one record using the secondary key (ASIN - Amazon ID Number)"
 			<< endl;
 	cout << "2. List Database of Products" << endl;
-	cout << setw(9) << "-List data sorted by primary key" << endl;
-	cout << setw(9) << "-List data sorted by secondary key" << endl;
-	cout << "3. Place an Order" << endl;
-	cout << setw(9) << "-Overnight Shipping" << endl;
-	cout << setw(9) << "-Rush Shipping" << endl;
-	cout << setw(9) << "-Standard Shipping" << endl;
-	cout << "4. View Purchases" << endl;
-	cout << setw(9) << "Determine whether or not an order has shipped" << endl;
+	cout << setw(9) << "    - List data sorted by primary key" << endl;
+	cout << setw(9) << "    - List data sorted by secondary key" << endl;
 	cout << "5. Quit" << endl << endl;
 }
 
 void CustomerInterface::searchByKey()
 {
-	cout << "Please choose an option between 1 and 5 in the menu: ";
+	cout << "Please choose option 1, 2, or Q to quit: ";
 	promptUserInput();
-	while(menuNum < 1 || menuNum > 5){
+	while(!checkMenuOpt()){
 		cout << "Invalid choice." << endl;
-		cout << "Only choose between 1 and 5. Enter again: ";
+		cout << "Please choose option 1, 2, or Q to quit: ";
 		promptUserInput();
 	}
 
-	switch (menuNum)
+	switch (menuOpt)
 	{
-	case 5:
+	case 'Q':
+	case 'q':
 		quitShopping();
 		break;
-	case 4:
-		viewPurchase();
-		break;
-	case 3:
-		cout << "Please chose a product first." << endl;
-		cout << "Please chose option 1 or 2 from the menu: ";
-		searchByKey();
-		break;
-	case 2:
+	case '2':
 		cout << "\nDo you want to see list of robots by name or by asin? ";
 		choice.clear();
 		getline(cin, choice);
@@ -94,31 +86,30 @@ void CustomerInterface::searchByKey()
 		 else if (choice == "asin")
 			asinbst->printMenu(cout);
 		break;
-	case 1:
+	case '1':
 		search();
 		break;
 	default:
 		quitShopping();
-	} // end switch
+	}
 }
 
 void CustomerInterface::search()
-{
+ {
 	bool status = false;
 	string answer;
 	string purchase;
-	char option;
-	string temp;
+	//char option;
 	string choice;
 	string name;
+
 	newOrder = buildNewOrder();
 	do {
 		cout << "Do you want to search for the product by name or asin? ";
 		choice.clear();
 		getline(cin, choice);
 		Robot *rTemp = new Robot;
-		if (checkName(choice))
-		{
+		if (checkName(choice)) {
 			cout << "Please enter name of the robot: ";
 			name.clear();
 			getline(cin, name);
@@ -127,9 +118,7 @@ void CustomerInterface::search()
 			status = namebst->search(*rTemp);
 			if (status)
 				*rTemp = namebst->getRobot(*rTemp);
-		} 
-		else if (checkAsin(choice))
-		{
+		} else if (checkAsin(choice)) {
 			cout << "Please enter asin number of the robot: ";
 			getAsinInput();
 			rTemp->set_asin(number);
@@ -138,36 +127,23 @@ void CustomerInterface::search()
 				*rTemp = namebst->getRobot(*rTemp);
 		}
 
-		if (status == true) 
-		{
+		if (status == true) {
 			cout << *rTemp;
 			cout << "\nDo you want to purchase this product? ";
 			getline(cin, purchase);
 
-			if (purchase == "yes") 
-			{
+			if (purchase == "yes") {
 				//call function in Heap to add robot to the priority queue
 				*rTemp = namebst->getRobot(*rTemp);
 				cout << "adding a robot to newOrder.\n";
 				newOrder->addRobot(*rTemp);
-				cout << "The product is your added to your order list." << endl << endl;
-				cout << "Chose your shipping method:" << endl;
-				cout << "O - Over night ($10.99)" << endl;
-				cout << "R - Rush ($6.99)" << endl;
-				cout << "S - Standard ($3.99)" << endl;
-				getline(cin, temp);
-				option = temp.c_str()[0];
-				//call function in Heap to set method option
-				newOrder->setPriorityVal(option);
-				cout << endl << endl;
-				// if / else: if the options are equal, call time functon
-			}
-			else
-				cout << "The product wasn't added to your order." << endl << endl;
-		}
-		else 
-		{
-			cout << "We currently do not have this product in our store. " << endl;
+// update QTY of robot!!
+			} else
+				cout << "The product wasn't added to your order." << endl
+						<< endl;
+		} else {
+			cout << "We currently do not have this product in our store. "
+					<< endl;
 		}
 
 		cout << "Do you want to search another product? ";
@@ -175,110 +151,99 @@ void CustomerInterface::search()
 
 	} while (answer == "yes" || answer == "Yes");
 
-	if (answer == "no" || answer == "NO")
-	{
-		cout << "SIZE: " << newOrder->getSize() << "\n";
-		if (newOrder->getSize() == 0)
-		{
-			cout << "newOrder has size 0!\n";
-			return;
+	if (answer == "no" || answer == "NO") {
+		newOrder->setTotal();
+		newOrder->setDate();
+		newOrder->displayTime(newOrder->getDate());
+		cout << "The product is your added to your order list." << endl << endl;
+		cout << "Chose your shipping method:" << endl;
+		cout << "    O - Over night ($10.99)" << endl;
+		cout << "    R - Rush ($6.99)" << endl;
+		cout << "    S - Standard ($3.99)" << endl;
+		getline(cin, temp);
+		while (!checkShippingMethod()) {
+			cout << "There was an error with your input; you only have these options:\n";
+			cout << "    O - Over night ($10.99)" << endl;
+			cout << "    R - Rush ($6.99)" << endl;
+			cout << "    S - Standard ($3.99)" << endl;
+			getline(cin, temp);
 		}
-		else
-		{
+		newOrder->setOption(temp.c_str()[0]);
+		//call function in Heap to set method option
+		newOrder->setPriorityVal(temp.c_str()[0]);
+		cout << endl << endl;
+		orderNum++;
+		newOrder->setOrderNum(orderNum);
+		// if / else: if the options are equal, call time functon
+		if (newOrder->getSize() == 0) {
+			cout << "PROBLEM: newOrder has size 0!\n";
+			return;
+		} else {
 			placeOrder();
 			viewPurchase();
 		}
 	}
 
-
-	//call function in Heap to add order
 	heap->insert(*newOrder);
+	cout << "Inserting Order #" << newOrder->getOrderNum() << ". Heap size: " << heap->getSize() << endl;
+	if (heap->getSize() > 1)
+		heap->heapIncreaseKey(*newOrder, heap->getSize()-1); // doesn't work yet
 	cout << endl << endl;
 }
 
-void CustomerInterface::placeOrder() // Order *
+void CustomerInterface::placeOrder()
 {
 	string firstname, lastname, email;
 	string address, city, state;
 	string temp;
 	int zip;
-
-	//cout << "Here is you order list: " << endl;
-	//call function in Order.h to display the order list
-
+	customer = new Customer;
 	cout << "Please enter your purchase information: " << endl;
 	cout << "First name: ";
 	getline(cin, firstname);
-	cout << "\nLast name: ";
+	cout << "Last name: ";
 	getline(cin, lastname);
 	customer->setFirst(firstname);
 	customer->setLast(lastname);
 	cout << "Street address: ";
 	getline(cin, address);
 	customer->setAddress(address);
-	cout << "\nCity: ";
+	cout << "City: ";
 	getline(cin, city);
 	customer->setCity(city);
-	cout << "\nState: ";
+	cout << "State: ";
 	getline(cin, state);
 	customer->setState(state);
-	cout << "\nZip: ";
+	cout << "Zip: ";
 	getline(cin, temp);
 	zip = atoi(temp.c_str());
 	customer->setZip(zip);
-	cout << "Email: ";
-	getline(cin, email);
-	customer->setEmail(email);
-	//call function in HashTable to add customer info
+
 	table->insertData(*customer);
 	Order o;
 	o = *newOrder;
 	customer->insertOrder(o);
 
-	//orders = customer->getOrders();  // PROBLEM HERE
-	List<Order> newOrdersList(customer->getOrders());
-	newOrdersList.beginIterator();
-	for (int i = 0; i < newOrdersList.getLength(); i++)
-	{
-		cout << "In CustomerInterface, printing an order list:\n";
-		o = newOrdersList.getIterator();
-		cout << o << endl;
-		if (i < newOrdersList.getLength() - 1)
-			newOrdersList.advanceIterator();
-	}
-//	cout << "PRINTING ORDERS\n";
-//	Order tempO;
-//	orders.beginIterator();
-//
-//	for (int i = 0; i < orders.getLength(); i++)
-//	{
-//		cout << "In CUST INT printing...\n";
-//		tempO = orders.getIterator();
-//		cout << "I would print here.\n";
-//		cout << tempO;
-//		cout << endl;
-//		if (i < orders.getLength() - 1)
-//			orders.advanceIterator();
-//	}
-
+	orders = customer->getOrders();
 }
 void CustomerInterface::viewPurchase() {
+	Order oTemp;
+	cout << "Viewing Purchase:\n";
 	if (orders.getLength() > 0)
-		cout << "there is an order\n";
+		printOrders();
 	else
 		cout << "You haven't yet made a purchase.\n";
 }
 
 void CustomerInterface::quitShopping() {
-	if (newOrder->getSize() > 0)
-		cout << "The receipt is sent to " << customer->getEmail() << endl;
 	cout << "Exiting the customer interface.\n";
 }
 
 void CustomerInterface::promptUserInput()
 {
 	getline(cin, choice);
-	menuNum = atoi(choice.c_str());
+	//menuNum = atoi(choice.c_str());
+	menuOpt = (choice.c_str()[0]);
 }
 
 void CustomerInterface::getAsinInput()
@@ -305,7 +270,36 @@ bool CustomerInterface::checkAsin(string t)
 	return t == "A" || t == "ASIN";
 }
 
+bool CustomerInterface::checkMenuOpt()
+{
+	if (menuOpt != '1' && menuOpt != '2' && menuOpt != 'q' && menuOpt != 'Q')
+		return false;
+	return true;
+}
+
 Order *CustomerInterface::buildNewOrder()
 {
 	return new Order;
+}
+
+void CustomerInterface::printOrders()
+{
+	Order tempO;
+	orders.beginIterator();
+
+	for (int i = 0; i < orders.getLength(); i++)
+	{
+		tempO = orders.getIterator();
+		cout << tempO;
+		cout << endl;
+		if (i < orders.getLength() - 1)
+			orders.advanceIterator();
+	}
+}
+
+bool CustomerInterface::checkShippingMethod()
+{
+	if (temp != "O" && temp != "o" && temp != "S" && temp != "s" && temp != "R" && temp != "r")
+		return false;
+	return true;
 }

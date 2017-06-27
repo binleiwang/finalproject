@@ -27,15 +27,18 @@ private:
 	AST *asinbst;
 	HashTable *table;
 	Heap<Order> *heap;
-	Order *newOrder;
 	Customer *customer;
 	string choice, number;
 	List<Order> orders;
 	int menuNum;
+	char menuOpt;
+	string temp;
+	Order *newOrder;
 	bool checkName(string t);
 	bool checkAsin(string t);
+	bool checkMenuOpt();
 public:
-	CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Customer *customer, Robot *robot);
+	CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Robot *robot);
 	Order *buildNewOrder();
 	void welcome();
 	void printOptions();
@@ -46,6 +49,8 @@ public:
 	void quitShopping();
 	void promptUserInput();
 	void getAsinInput();
+	void printOrders();
+	bool checkShippingMethod();
 };
 
 #endif /* CUSTOMERINTERFACE_H_ */

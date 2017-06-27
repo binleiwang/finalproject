@@ -17,7 +17,6 @@ Customer::Customer()
     city = "";
     state = "";
     zip = 0;
-    email = "";
 }
 
 void Customer::setFirst(string s)
@@ -50,11 +49,6 @@ void Customer::setZip(int i)
     zip = i;
 }
 
-void Customer::setEmail(string info)
-{
-    email = info;
-}
-
 string Customer::getFirst() const
 {
     return first_name;
@@ -84,11 +78,6 @@ int Customer::getZip() const
 {
     return zip;
 }
-
-string Customer::getEmail() const
-{
-    return first_name;
-}
     
 bool Customer::operator ==(const Customer& c)
 {
@@ -107,14 +96,11 @@ ostream &operator <<(ostream &os, const Customer& c)
 
 void Customer::insertOrder(Order o)
 {
-	cout << "In Customer, inserting an order...\n";
-	cout << o;
-	orders.insertEnd(o); // problem here
+	orders.insertEnd(o);
 }
 
 List<Order> Customer::getOrders()
 {
-	cout << "In Customer::getOrders.\n";
 	return orders;
 }
 //Lack of getter and setter for ORDERS

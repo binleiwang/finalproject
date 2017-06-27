@@ -84,17 +84,28 @@ void AST::printMenu(ostream& out, NodePtr root)
 
 /********************************search************************************/
 
-void AST::printItem()
+void AST::printItem(NodePtr root, ostream &out)
 {
-	cout << "Name: " << root->data.get_name() << endl;
-	cout << "Asin: " << root->data.get_asin() << endl;
-	cout << "Price: " << root->data.get_price() << endl;
-	cout << "Manufacture: " << root->data.get_manufacture() << endl;
-	cout << "Purpose: " << root->data.get_purpose() << endl;
-	cout << "User: " << root->data.get_user() << endl;
-	cout << "Weight: " << root->data.get_weight() << endl;
-	cout << "Rating: " << root->data.get_rating() << endl;
-	cout << "Quantity: " << root->data.get_quantity() << endl << endl;
+	if (root == NULL)
+		return;
+	printItem(root->left, out);
+	out << "-------------------------------------------\n";
+	out << "Name: " << root->data.get_name() << endl;
+	out << "Asin: " << root->data.get_asin() << endl;
+	out << "Price: " << root->data.get_price() << endl;
+	out << "Manufacture: " << root->data.get_manufacture() << endl;
+	out << "Purpose: " << root->data.get_purpose() << endl;
+	out << "User: " << root->data.get_user() << endl;
+	out << "Weight: " << root->data.get_weight() << endl;
+	out << "Rating: " << root->data.get_rating() << endl;
+	out << "Quantity: " << root->data.get_quantity() << endl;
+	out << "-------------------------------------------\n";
+	printItem(root->right, out);
+}
+
+void AST::printItem(ostream &out)
+{
+	printItem(root, out);
 }
 
 bool AST::search(Robot robot)

@@ -41,6 +41,7 @@ private:
     int height(NodePtr root);
     void printMenu(ostream& out, NodePtr root);
     Robot findRobot(NodePtr root, string asin);
+    void printItem(NodePtr root, ostream &out);
 public:
 
     AST();
@@ -60,6 +61,6 @@ public:
     void printMenu(ostream& out);
     string getOtherKey(Robot robot);
     Robot getRobot(Robot robot);
-    void printItem();
+    void printItem(ostream &out);
 };
 #endif /* AST_H_ */

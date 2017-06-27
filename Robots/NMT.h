@@ -1,16 +1,5 @@
-/*
- * NMT.h
- *
- *  Created on: Jun 25, 2017
- *      Author: Lucy
- */
-
 #ifndef NMT_H_
 #define NMT_H_
-/**
- * Binlei Wang
- * CIS 22C, Lab 7
- */
 #include <cstddef>
 #include <iostream>
 #include <cstdlib>
@@ -33,6 +22,7 @@ private:
 
     NodePtr root;
     void insertData(NodePtr root, Robot robot);
+    void printItem(NodePtr root, ostream &out);
     void Print(ostream& out, NodePtr root);
     void makeCopy(NodePtr copy);
     void freeNode(NodePtr root);
@@ -64,6 +54,6 @@ public:
     void printMenu(ostream& out);
     string getOtherKey(Robot robot);
     Robot getRobot(Robot robot);
-    void printItem();
+    void printItem(ostream& out);
 };
 #endif /* NMT_H_ */

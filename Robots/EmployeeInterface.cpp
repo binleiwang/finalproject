@@ -1,9 +1,3 @@
-/*
- * EmployeeInterface.cpp
- *
- *  Created on: Jun 24, 2017
- *      Author: My Nguyen
- */
 #include "CustomerInterface.h"
 #include "EmployeeInterface.h"
 #include <iostream>
@@ -80,7 +74,7 @@ void EmployeeInterface::employeeRights()
 	do {
 		//display menu
 		menu();
-		
+
 		cout << "Please chose an option between 1 and 6: ";
 		getline(cin, answer);
 		menuNum = atoi(answer.c_str());

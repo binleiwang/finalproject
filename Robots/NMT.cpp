@@ -319,9 +319,9 @@ void NMT::printMiniMenu(ostream& out, NodePtr root) {
 		return;
 	}
 	printMiniMenu(out, root->left);
-	out << "Name: " << root->data.get_name();
-	out << " || ASIN: " << root->data.get_asin() << endl;
-	out << "Purpose: " << root->data.get_purpose() << endl << endl;
+	out << setw(30) << root->data.get_name();
+	out << " || " << root->data.get_asin() << endl;
+	//out << "Purpose: " << root->data.get_purpose() << endl << endl;
 	printMiniMenu(out, root->right);
 }
 

@@ -102,20 +102,32 @@ void CustomerInterface::searchTest()
 	List<Robot> rList;
 	rList.deleteList();
 	namebst->queryResult.deleteList();
+	cout << "_______________________Shortlist of Robots_______________________\n";
+	cout << "_________Name______________________________________ASIN__________\n";
+	namebst->printMiniMenu(cout);
+	cout << "_________________________________________________________________\n";
 	cout << "Name to search: ";
 	getline(cin, query);
 	rTemp.set_name(query);
-	//namebst->printMiniMenu(cout);
+
 	namebst->buildQuery(rTemp);
 	rList = namebst->queryResult;
-	if (rList.getLength() > 0)
-		rList.beginIterator();
-	for (int i = 1; i <= rList.getLength(); i++)
+	printRobotList(rList);
+}
+
+void CustomerInterface::printRobotList(List<Robot> items)
+{
+	Robot rTemp;
+	if (items.getLength() > 0)
+		items.beginIterator();
+	else
+		cout << "Sorry, nothing was found.\n";
+	for (int i = 1; i <= items.getLength(); i++)
 	{
-		rTemp = rList.getIterator();
+		rTemp = items.getIterator();
 		cout << i << ": " << rTemp.get_name() << " || " << rTemp.get_asin() << endl;
-		if (i < rList.getLength())
-			rList.advanceIterator();
+		if (i < items.getLength())
+			items.advanceIterator();
 	}
 }
 

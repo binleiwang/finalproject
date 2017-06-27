@@ -52,6 +52,7 @@ public:
 	void getAsinInput();
 	void printOrders();
 	bool checkShippingMethod();
+	void printRobotList(List<Robot> items);
 };
 
 #endif /* CUSTOMERINTERFACE_H_ */

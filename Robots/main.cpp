@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
-//#include "ColorConsole.h"
+#include "ConsoleColor.h"
 #include "FileIO.h"
 #include "List.h"
 #include "AST.h"
@@ -17,12 +17,13 @@ using namespace std;
 bool isCustomer(string input);
 bool isEmployee(string input);
 bool quitProgram(string input);
-void printRobotAscii();
 void printMenuInstructions();
 void welcome();
+void goodbye();
 
 int main()
 {
+	//cout << red << "TEST" << yellow << "TEST" << green << "TEST" << blue << "TEST" << "TEST" << white << "TEST" << endl; // no worky
 	welcome();
 	FileIO file;
 	Robot robot;
@@ -36,14 +37,8 @@ int main()
 	CustomerInterface c(&nameTree, &asinTree, &customers, &orders, &robot);
 	EmployeeInterface e(&orders, &nameTree, &asinTree);
 
-	// when you search for an item,
-	// it prints to screen 2 times, once for each tree (or it did before i removed the code)
-	// i moved print to its own function, but it wont work within th eBST class.
-	// *** use a robot print function
-	// *  cout << r;
 	printMenuInstructions();
 	getline(cin, input);
-
 	while (!quitProgram(input))
 	{
 		if (isCustomer(input))
@@ -64,18 +59,13 @@ int main()
 		printMenuInstructions();
 		input.clear();
 		getline(cin, input);
-		// if q
-		// write output file.
 		if (input == "q" || input == "Q")
 		{
 			cout << "Writing data to outputFile.txt.\n";
 			file.writeToFile(&nameTree, &asinTree, &customers);
 		}
 	}
-// exit msg?
-	cout << "Thank you for shopping at our store." << endl;
-	cout << "Have a great day!!!" << endl << endl;
-	printRobotAscii();
+	goodbye();
 	return 0;
 }
 
@@ -115,8 +105,10 @@ void printMenuInstructions()
 	cout << "Please type C for customer, E for employee, or type Q to quit.\n";
 }
 
-void printRobotAscii()
+void goodbye()
 {
+	cout << "Thank you for shopping at our store." << endl;
+	cout << "Have a great day!!!" << endl << endl;
 	cout << "          ________" << endl;
 	cout << "     _,.-Y  |  |  Y-._" << endl;
 	cout << "    .-~\"   ||  |  |  |   \"-." << endl;

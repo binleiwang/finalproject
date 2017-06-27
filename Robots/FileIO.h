@@ -14,6 +14,7 @@
 #include "Robot.h"
 #include "AST.h"
 #include "NMT.h"
+#include "HashTable.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ private:
 public:
 	FileIO();
 	void readFromFile(Robot *robot, NMT *bst1,  AST *bst2);
-
+	void writeToFile(NMT *bst1, AST *bst2, HashTable *table);
 };
 
 #endif /* FILEIO_H_ */

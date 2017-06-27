@@ -10,6 +10,7 @@
 
 #include <string>
 #include <ostream>
+#include <ctime>
 
 using namespace std;
 

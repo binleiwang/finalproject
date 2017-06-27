@@ -63,9 +63,24 @@ void FileIO::readFromFile(Robot *robot, NMT *bst1, AST *bst2)
 
 		getline(inputFile, empty);
 
-		// temporary until we get new BST functions
 		bst1->insertData(*robot);
-		//bst1->PriInsert(robot);
 		bst2->insertData(*robot);
 	}
+}
+
+void FileIO::writeToFile(NMT *bst1, AST *bst2, HashTable *table)
+{
+	ofstream outputFile;
+	outputFile.open(outfileName.c_str());
+	outputFile << "List of robots sorted by name:\n";
+	bst1->printItem(outputFile);
+	outputFile << endl;
+
+	outputFile << "List of robots sorted by ASIN:\n";
+	bst2->printItem(outputFile);
+	outputFile << endl;
+
+	outputFile << "Information of all the customers:\n";
+	table->printTable(outputFile);
+
 }

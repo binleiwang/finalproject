@@ -134,11 +134,8 @@ void EmployeeInterface::employeeRights()
 void EmployeeInterface::viewOrders()
 {
 	cout << "Printing orders:\n";
+	//heap->buildHeap(); // no worky
 	heap->printOrders();
-
-		// temp until print is added
-		//orders->at(i).print(); // need a way to print an order, either << or print()in Order.h
-		//print all order in the Heap
 }
 
 void EmployeeInterface::shipOrder()
@@ -147,7 +144,9 @@ void EmployeeInterface::shipOrder()
 		cout << "Unable to ship an order, because there are no orders!\n";
 	else
 	{
-		cout << "Shipping order...\n";
+		cout << "Shipping order: \n";
+		heap->showOrder(0);
+		cout << endl << "The order has been shipped!\n";
 		heap->deleteMax();
 	}
 
@@ -161,13 +160,13 @@ void EmployeeInterface::shipOrder()
 void EmployeeInterface::listRobotsName()
 {
 	cout << "Current inventory, by name:\n\n";
-	//display the robot tree by name
+	nameTree->printMenu(cout);
 }
 
 void EmployeeInterface::listRobotsAsin()
 {
 	cout << "Current inventory, by ASIN:\n\n";
-	//display the robot tree by asin
+	asinTree->printMenu(cout);
 }
 
 void EmployeeInterface::addNewRobot()
@@ -179,50 +178,40 @@ void EmployeeInterface::addNewRobot()
 	cout << "Name: ";
 	getline(cin, temp);
 	rNew->set_name(temp);
-	//temp.erase();
 	cout << ".";
 
 	cout << "ASIN (like an ID number): ";
 	getline(cin, temp);
 	rNew->set_asin(temp);
-	//temp.erase();
 
 	cout << "Price (in USD): ";
 	getline(cin, temp);
-	rNew->set_price(atof(temp.c_str())); // uses stdlib.h to convert str to double
-	//temp.erase();
+	rNew->set_price(atof(temp.c_str()));
 
 	cout << "Manufacturer: ";
 	getline(cin, temp);
 	rNew->set_manufacture(temp);
-	//temp.erase();
 
 	cout << "Purpose of this robot: \n";
 	getline(cin, temp);
 	rNew->set_purpose(temp);
-	//temp.erase();
 
 
 	cout << "Who is the intended audience of this robot?\n";
 	cout << "ex: everyone, adults, children\n";
 	getline(cin, temp);
 	rNew->set_user(temp);
-	//temp.erase();
 
 	cout << "Weight (lbs): ";
 	getline(cin, temp);
 	rNew->set_weight(atof(temp.c_str()));
-	//temp.erase();
 
 	cout << "Average User Rating (0-5): ";
 	getline(cin, temp);
 	rNew->set_rating(atoi(temp.c_str()));
-	//temp.erase();
 
 	cout << "Inserting " << rNew->get_name() << "...\n";
-	//insert in the name tree
 	nameTree->insertData(*rNew);
-	//insert in the asin tree
 	asinTree->insertData(*rNew);
 }
 
@@ -238,7 +227,7 @@ void EmployeeInterface::removeRobot()
 	{
 		temp.erase();
 		cout << "There was an error with your input...\n";
-		cout << "Please enter name, n, asin, or a: \n";
+		cout << "Please enter name, n, asin, or a: ";
 		getline(cin, temp);
 	}
 	bool byName = checkName(temp);
@@ -252,14 +241,6 @@ void EmployeeInterface::removeRobot()
 		cout << "Please enter the name of the robot you wish to delete:\n";
 		getline(cin, tName);
 		rTemp.set_name(tName);
-		// *** Need a way to get the corresponding ASIN from BST
-		//     so we can delete it from the ASIN tree also.
-		// ex: possible BST function, unique to robot object:
-		//       string BST::getKey(string t)
-		//       searches BST name and ASIN for a match,
-		//          if name is found, return its ASIN
-		//          if ASIN is found, return its name
-		// ***      else return some dummy value (null).
 		if (nameTree->search(rTemp))
 		{
 			tASIN = nameTree->getOtherKey(rTemp);

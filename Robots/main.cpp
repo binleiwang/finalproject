@@ -1,10 +1,3 @@
-/*
- * main.cpp
- *
- *  Created on: Jun 18, 2017
- *      Author: Lucy
- */
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -26,19 +19,17 @@ bool quitProgram(string input);
 
 int main()
 {
-	cout << "Test\n";
+	cout << "Hi\n";
 	FileIO file;
 	Robot robot;
 	NMT nameTree;
 	AST asinTree;
 	Heap<Order> orders;
 	HashTable customers;
-	Order singleOrder;
-	Customer singleCustomer;
 	string input = "x";
 
 	file.readFromFile(&robot, &nameTree, &asinTree);
-	CustomerInterface c(&nameTree, &asinTree, &customers, &orders, &singleCustomer, &robot);
+	CustomerInterface c(&nameTree, &asinTree, &customers, &orders, &robot);
 	EmployeeInterface e(&orders, &nameTree, &asinTree);
 
 	// when you search for an item,
@@ -69,6 +60,13 @@ int main()
 		cout << "Please type C for customer, or E for employee, or type Q to quit.\n";
 		input.clear();
 		getline(cin, input);
+		// if q
+		// write output file.
+		if (input == "q" || input == "Q")
+		{
+			cout << "Writing data to outputFile.txt.\n";
+			file.writeToFile(&nameTree, &asinTree, &customers);
+		}
 	}
 // exit msg?
 	cout << "Thank you for shopping at our store." << endl;

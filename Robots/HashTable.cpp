@@ -59,17 +59,11 @@ void HashTable::printBucket(int index)
     Table[index].print();
 }
 
-void HashTable::printTable(ostream& out)
+void HashTable::printTable(ostream &out)
 {
     for(int i = 0; i < SIZE; i++)
     {
-        if(Table[i].empty())
-        {
-            out << "Bucket: " << i << endl;
-            out << "Number of customers at this bucket: " << countBucket(i) << endl;
-            out << "__________________________________" << endl << endl;
-        }
-        else
+        if(!Table[i].empty())
         {
             out << "Bucket: " << i << endl;
             out << Table[i].getBegin();

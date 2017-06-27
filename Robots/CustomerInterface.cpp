@@ -1,350 +1,392 @@
-/*
- * UserInterface.cpp
- *
- *  Created on: Jun 18, 2017
- *      Author: My Nguyen
- */
-#include "CustomerInterface.h"
-
-#include <iostream>
-#include <cstdlib>
-#include <string>
-#include "Order.h"
-#include "FileIO.h"
-#include "Robot.h"
-#include "AST.h"
 #include "NMT.h"
-#include "HashTable.h"
-#include "Customer.h"
-#include "Heap.h"
-#include <cmath>
 
-using namespace std;
-
-static int orderNum = 1000;
-
-CustomerInterface::CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Robot *robot)
+void NMT::insertData(Robot robot)
 {
-	namebst = bst1;
-	asinbst = bst2;
-	table = hash;
-	heap = heap1;
-	newOrder = new Order;
-	customer = NULL;
-	choice = "";
-	menuNum = 0;
-	menuOpt = 'z';
-	number = "";
-	temp = "";
-} // need REF to newOrder (Order *)
-
-void CustomerInterface::welcome() 
-{
-	cout << "Welcome to our robot store!  " << endl << endl;
-}
-
-void CustomerInterface::printOptions()
-{
-	cout << "1 - Search for a product" << endl;
-	cout << setw(9) << "    - Find and display one record using the primary key (name)"
-			<< endl;
-	cout << setw(9) << "    - Find and display one record using the secondary key (ASIN - Amazon ID Number)"
-			<< endl;
-	cout << "2 - List Full Product Details" << endl;
-	cout << setw(9) << "    - List data sorted by primary key" << endl;
-	cout << setw(9) << "    - List data sorted by secondary key" << endl;
-	cout << "3 - List Mini Product Menu" << endl;
-	cout << "Q - Quit" << endl << endl;
-}
-
-void CustomerInterface::searchByKey()
-{
-	cout << "Please choose option 1, 2, 3 or Q to quit: ";
-	promptUserInput();
-	while(!checkMenuOpt()){
-		cout << "Invalid choice." << endl;
-		cout << "Please choose option 1, 2, 3 or Q to quit: ";
-		promptUserInput();
-	}
-
-	switch (menuOpt)
+	if (root==NULL)
 	{
-	case 'Q':
-	case 'q':
-		quitShopping();
-		break;
-	case '3':
-		namebst->printMiniMenuFormatted(cout);
-		break;
-	case '2':
-		cout << "\nDo you want to see list of robots by name or by ASIN? ";
-		choice.clear();
-		getline(cin, choice);
-		while(!checkName(choice) && !checkAsin(choice)){
-			cout << "Invalid entry or typo. Please try again (name or ASIN): ";
-			choice.clear();
-			getline(cin, choice);
-		}
-		if(checkName(choice))
-			namebst->printMenu(cout);
-		 else if (checkAsin(choice))
-			asinbst->printMenu(cout);
-		break;
-	case '1':
-		//searchTest();
-		search();
-		break;
-	default:
-		quitShopping();
+		root = new Node(robot);
 	}
-}
-
-void CustomerInterface::searchTest()
-{
-	Robot rTemp;
-	string query;
-	List<Robot> rList;
-	rList.deleteList();
-	namebst->queryResult.deleteList();
-	// ADD THE REST
-	cout << "Name to search: ";
-	getline(cin, query);
-	rTemp.set_name(query);
-
-	namebst->buildQuery(rTemp);
-	rList = namebst->queryResult;
-	printRobotList(rList);
-}
-
-void CustomerInterface::printRobotList(List<Robot> items)
-{
-	Robot rTemp;
-	if (items.getLength() > 0)
-		items.beginIterator();
 	else
-		cout << "Sorry, nothing was found.\n";
-	for (int i = 1; i <= items.getLength(); i++)
 	{
-		rTemp = items.getIterator();
-		cout << i << ": " << rTemp.get_name() << " || " << rTemp.get_asin() << endl;
-		if (i < items.getLength())
-			items.advanceIterator();
+		insertData(root, robot);
 	}
 }
 
-void CustomerInterface::search()
+void NMT::insertData(NodePtr root, Robot robot)
  {
-	bool status = false;
-	string query;
-	string choice;
-	string name;
-	namebst->printMiniMenuFormatted(cout);
-	newOrder = buildNewOrder();
-	do {
-		Robot *rTemp = new Robot;
-		cout << "Do you want to search for the product by name or ASIN (ID#)? ";
-		choice.clear();
-		getline(cin, choice);
-
-		 while (!checkName(choice) && !checkAsin(choice))
-		{
-			 cout << "There was a problem with your input...\n";
-			 cout << "Type ASIN or name: ";
-			 getline(cin, choice);
-		}
-			if (checkName(choice)) {
-				cout << "Please enter a name to search for: ";
-				name.clear();
-				getline(cin, name);
-				rTemp->set_name(name);
-				status = namebst->search(*rTemp);
-				if (status)
-				*rTemp = namebst->getRobot(*rTemp);
-			} else if (checkAsin(choice)) {
-				cout << "Please enter ASIN number of the robot: ";
-				getAsinInput();
-				rTemp->set_asin(number);
-				status = asinbst->search(*rTemp);
-				if (status)
-				{
-					name = asinbst->getOtherKey(*rTemp);
-					rTemp->set_name(name);
-					*rTemp = namebst->getRobot(*rTemp);
-				}
-
-			}
-		if (status == true) {
-			cout << *rTemp;
-			cout << "Do you want to purchase this product? ";
-			getline(cin, choice);
-
-			if (choice == "yes") {
-				//call function in Heap to add robot to the priority queue
-				*rTemp = namebst->getRobot(*rTemp);
-				cout << "Adding " << rTemp->get_name() << " to your order.\n";
-				newOrder->addRobot(*rTemp);
-				// update QTY of robot!!
-			} else
-				cout << "The product wasn't added to your order." << endl
-						<< endl;
+	if (robot.get_name() == root->data.get_name()) {
+		return;
+	} else if (robot.get_name() < root->data.get_name()) {
+		if (root->left == NULL) {
+			root->left = new Node(robot);
 		} else {
-			cout << "We currently do not have this product in our store. "
-					<< endl;
+			insertData(root->left, robot);
 		}
-
-		cout << "Do you want to search for another product? ";
-		getline(cin, choice);
-
-	} while (choice == "yes" || choice == "Yes");
-
-	if ((choice == "no" || choice == "NO") && (newOrder->getSize() > 0)) {
-		newOrder->setTotal();
-		newOrder->setDate();
-		newOrder->displayTime(newOrder->getDate());
-		cout << "The product is your added to your order list." << endl << endl;
-		cout << "Chose your shipping method:" << endl;
-		cout << "    O - Over night ($10.99)" << endl;
-		cout << "    R - Rush ($6.99)" << endl;
-		cout << "    S - Standard ($3.99)" << endl;
-		getline(cin, temp);
-		while (!checkShippingMethod()) {
-			cout << "There was an error with your input; you only have these options:\n";
-			cout << "    O - Over night ($10.99)" << endl;
-			cout << "    R - Rush ($6.99)" << endl;
-			cout << "    S - Standard ($3.99)" << endl;
-			getline(cin, temp);
-		}
-		newOrder->setOption(temp.c_str()[0]);
-		//call function in Heap to set method option
-		newOrder->setPriorityVal(temp.c_str()[0]);
-		cout << endl << endl;
-		orderNum++;
-		newOrder->setOrderNum(orderNum);
-		// if / else: if the options are equal, call time functon
-		if (newOrder->getSize() == 0) {
-			cout << "PROBLEM: newOrder has size 0!\n";
-			return;
+	} else {
+		if (root->right == NULL) {
+			root->right = new Node(robot);
 		} else {
-			placeOrder();
-			viewPurchase();
-			heap->insert(*newOrder);
-			cout << "Inserting Order #" << newOrder->getOrderNum() << ". Heap size: " << heap->getSize() << endl;
-			if (heap->getSize() > 1)
-				heap->heapIncreaseKey(*newOrder, heap->getSize()-1); // doesn't work yet
+			insertData(root->right, robot);
 		}
-	}
-	cout << "Returning to Main Menu.\n\n";
-}
-
-void CustomerInterface::placeOrder()
-{
-	string firstname, lastname, email;
-	string address, city, state;
-	string temp;
-	int zip;
-	customer = new Customer;
-	cout << "Please enter your purchase information: " << endl;
-	cout << "First name: ";
-	getline(cin, firstname);
-	cout << "Last name: ";
-	getline(cin, lastname);
-	customer->setFirst(firstname);
-	customer->setLast(lastname);
-	cout << "Street address: ";
-	getline(cin, address);
-	customer->setAddress(address);
-	cout << "City: ";
-	getline(cin, city);
-	customer->setCity(city);
-	cout << "State: ";
-	getline(cin, state);
-	customer->setState(state);
-	cout << "Zip: ";
-	getline(cin, temp);
-	zip = atoi(temp.c_str());
-	customer->setZip(zip);
-
-	table->insertData(*customer);
-	Order o;
-	o = *newOrder;
-	customer->insertOrder(o);
-
-	orders = customer->getOrders();
-}
-void CustomerInterface::viewPurchase() {
-	Order oTemp;
-	cout << "Viewing Purchase:\n";
-	if (orders.getLength() > 0)
-		printOrders();
-	else
-		cout << "You haven't yet made a purchase.\n";
-}
-
-void CustomerInterface::quitShopping() {
-	cout << "Exiting the customer interface.\n";
-}
-
-void CustomerInterface::promptUserInput()
-{
-	getline(cin, choice);
-	//menuNum = atoi(choice.c_str());
-	menuOpt = (choice.c_str()[0]);
-}
-
-void CustomerInterface::getAsinInput()
-{
-	getline(cin, number);
-	size_t position = 0;
-	for (position = number.find(" "); position != string::npos; position =
-			number.find(" ", position)) {
-		number.replace(position, 1, "");
 	}
 }
 
-bool CustomerInterface::checkName(string t)
-{
-	for (unsigned int i = 0; i < t.length(); i++)
-		t[i] = toupper(t[i]);
-	return t == "N" || t == "NAME";
+void NMT::Print(ostream& out) {
+	Print(out, root);
 }
 
-bool CustomerInterface::checkAsin(string t)
-{
-	for (unsigned int i = 0; i < t.length(); i++)
-		t[i] = toupper(t[i]);
-	return t == "A" || t == "ASIN";
+void NMT::Print(ostream& out, NodePtr root) {
+	if (root == NULL) {
+		return;
+	}
+	Print(out, root->left);
+	out << "Name: " << root->data.get_name() << endl;
+	out << "Asin: " << root->data.get_asin() << endl;
+	out << "Price: " << root->data.get_price() << endl;
+	out << "Manufacture: " << root->data.get_manufacture() << endl;
+	out << "Purpose: " << root->data.get_purpose() << endl;
+	out << "User: " << root->data.get_user() << endl;
+	out << "Weight: " << root->data.get_weight() << endl;
+	out << "Rating: " << root->data.get_rating() << endl;
+	out << "Quantity: " << root->data.get_quantity() << endl;
+	Print(out, root->right);
 }
 
-bool CustomerInterface::checkMenuOpt()
-{
-	if (menuOpt != '1' && menuOpt != '2' && menuOpt != '3' && menuOpt != 'q' && menuOpt != 'Q')
-		return false;
-	return true;
+
+void NMT::printMenu(ostream& out) {
+	printMenu(out, root);
 }
 
-Order *CustomerInterface::buildNewOrder()
-{
-	return new Order;
+void NMT::printMenu(ostream& out, NodePtr root) {
+	if (root == NULL) {
+		return;
+	}
+	printMenu(out, root->left);
+	out << "Name: " << root->data.get_name() << endl;
+	out << "Asin: " << root->data.get_asin() << endl;
+	out << "Purpose: " << root->data.get_purpose() << endl << endl;
+	printMenu(out, root->right);
 }
 
-void CustomerInterface::printOrders()
-{
-	Order tempO;
-	orders.beginIterator();
+bool NMT::search(Robot robot)
+ {
+	assert(!empty());
+	if (robot.get_name() == root->data.get_name()) {
+		return true;
+	} else
+		return search(root, robot);
+}
 
-	for (int i = 0; i < orders.getLength(); i++)
+void NMT::printItem(NodePtr root, ostream &out)
+{
+	if (root == NULL)
+		return;
+	printItem(root->left, out);
+	out << "-------------------------------------------\n";
+	out << "Name: " << root->data.get_name() << endl;
+	out << "Asin: " << root->data.get_asin() << endl;
+	out << "Price: " << root->data.get_price() << endl;
+	out << "Manufacture: " << root->data.get_manufacture() << endl;
+	out << "Purpose: " << root->data.get_purpose() << endl;
+	out << "User: " << root->data.get_user() << endl;
+	out << "Weight: " << root->data.get_weight() << endl;
+	out << "Rating: " << root->data.get_rating() << endl;
+	out << "Quantity: " << root->data.get_quantity() << endl;
+	out << "-------------------------------------------\n";
+	printItem(root->right, out);
+}
+
+void NMT::printItem(ostream &out)
+{
+	printItem(root, out);
+}
+
+bool NMT::search(NodePtr root, Robot robot)
+ {
+	if (robot.get_name() == root->data.get_name()) {
+		return true;
+	} else if (robot.get_name() < root->data.get_name()) {
+		if (root->left != NULL) {
+			return search(root->left, robot);
+		} else {
+			return false;
+		}
+	} else {
+		if (root->right != NULL) {
+			return search(root->right, robot);
+		} else {
+			return false;
+		}
+	}
+}
+
+Robot NMT::findRobot(NodePtr root, string name)
+ {
+	Robot *rEmpty = new Robot;
+	if (name == root->data.get_name()) {
+		return root->data;
+	} else if (name < root->data.get_name()) {
+		if (root->left != NULL) {
+			return findRobot(root->left, name);
+		} else {
+			return *rEmpty;
+		}
+	} else {
+		if (root->right != NULL) {
+			return findRobot(root->right, name);
+		} else {
+			return *rEmpty;
+		}
+	}
+}
+
+Robot NMT::minimum()
+{
+    assert(!empty());
+    return minimum(root);
+}
+
+Robot NMT::minimum(NodePtr root)
+ {
+	if (root == NULL) {
+		return root->data;
+	} else {
+		if (root->left != NULL) {
+			return minimum(root->left);
+		} else {
+			return root->data;
+		}
+	}
+}
+
+Robot NMT::maximum()
+{
+    assert(!empty());
+    return maximum(root);
+}
+
+Robot NMT::maximum(NodePtr root)
+ {
+	if (root->right != NULL) {
+		return maximum(root->right);
+	} else {
+		return root->data;
+	}
+}
+
+void NMT::removeData(Robot robot)
+{
+    if (empty())
+    	cout << "The product list is empty!\n";
+    else if (!search(robot))
+    	cout << "Sorry, " << robot.get_name() << " was not found.\n";
+    else
+    	root = deleteData(root, robot);
+}
+
+typename NMT::NodePtr NMT::deleteData(NodePtr root, Robot robot)
+ {
+	if (root == NULL) {
+		return root;
+	} else if (robot.get_name() < root->data.get_name()) {
+		root->left = deleteData(root->left, robot);
+	} else if (robot.get_name() > root->data.get_name()) {
+		root->right = deleteData(root->right, robot);
+	} else {
+		if (root->left == NULL && root->right == NULL) {
+			delete root;
+			root = NULL;
+		} else if (root->left == NULL) {
+			NodePtr N = root;
+			root = root->right;
+			delete N;
+		} else if (root->right == NULL) {
+			NodePtr N = root;
+			root = root->left;
+			delete N;
+		} else {
+			Robot temp = minimum(root->right);
+			root->data = temp;
+			root->right = deleteData(root->right, temp);
+		}
+	}
+	return root;
+}
+
+int NMT::size()
+{
+	int size=0;
+    this->size(root,size);
+    return size;
+}
+
+
+void NMT::size(NodePtr root, int& size)
+{
+    if(root!=NULL)
+    {
+    size++;
+    this->size(root->left,size);
+    this->size(root->right,size);
+    }
+}
+
+int NMT::height()
+{
+	return height(root);
+}
+
+int NMT::height(NodePtr root)
+{
+    if(root==NULL)
+        return -1;
+    return max(height(root->left),height(root->right))+1;
+}
+
+NMT::NMT()
+{
+    root = NULL;
+}
+
+NMT::NMT(const NMT &bst)
+{
+	if (bst.root==NULL)
 	{
-		tempO = orders.getIterator();
-		cout << tempO;
-		cout << endl;
-		if (i < orders.getLength() - 1)
-			orders.advanceIterator();
+		root=NULL;
+	}
+	else
+	{
+		root=NULL;
+		makeCopy(bst.root);
 	}
 }
 
-bool CustomerInterface::checkShippingMethod()
+void NMT::makeCopy(NodePtr copy)
 {
-	if (temp != "O" && temp != "o" && temp != "S" && temp != "s" && temp != "R" && temp != "r")
-		return false;
-	return true;
+    if(copy==NULL)
+    {
+        return;
+    }
+    insertData(copy->data);
+    makeCopy(copy->left);
+    makeCopy(copy->right);
+}
+
+NMT::~NMT()
+{
+    freeNode(root);
+}
+
+void NMT::freeNode(NodePtr root)
+{
+    NodePtr N = root;
+    if(root==NULL)
+    {
+        return;
+    }
+    freeNode(root->left);
+    freeNode(root->right);
+    delete N;
+}
+
+bool NMT::empty()
+{
+    return root==NULL;
+}
+
+Robot NMT::getRoot()
+{
+    return root->data;
+}
+
+string NMT::getOtherKey(Robot robot)
+{
+	Robot rTemp = findRobot(root, robot.get_name());
+	return rTemp.get_asin();
+}
+
+Robot NMT::getRobot(Robot robot)
+{
+	return findRobot(root, robot.get_name());
+}
+
+void NMT::printMiniMenu(ostream& out) {
+	printMiniMenu(out, root);
+}
+
+void NMT::printMiniMenu(ostream& out, NodePtr root) {
+	if (root == NULL) {
+		return;
+	}
+	printMiniMenu(out, root->left);
+	out << setw(94) << root->data.get_name();
+	out << "   ||   " << root->data.get_asin()  << "	"<< endl;
+	printMiniMenu(out, root->right);
+}
+
+void NMT::printMiniMenuFormatted(ostream &out)
+{
+	cout << "________________________________________________________Shortlist of Robots"
+			"________________________________________________________\n";
+	cout << "______________________________________________Name_________________"
+			"______________________________________ASIN______________________\n";
+	printMiniMenu(out);
+	cout << "_________________________________________________________________\n";
+}
+
+// dont use these functions for anything
+//bool NMT::smartSearch(Robot robot)
+//{
+//	string query = robot.get_name();
+//	cout << "In smartSearch. searching for [" << query << "]\n";
+//	return smartSearch(root, robot);
+//}
+//
+//bool NMT::smartSearch(NodePtr root, Robot robot)
+//{
+//	string query = robot.get_name();
+//	string name = root->data.get_name();
+//	size_t found = name.find(query);
+//	cout << "checking [" << name << "] vs [" << query << "]\n";
+//	cout << "Found: " << found << " npos: " << string::npos << endl;
+//	if (root->left != NULL)
+//		smartSearch(root->left, robot);
+//	if (root->right != NULL)
+//		smartSearch(root->right, robot);
+//	if (found != string::npos) {
+//		cout << "in smartSearch, found a match:" << name << endl;
+//		return true;
+//	}
+//	else
+//		return false;
+//}
+
+void NMT::buildQuery(NodePtr root, string query)
+ {
+	string target = capitalize(query);
+	string name = capitalize(root->data.get_name());
+	size_t found = name.find(target);
+	//cout << "checking [" << name << "] vs [" << target << "]\n";
+	if (root->left != NULL)
+		buildQuery(root->left, query);
+	if (root->right != NULL)
+		buildQuery(root->right, query);
+	if (found != string::npos) {
+		queryResult.insertEnd(root->data);
+		return;
+	}
+	 else
+		 return;
+}
+
+void NMT::buildQuery(Robot robot)
+{
+	buildQuery(root, robot.get_name());
+}
+
+string NMT::capitalize(string s)
+{
+	for (unsigned int i = 0; i < s.length(); i++)
+		s[i] = toupper(s[i]);
+	return s;
 }

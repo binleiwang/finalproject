@@ -1,11 +1,3 @@
-//
-//  HashTable.cpp
-//  Robot
-//
-//  Created by Stephen Hung on 6/17/17.
-//  Copyright © 2017 Stephen Hung. All rights reserved.
-//
-
 #include "HashTable.h"
 #include "Customer.h"
 #include <assert.h>
@@ -67,22 +59,22 @@ void HashTable::printBucket(int index)
     Table[index].print();
 }
 
-void HashTable::printTable()
+void HashTable::printTable(ostream& out)
 {
     for(int i = 0; i < SIZE; i++)
     {
         if(Table[i].empty())
         {
-            cout << "Bucket: " << i << endl;
-            cout << "Number of customers at this bucket: " << countBucket(i) << endl;
-            cout << "__________________________________" << endl << endl;
+            out << "Bucket: " << i << endl;
+            out << "Number of customers at this bucket: " << countBucket(i) << endl;
+            out << "__________________________________" << endl << endl;
         }
         else
         {
-            cout << "Bucket: " << i << endl;
-            cout << Table[i].getBegin();
-            cout << "Number of customers at this bucket: " << countBucket(i) << endl;
-            cout << "__________________________________" << endl << endl;
+            out << "Bucket: " << i << endl;
+            out << Table[i].getBegin();
+            out << "Number of customers at this bucket: " << countBucket(i) << endl;
+            out << "__________________________________" << endl << endl;
         }
     }
 }

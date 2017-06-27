@@ -50,19 +50,20 @@ void CustomerInterface::printOptions()
 			<< endl;
 	cout << setw(9) << "    - Find and display one record using the secondary key (ASIN - Amazon ID Number)"
 			<< endl;
-	cout << "2 - List Database of Products" << endl;
+	cout << "2 - List Full Product Details" << endl;
 	cout << setw(9) << "    - List data sorted by primary key" << endl;
 	cout << setw(9) << "    - List data sorted by secondary key" << endl;
+	cout << "3 - List Mini Product Menu" << endl;
 	cout << "Q - Quit" << endl << endl;
 }
 
 void CustomerInterface::searchByKey()
 {
-	cout << "Please choose option 1, 2, or Q to quit: ";
+	cout << "Please choose option 1, 2, 3 or Q to quit: ";
 	promptUserInput();
 	while(!checkMenuOpt()){
 		cout << "Invalid choice." << endl;
-		cout << "Please choose option 1, 2, or Q to quit: ";
+		cout << "Please choose option 1, 2, 3 or Q to quit: ";
 		promptUserInput();
 	}
 
@@ -72,23 +73,26 @@ void CustomerInterface::searchByKey()
 	case 'q':
 		quitShopping();
 		break;
+	case '3':
+		namebst->printMiniMenuFormatted(cout);
+		break;
 	case '2':
-		cout << "\nDo you want to see list of robots by name or by asin? ";
+		cout << "\nDo you want to see list of robots by name or by ASIN? ";
 		choice.clear();
 		getline(cin, choice);
-		while(choice != "name" && choice != "asin"){
-			cout << "Invalid entry or typo. Please enter again(name or asin) ";
+		while(!checkName(choice) && !checkAsin(choice)){
+			cout << "Invalid entry or typo. Please try again (name or ASIN): ";
 			choice.clear();
 			getline(cin, choice);
 		}
-		if(choice == "name")
+		if(checkName(choice))
 			namebst->printMenu(cout);
-		 else if (choice == "asin")
+		 else if (checkAsin(choice))
 			asinbst->printMenu(cout);
 		break;
 	case '1':
-		searchTest();
-		//search();
+		//searchTest();
+		search();
 		break;
 	default:
 		quitShopping();
@@ -102,10 +106,7 @@ void CustomerInterface::searchTest()
 	List<Robot> rList;
 	rList.deleteList();
 	namebst->queryResult.deleteList();
-	cout << "_______________________Shortlist of Robots_______________________\n";
-	cout << "_________Name______________________________________ASIN__________\n";
-	namebst->printMiniMenu(cout);
-	cout << "_________________________________________________________________\n";
+	// ADD THE REST
 	cout << "Name to search: ";
 	getline(cin, query);
 	rTemp.set_name(query);
@@ -134,30 +135,28 @@ void CustomerInterface::printRobotList(List<Robot> items)
 void CustomerInterface::search()
  {
 	bool status = false;
-	string answer;
-	string purchase;
-	//char option;
+	string query;
 	string choice;
 	string name;
-
+	namebst->printMiniMenuFormatted(cout);
 	newOrder = buildNewOrder();
 	do {
-		namebst->printMenu(cout);
-		cout << "Do you want to search for the product by name or asin? ";
+
+		cout << "Do you want to search for the product by name or ASIN (ID#)? ";
 		choice.clear();
 		getline(cin, choice);
 		Robot *rTemp = new Robot;
 		if (checkName(choice)) {
-			cout << "Please enter name of the robot: ";
+			cout << "Please enter a name to search for: ";
 			name.clear();
 			getline(cin, name);
 
 			rTemp->set_name(name);
-			status = namebst->search(*rTemp);
+			//status = namebst->search(*rTemp);
 			if (status)
 				*rTemp = namebst->getRobot(*rTemp);
 		} else if (checkAsin(choice)) {
-			cout << "Please enter asin number of the robot: ";
+			cout << "Please enter ASIN number of the robot: ";
 			getAsinInput();
 			rTemp->set_asin(number);
 			status = asinbst->search(*rTemp);
@@ -168,9 +167,9 @@ void CustomerInterface::search()
 		if (status == true) {
 			cout << *rTemp;
 			cout << "\nDo you want to purchase this product? ";
-			getline(cin, purchase);
+			getline(cin, choice);
 
-			if (purchase == "yes") {
+			if (choice == "yes") {
 				//call function in Heap to add robot to the priority queue
 				*rTemp = namebst->getRobot(*rTemp);
 				cout << "adding a robot to newOrder.\n";
@@ -185,11 +184,11 @@ void CustomerInterface::search()
 		}
 
 		cout << "Do you want to search another product? ";
-		getline(cin, answer);
+		getline(cin, choice);
 
-	} while (answer == "yes" || answer == "Yes");
+	} while (choice == "yes" || choice == "Yes");
 
-	if (answer == "no" || answer == "NO") {
+	if ((choice == "no" || choice == "NO") && (newOrder->getSize() > 0)) {
 		newOrder->setTotal();
 		newOrder->setDate();
 		newOrder->displayTime(newOrder->getDate());
@@ -219,14 +218,13 @@ void CustomerInterface::search()
 		} else {
 			placeOrder();
 			viewPurchase();
+			heap->insert(*newOrder);
+			cout << "Inserting Order #" << newOrder->getOrderNum() << ". Heap size: " << heap->getSize() << endl;
+			if (heap->getSize() > 1)
+				heap->heapIncreaseKey(*newOrder, heap->getSize()-1); // doesn't work yet
 		}
 	}
-
-	heap->insert(*newOrder);
-	cout << "Inserting Order #" << newOrder->getOrderNum() << ". Heap size: " << heap->getSize() << endl;
-	if (heap->getSize() > 1)
-		heap->heapIncreaseKey(*newOrder, heap->getSize()-1); // doesn't work yet
-	cout << endl << endl;
+	cout << "Returning to Main Menu.\n\n";
 }
 
 void CustomerInterface::placeOrder()
@@ -310,7 +308,7 @@ bool CustomerInterface::checkAsin(string t)
 
 bool CustomerInterface::checkMenuOpt()
 {
-	if (menuOpt != '1' && menuOpt != '2' && menuOpt != 'q' && menuOpt != 'Q')
+	if (menuOpt != '1' && menuOpt != '2' && menuOpt != '3' && menuOpt != 'q' && menuOpt != 'Q')
 		return false;
 	return true;
 }

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+//#include "ColorConsole.h"
 #include "FileIO.h"
 #include "List.h"
 #include "AST.h"
@@ -16,10 +17,13 @@ using namespace std;
 bool isCustomer(string input);
 bool isEmployee(string input);
 bool quitProgram(string input);
+void printRobotAscii();
+void printMenuInstructions();
+void welcome();
 
 int main()
 {
-	cout << "Hi\n";
+	welcome();
 	FileIO file;
 	Robot robot;
 	NMT nameTree;
@@ -37,7 +41,7 @@ int main()
 	// i moved print to its own function, but it wont work within th eBST class.
 	// *** use a robot print function
 	// *  cout << r;
-	cout << "Please type C for customer, or E for employee, or type Q to quit.\n";
+	printMenuInstructions();
 	getline(cin, input);
 
 	while (!quitProgram(input))
@@ -57,7 +61,7 @@ int main()
 		{
 			cout << "There was a problem with your input...\n";
 		}
-		cout << "Please type C for customer, or E for employee, or type Q to quit.\n";
+		printMenuInstructions();
 		input.clear();
 		getline(cin, input);
 		// if q
@@ -71,6 +75,7 @@ int main()
 // exit msg?
 	cout << "Thank you for shopping at our store." << endl;
 	cout << "Have a great day!!!" << endl << endl;
+	printRobotAscii();
 	return 0;
 }
 
@@ -93,4 +98,44 @@ bool quitProgram(string input)
 	if (input == "Q" || input == "q")
 		return true;
 	return false;
+}
+
+void welcome()
+{
+	cout << "Welcome to Robot Land!\n";
+	cout << "This program simulates a marketplace where you can buy and sell robots.\n";
+	cout << "It utilizes several data structures, such as a heap, hash table, binary search trees, and linked lists.\n";
+	cout << "You may interact with the item database as either a customer (to search and order Robots),\n";
+	cout << "or an employee (to ship/view orders and add/delete Robots from the store.\n\n";
+}
+
+void printMenuInstructions()
+{
+	cout << "========================= Main Menu ==========================\n";
+	cout << "Please type C for customer, E for employee, or type Q to quit.\n";
+}
+
+void printRobotAscii()
+{
+	cout << "          ________" << endl;
+	cout << "     _,.-Y  |  |  Y-._" << endl;
+	cout << "    .-~\"   ||  |  |  |   \"-." << endl;
+	cout << "    I\" \"\"==\"|\" !\"\"! \"|\"[]\"\"|     _____" << endl;
+	cout << "    L__  [] |..------|:   _[----I\" .-{\"-." << endl;
+	cout << "   I___|  ..| l______|l_ [__L]_[I_/r(=}=-P" << endl;
+	cout << "  [L______L_[________]______j~  '-=c_]/=-^" << endl;
+	cout << "    \\_I_j.--.\\==I|I==_/.--L_]" << endl;
+	cout << "    [_((==)[`-----\"](==)j" << endl;
+	cout << "    I--I\"~~\"\"\"~~\"I--I" << endl;
+	cout << "    |[]|         |[]|" << endl;
+	cout << "    l__j         l__j" << endl;
+	cout << "    |!!|         |!!|" << endl;
+	cout << "    |..|         |..|" << endl;
+	cout << "    ([])         ([])" << endl;
+	cout << "    ]--[         ]--[" << endl;
+	cout << "    [_L]         [_L]  -Row  (the Ascii-Wizard of Oz)" << endl;
+	cout << "   /|..|\\       /|..|\\" << endl;
+	cout << "  `=}--{='     `=}--{='" << endl;
+	cout << " .-^--r-^-.   .-^--r-^-." << endl;
+	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 }

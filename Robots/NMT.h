@@ -59,6 +59,7 @@ public:
     void Print(ostream& out);
     void printMenu(ostream& out);
     void printMiniMenu(ostream& out);
+    void printMiniMenuFormatted(ostream &out);
     string getOtherKey(Robot robot);
     Robot getRobot(Robot robot);
     void printItem(ostream& out);

@@ -321,35 +321,43 @@ void NMT::printMiniMenu(ostream& out, NodePtr root) {
 	printMiniMenu(out, root->left);
 	out << setw(30) << root->data.get_name();
 	out << " || " << root->data.get_asin() << endl;
-	//out << "Purpose: " << root->data.get_purpose() << endl << endl;
 	printMiniMenu(out, root->right);
 }
 
-bool NMT::smartSearch(Robot robot)
+void NMT::printMiniMenuFormatted(ostream &out)
 {
-	string query = robot.get_name();
-	cout << "In smartSearch. searching for [" << query << "]\n";
-	return smartSearch(root, robot);
+	cout << "_______________________Shortlist of Robots_______________________\n";
+	cout << "_________Name______________________________________ASIN__________\n";
+	printMiniMenu(out);
+	cout << "_________________________________________________________________\n";
 }
 
-bool NMT::smartSearch(NodePtr root, Robot robot)
-{
-	string query = robot.get_name();
-	string name = root->data.get_name();
-	size_t found = name.find(query);
-	cout << "checking [" << name << "] vs [" << query << "]\n";
-	cout << "Found: " << found << " npos: " << string::npos << endl;
-	if (root->left != NULL)
-		smartSearch(root->left, robot);
-	if (root->right != NULL)
-		smartSearch(root->right, robot);
-	if (found != string::npos) {
-		cout << "in smartSearch, found a match:" << name << endl;
-		return true;
-	}
-	else
-		return false;
-}
+// dont use these functions for anything
+//bool NMT::smartSearch(Robot robot)
+//{
+//	string query = robot.get_name();
+//	cout << "In smartSearch. searching for [" << query << "]\n";
+//	return smartSearch(root, robot);
+//}
+//
+//bool NMT::smartSearch(NodePtr root, Robot robot)
+//{
+//	string query = robot.get_name();
+//	string name = root->data.get_name();
+//	size_t found = name.find(query);
+//	cout << "checking [" << name << "] vs [" << query << "]\n";
+//	cout << "Found: " << found << " npos: " << string::npos << endl;
+//	if (root->left != NULL)
+//		smartSearch(root->left, robot);
+//	if (root->right != NULL)
+//		smartSearch(root->right, robot);
+//	if (found != string::npos) {
+//		cout << "in smartSearch, found a match:" << name << endl;
+//		return true;
+//	}
+//	else
+//		return false;
+//}
 
 void NMT::buildQuery(NodePtr root, string query)
  {

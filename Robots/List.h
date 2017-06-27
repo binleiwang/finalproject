@@ -108,6 +108,8 @@ public:
     //Precondition: There must be at least 1 node in the list.
     //Postcondition: First element deleted, 2nd element is now 1st.
 
+    void deleteList();
+
     void insertEnd(listdata data);
     //Inserts a new element at the end of the list
     //If the list is empty, the new element becomes both first and last
@@ -135,6 +137,8 @@ public:
 
     void printNumberedList() const;
     // Prints linked list with #s in front, 1 item per line
+
+    List<listdata> operator=(const List &list);
 
     bool operator==(const List &list);
     // Tests two lists to determine whether their contents are equal
@@ -185,6 +189,19 @@ List<listdata>::List() {
 
 template <class listdata>
 List<listdata>::~List() {
+    NodePtr after = begin;
+    NodePtr before;
+    while (after != NULL) {
+        before = after->nextnode;
+        after->previousnode = NULL;
+        delete after;
+        after = before;
+    }
+}
+
+template <class listdata>
+void List<listdata>::deleteList()
+{
     NodePtr after = begin;
     NodePtr before;
     while (after != NULL) {
@@ -517,5 +534,36 @@ int List<listdata>::binarySearch(int low, int high, listdata data)
 	else
 		return binarySearch(mid+1, high, data);
 }
+
+template <class listdata>
+List<listdata> List<listdata>::operator=(const List &oldList)
+{
+	// empty list
+		if (oldList.length == 0) {
+			begin = end = iterator = NULL;
+			length = 0;
+		}
+		else {
+			length = 0;
+			iterator = NULL;
+			NodePtr tempOld = oldList.begin;
+			NodePtr newBegin = new Node(tempOld->data); // allocate 1st node
+			begin = newBegin; // set begin
+			NodePtr tempNew = newBegin;
+			length++;
+			while (tempOld->nextnode != NULL) {
+				NodePtr N = new Node(tempOld->nextnode->data);
+				length++;
+				tempNew->nextnode = N;
+				N->previousnode = tempNew;
+				tempOld = tempOld->nextnode;
+				tempNew = tempNew->nextnode;
+			}
+			// set end
+			end = tempNew; // tempNew currently points at the last node.
+		}
+		return *this;
+}
+
 
 #endif /* LIST_H_ */

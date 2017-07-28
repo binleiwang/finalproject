@@ -33,13 +33,15 @@ private:
 	int menuNum;
 	char menuOpt;
 	string temp;
+	Order *o;
 	Order *newOrder;
 	bool checkName(string t);
 	bool checkAsin(string t);
 	bool checkMenuOpt();
 	void searchTest();
+	bool checkYes(string input);
 public:
-	CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Robot *robot);
+	CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Robot *robot, Order *o);
 	Order *buildNewOrder();
 	void welcome();
 	void printOptions();

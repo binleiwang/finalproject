@@ -3,7 +3,7 @@
 //  Robot
 //
 //  Created by Stephen Hung on 6/17/17.
-//  Copyright © 2017 Stephen Hung. All rights reserved.
+//  Copyright Â© 2017 Stephen Hung. All rights reserved.
 //
 
 #ifndef Customer_h
@@ -37,6 +37,7 @@ public:
     string getCity() const;
     string getState() const;
     int getZip() const;
+    ostream &printDetail(ostream &out);
     
     //manipulation procedures
     void setFirst(string);

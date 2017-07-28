@@ -24,12 +24,13 @@ private:
 	//vector<Order> orders; // TBD if need this, or if access orders a different way.
 	NMT *nameTree;
 	AST *asinTree;
+	HashTable *customers;
 	bool checkName(string t);
 	bool checkAsin(string t);
 
 public:
 	EmployeeInterface();
-	EmployeeInterface(Heap<Order> *h, NMT *t1, AST *t2);
+	EmployeeInterface(Heap<Order> *h, NMT *t1, AST *t2, HashTable *t);
 	void welcome();
 	void menu();
 	void employeeRights();
@@ -40,6 +41,7 @@ public:
     void addNewRobot(); // add a new robot to the database
     void removeRobot(); // delete an existing robot from the database
     					// does not affect current orders
+    void searchCustomer();
     void quit();
 };
 

@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <vector>
 #include <cassert>
+#include <algorithm>
 
 using namespace std;
 
@@ -18,6 +19,7 @@ private:
 	int rightChild(int parent);
 	int parent(int child);
 	void swap(H & a, H & b);
+	void printOrders(vector<H> h);
 public:
 	Heap();
 	int getSize();
@@ -25,10 +27,11 @@ public:
 	void showOrder(int index);
 	H deleteMax();
 	H deleteOrder(int);
-	void printOrders();
 	void buildHeap(); //
 	void heapIncreaseKey(H & newdata, int i); // maxHeapify
 	void heapDecreaseKey(int first, int last); // bubble down?
+	void print();
+	bool greater();
 };
 template<class H>
 Heap<H>::Heap() {
@@ -104,15 +107,23 @@ void Heap<H>::insert(H newData) {
 //return the info of max node for user to review
 template<class H>
 H Heap<H>::deleteMax() {
-	assert(size != 0);
-	H temp = order[0];//save for return
-	swap(order[0], order[size - 1]);
-	order.pop_back();
-	heapDecreaseKey(0, size - 1);
+	assert(size!=0);
+	int last = size-1;
+	H temp = order[0];
+	swap(order[0], order[last]);
+	heapDecreaseKey(0,last);
 	--size;
-	//buildHeap(); // TEST
-	heapIncreaseKey(order[size-1], size-1);
+	buildHeap();
 	return temp;
+//	assert(size != 0);
+//	H temp = order[0];//save for return
+//	swap(order[0], order[size - 1]);
+//	order.pop_back();
+//	heapDecreaseKey(0, size - 1);
+//	--size;
+//	buildHeap(); // TEST
+//	//heapIncreaseKey(order[size-1], size-1);
+//	return temp;
 }
 //This function is used to delete a random Order (which is not processed)
 //return the info of pointed node for user to review
@@ -134,15 +145,30 @@ void Heap<H>::buildHeap() {
 		heapIncreaseKey(order[i], i);
 	}
 }
+
 template<class H>
-void Heap<H>::printOrders() {
+bool Heap<H>::greater()
+{
+	H a;
+	H b;
+	return a > b;
+}
+
+template<class H>
+void Heap<H>::print() {
+	vector<H> h;
+	printOrders(h);
+}
+
+template<class H>
+void Heap<H>::printOrders(vector<H> h) {
 	if (size == 0)
 		cout << "List is empty";
-	else {
-		for (int i = 0; i < size; i++)
-			cout << order[i] << endl;
+	h = order;
+	//std::sort(h.begin(), h.end(), greater());
+	for (unsigned int i = 0; i < h.size(); i++) {
+		cout << h[i] << endl;
 	}
-	cout << endl;
 }
 
 #endif // !HEAP_H

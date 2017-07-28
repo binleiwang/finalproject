@@ -61,14 +61,44 @@ void HashTable::printBucket(int index)
 
 void HashTable::printTable(ostream &out)
 {
+	int n = 0;
     for(int i = 0; i < SIZE; i++)
     {
         if(!Table[i].empty())
         {
-            out << "Bucket: " << i << endl;
-            out << Table[i].getBegin();
-            out << "Number of customers at this bucket: " << countBucket(i) << endl;
+			Table[i].beginIterator();
+			for (int j = 0; j < Table[i].getLength(); j++) {
+				out << Table[i].getIterator() << endl;
+				out << "__________________________________\n";
+				if (j < Table[i].getLength() - 1)
+					Table[i].advanceIterator();
+			}
+			out << "__________________________________" << endl << endl;
+			n++;
+		}
+    }
+    if (n == 0)
+    	out << "There were no customers in this session.\n";
+}
+
+ostream &HashTable::printCustomerDetail(ostream &out)
+{
+	int n = 0;
+	Customer cTemp;
+    for(int i = 0; i < SIZE; i++)
+    {
+        if(!Table[i].empty())
+        {
+        	Table[i].beginIterator();
+        	for (int j = 0; j < Table[i].getLength(); j++) {
+        		Table[i].getIterator().printDetail(out);
+        		if (j < Table[i].getLength() - 1)
+        			Table[i].advanceIterator();
+        	}
             out << "__________________________________" << endl << endl;
+            n++;
         }
     }
+    if (n == 0)
+    	out << "There were no customers in this session.\n";
 }

@@ -3,7 +3,7 @@
 //  Robot
 //
 //  Created by Stephen Hung on 6/17/17.
-//  Copyright © 2017 Stephen Hung. All rights reserved.
+//  Copyright Â© 2017 Stephen Hung. All rights reserved.
 //
 
 #include <string>
@@ -91,6 +91,32 @@ ostream &operator <<(ostream &os, const Customer& c)
     os << "City: " << c.city << endl;
     os << "State: " << c.state << endl;
     os << "Zip Code: " << c.zip << endl;
+    return os;
+}
+
+ostream &Customer::printDetail(ostream &os)
+{
+    os << "Customer: " << first_name << " " << last_name << endl;
+    os << "Address: " << address << endl;
+    os << "City: " << city << endl;
+    os << "State: " << state << endl;
+    os << "Zip Code: " << zip << endl;
+
+    if (orders.getLength() > 0)
+    {
+		Order tempO;
+		orders.beginIterator();
+		for (int i = 0; i < orders.getLength(); i++) {
+			tempO = orders.getIterator();
+			cout << tempO;
+			cout << endl;
+			if (i < orders.getLength() - 1)
+				orders.advanceIterator();
+		}
+	}
+    else
+    	;
+    	//os << "No current orders.\n";
     return os;
 }
 

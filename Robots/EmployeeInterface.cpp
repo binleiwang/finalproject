@@ -11,24 +11,20 @@
 #include "HashTable.h"
 #include "Customer.h"
 #include "Heap.h"
+#include <vector>
 
 EmployeeInterface::EmployeeInterface()
 {
 	asinTree = new AST;
 	nameTree = new NMT;
 	heap = new Heap<Order>;
-	//orders = new vector<Order> ordersTemp;
+	customers = new HashTable;
 }
 
-EmployeeInterface::EmployeeInterface(Heap<Order> *h, NMT *t1, AST *t2)
+EmployeeInterface::EmployeeInterface(Heap<Order> *h, NMT *t1, AST *t2, HashTable *t)
 {
 	heap = h;
-	//orders = &(heap.getOrders());
-	// Heap::getOrders() doesn't exist but likely will need this to use
-	// the vector inside Employee
-	// OR, could write a Heap::printOrders() function and call it from here.
-	// if we use orders vector, it must be a reference value
-	// so that when we delete from the front, it updates the real heap.
+	customers = t;
 	nameTree = t1;
 	asinTree = t2;
 }
@@ -62,7 +58,9 @@ void EmployeeInterface::menu()
 	cout << setw(6) << "-List data sorted by secondary key" << endl;
 	cout << "4. Add New Robot" << endl;
 	cout << "5. Remove Robot" << endl;
-	cout << "6. Exit Employee Menu" << endl << endl;
+	cout << "6. Search for a Customer" << endl;
+	cout << "7. List all Customers" << endl;
+	cout << "8. Exit Employee Menu" << endl << endl;
 }
 
 void EmployeeInterface::employeeRights()
@@ -72,16 +70,15 @@ void EmployeeInterface::employeeRights()
 	string choice;
 
 	do {
-		//display menu
 		menu();
 
-		cout << "Please chose an option between 1 and 6: ";
+		cout << "Please chose an option between 1 and 8: ";
 		getline(cin, answer);
 		menuNum = atoi(answer.c_str());
 		answer.clear();
-		while(menuNum < 1 || menuNum > 6){
+		while(menuNum < 1 || menuNum > 8){
 			cout << "Invalid choice." << endl;
-			cout << "Only chose between 1 and 6. Enter again: ";
+			cout << "Only chose between 1 and 8. Enter again: ";
 			getline(cin, answer);
 			menuNum = atoi(answer.c_str());
 			answer.clear();
@@ -110,6 +107,12 @@ void EmployeeInterface::employeeRights()
 			removeRobot();
 			break;
 		case 6:
+			searchCustomer();
+			break;
+		case 7:
+			customers->printCustomerDetail(cout);
+			break;
+		case 8:
 			quit();
 			break;
 		default:
@@ -128,8 +131,7 @@ void EmployeeInterface::employeeRights()
 void EmployeeInterface::viewOrders()
 {
 	cout << "Printing orders:\n";
-	//heap->buildHeap(); // no worky
-	heap->printOrders();
+	heap->print();
 }
 
 void EmployeeInterface::shipOrder()
@@ -143,12 +145,6 @@ void EmployeeInterface::shipOrder()
 		cout << endl << "The order has been shipped!\n";
 		heap->deleteMax();
 	}
-
-	//shipping each order in the Heap
-	//orders->at(0).print();
-	//after shipping, delete that order from the Heap
-	//orders->erase(orders->begin()); // deletes first element from a vector
-	// OR, call a newly created "deleteFirstOrder" function from Heap
 }
 
 void EmployeeInterface::listRobotsName()
@@ -259,4 +255,22 @@ void EmployeeInterface::removeRobot()
 
 void EmployeeInterface::quit() {
 	cout << "Exiting the employee menu.\n";
+}
+
+void EmployeeInterface::searchCustomer() {
+	cout << "Searching the customer table:\n";
+	Customer cTemp;
+	string input;
+	cout << "First name: ";
+	getline(cin, input);
+	cTemp.setFirst(input);
+	cout << "Last name: ";
+	getline(cin, input);
+	cTemp.setLast(input);
+	int found = 0;
+	found = customers->searchData(cTemp);
+	if (found > 0)
+		customers->printBucket(found);
+	else
+		cout << "Sorry, no customer with that name was found.\n";
 }

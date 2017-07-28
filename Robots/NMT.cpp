@@ -319,17 +319,15 @@ void NMT::printMiniMenu(ostream& out, NodePtr root) {
 		return;
 	}
 	printMiniMenu(out, root->left);
-	out << setw(94) << root->data.get_name();
-	out << "   ||   " << root->data.get_asin()  << "	"<< endl;
+	out << setw(30) << root->data.get_name();
+	out << " || " << root->data.get_asin() << endl;
 	printMiniMenu(out, root->right);
 }
 
 void NMT::printMiniMenuFormatted(ostream &out)
 {
-	cout << "________________________________________________________Shortlist of Robots"
-			"________________________________________________________\n";
-	cout << "______________________________________________Name_________________"
-			"______________________________________ASIN______________________\n";
+	cout << "_______________________Shortlist of Robots_______________________\n";
+	cout << "_________Name______________________________________ASIN__________\n";
 	printMiniMenu(out);
 	cout << "_________________________________________________________________\n";
 }

@@ -12,3 +12,7 @@ The specifications include:
 - The user interface has two main options - employee or customer controls. 
 - Customers can search for items and create orders.
 - Employees can list orders, ship them, add new robots, or delete robots.
+
+UML:
+
+![UML Image](https://raw.githubusercontent.com/binleiwang/finalproject/master/umlsample.png)

@@ -23,6 +23,7 @@ void goodbye();
 int main()
 {
 	welcome();
+	Order oTemp;
 	FileIO file;
 	Robot robot;
 	NMT nameTree;
@@ -32,8 +33,8 @@ int main()
 	string input = "x";
 
 	file.readFromFile(&robot, &nameTree, &asinTree);
-	CustomerInterface c(&nameTree, &asinTree, &customers, &orders, &robot);
-	EmployeeInterface e(&orders, &nameTree, &asinTree);
+	CustomerInterface c(&nameTree, &asinTree, &customers, &orders, &robot, &oTemp);
+	EmployeeInterface e(&orders, &nameTree, &asinTree, &customers);
 
 	printMenuInstructions();
 	getline(cin, input);
@@ -76,26 +77,8 @@ bool isCustomer(string input)
 
 bool isEmployee(string input)
 {
-	string password;
-	int i = 3;
 	if (input == "E" || input == "e")
-	{
-		cout << "Please key in the password: ";
-		getline(cin, password);
-		while(password != "you suck")
-		{
-			i--;
-			if(i == 0)
-			{
-				cout <<  "System warning: You suck!" << endl;
-				return false;
-			}
-			cout << "Wrong password, you have " << i << " more chances" << endl;
-			cout << "Please key in the password: ";
-			getline(cin, password);
-		}
 		return true;
-	}
 	return false;
 }
 
@@ -125,25 +108,25 @@ void goodbye()
 {
 	cout << "Thank you for shopping at our store." << endl;
 	cout << "Have a great day!!!" << endl << endl;
-//	cout << "          ________" << endl;
-//	cout << "     _,.-Y  |  |  Y-._" << endl;
-//	cout << "    .-~\"   ||  |  |  |   \"-." << endl;
-//	cout << "    I\" \"\"==\"|\" !\"\"! \"|\"[]\"\"|     _____" << endl;
-//	cout << "    L__  [] |..------|:   _[----I\" .-{\"-." << endl;
-//	cout << "   I___|  ..| l______|l_ [__L]_[I_/r(=}=-P" << endl;
-//	cout << "  [L______L_[________]______j~  '-=c_]/=-^" << endl;
-//	cout << "    \\_I_j.--.\\==I|I==_/.--L_]" << endl;
-//	cout << "    [_((==)[`-----\"](==)j" << endl;
-//	cout << "    I--I\"~~\"\"\"~~\"I--I" << endl;
-//	cout << "    |[]|         |[]|" << endl;
-//	cout << "    l__j         l__j" << endl;
-//	cout << "    |!!|         |!!|" << endl;
-//	cout << "    |..|         |..|" << endl;
-//	cout << "    ([])         ([])" << endl;
-//	cout << "    ]--[         ]--[" << endl;
-//	cout << "    [_L]         [_L]  -Row  (the Ascii-Wizard of Oz)" << endl;
-//	cout << "   /|..|\\       /|..|\\" << endl;
-//	cout << "  `=}--{='     `=}--{='" << endl;
-//	cout << " .-^--r-^-.   .-^--r-^-." << endl;
-//	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+	cout << "          ________" << endl;
+	cout << "     _,.-Y  |  |  Y-._" << endl;
+	cout << "    .-~\"   ||  |  |  |   \"-." << endl;
+	cout << "    I\" \"\"==\"|\" !\"\"! \"|\"[]\"\"|     _____" << endl;
+	cout << "    L__  [] |..------|:   _[----I\" .-{\"-." << endl;
+	cout << "   I___|  ..| l______|l_ [__L]_[I_/r(=}=-P" << endl;
+	cout << "  [L______L_[________]______j~  '-=c_]/=-^" << endl;
+	cout << "    \\_I_j.--.\\==I|I==_/.--L_]" << endl;
+	cout << "    [_((==)[`-----\"](==)j" << endl;
+	cout << "    I--I\"~~\"\"\"~~\"I--I" << endl;
+	cout << "    |[]|         |[]|" << endl;
+	cout << "    l__j  KATHY  l__j" << endl;
+	cout << "    |!!|  BINLEI |!!|" << endl;
+	cout << "    |..| STEPHEN |..|" << endl;
+	cout << "    ([])    MY   ([])" << endl;
+	cout << "    ]--[   LUCY  ]--[" << endl;
+	cout << "    [_L]         [_L]  "<< endl;
+	cout << "   /|..|\\       /|..|\\" << endl;
+	cout << "  `=}--{='     `=}--{='" << endl;
+	cout << " .-^--r-^-.   .-^--r-^-." << endl;
+	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 }

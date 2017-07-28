@@ -1,0 +1,619 @@
+******************************
+List of robots sorted by name:
+******************************
+-------------------------------------------
+Name: 4M Doodling Robot
+Asin: B002EWWW9O
+Price: 16
+Manufacture: 4M
+Purpose: Drawing robot
+User: kids
+Weight: 0.6625
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: 4M Smart Robot
+Asin: B001XQ1N2E
+Price: 10.89
+Manufacture: 4M
+Purpose: Moving robot toy
+User: everyone
+Weight: 0.6
+Rating: 2
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: 4M Tin Can Robot
+Asin: B0014WO96Y
+Price: 13.92
+Manufacture: 4M
+Purpose: Build your own model robot kit
+User: kids
+Weight: 0.72
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Autel Robotics X-Star Premium Drone
+Asin: B01B1H8322
+Price: 799
+Manufacture: Autel Robotics
+Purpose: Remote control aerial camera
+User: everyone
+Weight: 3.2
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Cheerwing Syma X5SW-V3 FPV Explorers2 2.4Ghz 4CH 6-Axis Gyro RC Headless Quadcopter Drone
+Asin: B011JV9HA2
+Price: 50.98
+Manufacture: Cheerwing
+Purpose: Remote control aerial camera
+User: everyone
+Weight: 0.26
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Cozmo
+Asin: B01GA1298S 
+Price: 172.99
+Manufacture: Anki
+Purpose: Programmable toy robot
+User: everyone
+Weight: 2
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: DJI Phantom P3-STANDARD Quadcopter Drone with 2.7K HD Video Camera
+Asin: B013U0F6EQ
+Price: 479
+Manufacture: DJI
+Purpose: Remote control aerial camera
+User: everyone
+Weight: 8
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: H456 Abb Industrial Robot Mechanical Arm
+Asin: B01M9DQUAS
+Price: 229
+Manufacture: HOBBYT
+Purpose: Programmable robotic arm
+User: everyone
+Weight: 4.41
+Rating: 0
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Kohstar S520 4th generation robot lawn mower
+Asin: B06WD7MT8W
+Price: 1299
+Manufacture: Kohstar
+Purpose: Lawn mower
+User: adult
+Weight: 88.2
+Rating: 0
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: LEGO 31313 Mindstorms Programmable EV3 Customizable Robot with Sensors
+Asin: B00BMKLVJ6
+Price: 365.95
+Manufacture: LEGO
+Purpose: Programmable robot kit
+User: teens
+Weight: 4.2
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: LEGO Creator Robo Explorer 31062 Building Kit
+Asin: B01KJEO7TQ
+Price: 19.29
+Manufacture: LEGO
+Purpose: Toy robot kit
+User: kids
+Weight: 0.7
+Rating: 5
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Miposaur
+Asin: B00VFZDOC0
+Price: 58.99
+Manufacture: WowWee
+Purpose: Remote control toy robot
+User: everyone
+Weight: 0.6625
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: OWI Robotic Arm Edge
+Asin: B0017OFRCY
+Price: 51.99
+Manufacture: OWI
+Purpose: Programmable robotic arm kit
+User: everyone
+Weight: 2.4
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: OWI Salt Water Fuel Cell Giant Arachnoid Kit
+Asin: B007V5YYWM
+Price: 15.58
+Manufacture: OWI
+Purpose: Toy robot spider
+User: kids
+Weight: 0.25
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Snov Surveillance Moving Robot
+Asin: B01G7CEBDG
+Price: 229.99
+Manufacture: Snov
+Purpose: Remote control surveillance robot
+User: everyone
+Weight: 4.4
+Rating: 0
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Sphero Ollie Darkside App-Controlled Robot
+Asin: B00W4Z8DRQ
+Price: 99.99
+Manufacture: Sphero
+Purpose: Remote control toy robot
+User: everyone
+Weight: 1
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Sphero SPRK+ STEAM Educational Robot
+Asin: B01GZ1S7OS
+Price: 129.99
+Manufacture: Sphero
+Purpose: Remote control programmable toy robot
+User: everyone
+Weight: 0.9
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Sphero Star Wars BB-8 Droid
+Asin: B0107H5FJ6
+Price: 109
+Manufacture: Sphero
+Purpose: Remote control toy robot
+User: everyone
+Weight: 1.25
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Super Robot 500
+Asin: 12345
+Price: 999
+Manufacture: deanza
+Purpose: Laser cannon
+User: children
+Weight: 60
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Telebrands,Robo Stir Automatic Pot Stirer, As Seen On Tv Clamshell
+Asin: B004PZ7FPY
+Price: 14.96
+Manufacture: RoboStir
+Purpose: Automatic pot stirrer
+User: adult
+Weight: 0.5
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Traxxas Aton Quadcopter
+Asin: B019OQEIPI
+Price: 312.87
+Manufacture: Traxxas
+Purpose: Remote control aerial camera
+User: everyone
+Weight: 1.4
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: WowWee - MiP the Toy Robot
+Asin: B00KMSOIGM
+Price: 69.89
+Manufacture: WowWee
+Purpose: Remote control toy robot
+User: everyone
+Weight: 0.6625
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Yipa 3D Flip Mini RC Drone with LED Flash Light 29mm 2.4G 4CH 6 Axis Gyro CX-10 UFO Quadcopter
+Asin: B01NARDYUQ
+Price: 17.99
+Manufacture: Yipa
+Purpose: Remote control aerial camera
+User: everyone
+Weight: 0.3
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Zodiac MX6 Automatic In Ground Pool Cleaner
+Asin: B00IG9LZ4C
+Price: 273.49
+Manufacture: Zodiac
+Purpose: Pool vacuum cleaner
+User: adult
+Weight: 17.6
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: eDrawBot Drawing Robot
+Asin: B06XC7G3JL
+Price: 239
+Manufacture: RobotHouse
+Purpose: Robotic drawing machine
+User: everyone
+Weight: 2.2
+Rating: 0
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: iRobot Roomba 650 Robotic Vacuum Cleaner
+Asin: B008LX6OC6
+Price: 299.99
+Manufacture: iRobot
+Purpose: Vacuum cleaner
+User: adult
+Weight: 11.1
+Rating: 4
+Quantity: 25
+-------------------------------------------
+
+******************************
+List of robots sorted by ASIN:
+******************************
+-------------------------------------------
+Name: Super Robot 500
+Asin: 12345
+Price: 999
+Manufacture: deanza
+Purpose: Laser cannon
+User: children
+Weight: 60
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: 4M Tin Can Robot
+Asin: B0014WO96Y
+Price: 13.92
+Manufacture: 4M
+Purpose: Build your own model robot kit
+User: kids
+Weight: 0.72
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: OWI Robotic Arm Edge
+Asin: B0017OFRCY
+Price: 51.99
+Manufacture: OWI
+Purpose: Programmable robotic arm kit
+User: everyone
+Weight: 2.4
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: 4M Smart Robot
+Asin: B001XQ1N2E
+Price: 10.89
+Manufacture: 4M
+Purpose: Moving robot toy
+User: everyone
+Weight: 0.6
+Rating: 2
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: 4M Doodling Robot
+Asin: B002EWWW9O
+Price: 16
+Manufacture: 4M
+Purpose: Drawing robot
+User: kids
+Weight: 0.6625
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Telebrands,Robo Stir Automatic Pot Stirer, As Seen On Tv Clamshell
+Asin: B004PZ7FPY
+Price: 14.96
+Manufacture: RoboStir
+Purpose: Automatic pot stirrer
+User: adult
+Weight: 0.5
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: OWI Salt Water Fuel Cell Giant Arachnoid Kit
+Asin: B007V5YYWM
+Price: 15.58
+Manufacture: OWI
+Purpose: Toy robot spider
+User: kids
+Weight: 0.25
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: iRobot Roomba 650 Robotic Vacuum Cleaner
+Asin: B008LX6OC6
+Price: 299.99
+Manufacture: iRobot
+Purpose: Vacuum cleaner
+User: adult
+Weight: 11.1
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: LEGO 31313 Mindstorms Programmable EV3 Customizable Robot with Sensors
+Asin: B00BMKLVJ6
+Price: 365.95
+Manufacture: LEGO
+Purpose: Programmable robot kit
+User: teens
+Weight: 4.2
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Zodiac MX6 Automatic In Ground Pool Cleaner
+Asin: B00IG9LZ4C
+Price: 273.49
+Manufacture: Zodiac
+Purpose: Pool vacuum cleaner
+User: adult
+Weight: 17.6
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: WowWee - MiP the Toy Robot
+Asin: B00KMSOIGM
+Price: 69.89
+Manufacture: WowWee
+Purpose: Remote control toy robot
+User: everyone
+Weight: 0.6625
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Miposaur
+Asin: B00VFZDOC0
+Price: 58.99
+Manufacture: WowWee
+Purpose: Remote control toy robot
+User: everyone
+Weight: 0.6625
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Sphero Ollie Darkside App-Controlled Robot
+Asin: B00W4Z8DRQ
+Price: 99.99
+Manufacture: Sphero
+Purpose: Remote control toy robot
+User: everyone
+Weight: 1
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Sphero Star Wars BB-8 Droid
+Asin: B0107H5FJ6
+Price: 109
+Manufacture: Sphero
+Purpose: Remote control toy robot
+User: everyone
+Weight: 1.25
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Cheerwing Syma X5SW-V3 FPV Explorers2 2.4Ghz 4CH 6-Axis Gyro RC Headless Quadcopter Drone
+Asin: B011JV9HA2
+Price: 50.98
+Manufacture: Cheerwing
+Purpose: Remote control aerial camera
+User: everyone
+Weight: 0.26
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: DJI Phantom P3-STANDARD Quadcopter Drone with 2.7K HD Video Camera
+Asin: B013U0F6EQ
+Price: 479
+Manufacture: DJI
+Purpose: Remote control aerial camera
+User: everyone
+Weight: 8
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Traxxas Aton Quadcopter
+Asin: B019OQEIPI
+Price: 312.87
+Manufacture: Traxxas
+Purpose: Remote control aerial camera
+User: everyone
+Weight: 1.4
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Autel Robotics X-Star Premium Drone
+Asin: B01B1H8322
+Price: 799
+Manufacture: Autel Robotics
+Purpose: Remote control aerial camera
+User: everyone
+Weight: 3.2
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Snov Surveillance Moving Robot
+Asin: B01G7CEBDG
+Price: 229.99
+Manufacture: Snov
+Purpose: Remote control surveillance robot
+User: everyone
+Weight: 4.4
+Rating: 0
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Cozmo
+Asin: B01GA1298S 
+Price: 172.99
+Manufacture: Anki
+Purpose: Programmable toy robot
+User: everyone
+Weight: 2
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Sphero SPRK+ STEAM Educational Robot
+Asin: B01GZ1S7OS
+Price: 129.99
+Manufacture: Sphero
+Purpose: Remote control programmable toy robot
+User: everyone
+Weight: 0.9
+Rating: 4
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: LEGO Creator Robo Explorer 31062 Building Kit
+Asin: B01KJEO7TQ
+Price: 19.29
+Manufacture: LEGO
+Purpose: Toy robot kit
+User: kids
+Weight: 0.7
+Rating: 5
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: H456 Abb Industrial Robot Mechanical Arm
+Asin: B01M9DQUAS
+Price: 229
+Manufacture: HOBBYT
+Purpose: Programmable robotic arm
+User: everyone
+Weight: 4.41
+Rating: 0
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Yipa 3D Flip Mini RC Drone with LED Flash Light 29mm 2.4G 4CH 6 Axis Gyro CX-10 UFO Quadcopter
+Asin: B01NARDYUQ
+Price: 17.99
+Manufacture: Yipa
+Purpose: Remote control aerial camera
+User: everyone
+Weight: 0.3
+Rating: 3
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: Kohstar S520 4th generation robot lawn mower
+Asin: B06WD7MT8W
+Price: 1299
+Manufacture: Kohstar
+Purpose: Lawn mower
+User: adult
+Weight: 88.2
+Rating: 0
+Quantity: 25
+-------------------------------------------
+-------------------------------------------
+Name: eDrawBot Drawing Robot
+Asin: B06XC7G3JL
+Price: 239
+Manufacture: RobotHouse
+Purpose: Robotic drawing machine
+User: everyone
+Weight: 2.2
+Rating: 0
+Quantity: 25
+-------------------------------------------
+
+*********************************
+Information on all the customers:
+*********************************
+Customer: Lucy McLaurin
+Address: 123 Cherry St
+City: Cupertino
+State: CA
+Zip Code: 90210
+
+__________________________________
+__________________________________
+
+Customer: Test Test
+Address: 1
+City: 1
+State: 1
+Zip Code: 1
+
+__________________________________
+__________________________________
+
+Customer: a b
+Address: c
+City: d
+State: e
+Zip Code: 0
+
+__________________________________
+__________________________________
+
+Customer: MY Nguyen
+Address: 123 easy st
+City: sunnyvale
+State: CA
+Zip Code: 94087
+
+__________________________________
+__________________________________
+

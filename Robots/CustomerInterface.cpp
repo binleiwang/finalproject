@@ -17,20 +17,21 @@ using namespace std;
 
 static int orderNum = 1000;
 
-CustomerInterface::CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Robot *robot)
+CustomerInterface::CustomerInterface(NMT *bst1, AST *bst2, HashTable *hash, Heap<Order> *heap1, Robot *robot, Order *oTemp)
 {
 	namebst = bst1;
 	asinbst = bst2;
 	table = hash;
 	heap = heap1;
 	newOrder = new Order;
+	o = oTemp;
 	customer = NULL;
 	choice = "";
 	menuNum = 0;
 	menuOpt = 'z';
 	number = "";
 	temp = "";
-} // need REF to newOrder (Order *)
+}
 
 void CustomerInterface::welcome()
 {
@@ -134,7 +135,8 @@ void CustomerInterface::search()
 	string name;
 	namebst->printMiniMenuFormatted(cout);
 	newOrder = buildNewOrder();
-	do {
+	do
+	{
 		Robot *rTemp = new Robot;
 		cout << "Do you want to search for the product by name or ASIN (ID#)? ";
 		choice.clear();
@@ -189,7 +191,7 @@ void CustomerInterface::search()
 		cout << "Do you want to search for another product? ";
 		getline(cin, choice);
 
-	} while (choice == "yes" || choice == "Yes");
+	} while (checkYes(choice));
 
 	if ((choice == "no" || choice == "NO") && (newOrder->getSize() > 0)) {
 		newOrder->setTotal();
@@ -223,8 +225,8 @@ void CustomerInterface::search()
 			viewPurchase();
 			heap->insert(*newOrder);
 			cout << "Inserting Order #" << newOrder->getOrderNum() << ". Heap size: " << heap->getSize() << endl;
-			if (heap->getSize() > 1)
-				heap->heapIncreaseKey(*newOrder, heap->getSize()-1); // doesn't work yet
+			//if (heap->getSize() > 1)
+			// sort
 		}
 	}
 	cout << "Returning to Main Menu.\n\n";
@@ -259,9 +261,8 @@ void CustomerInterface::placeOrder()
 	customer->setZip(zip);
 
 	table->insertData(*customer);
-	Order o;
-	o = *newOrder;
-	customer->insertOrder(o);
+	*o = *newOrder;
+	customer->insertOrder(*o);
 
 	orders = customer->getOrders();
 }
@@ -281,7 +282,6 @@ void CustomerInterface::quitShopping() {
 void CustomerInterface::promptUserInput()
 {
 	getline(cin, choice);
-	//menuNum = atoi(choice.c_str());
 	menuOpt = (choice.c_str()[0]);
 }
 
@@ -314,6 +314,13 @@ bool CustomerInterface::checkMenuOpt()
 	if (menuOpt != '1' && menuOpt != '2' && menuOpt != '3' && menuOpt != 'q' && menuOpt != 'Q')
 		return false;
 	return true;
+}
+
+bool CustomerInterface::checkYes(string input)
+{
+	if (input == "Yes" || input == "yes" || input == "YES" || input == "Y" || input == "y")
+		return true;
+	return false;
 }
 
 Order *CustomerInterface::buildNewOrder()

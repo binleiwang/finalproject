@@ -72,15 +72,20 @@ void FileIO::writeToFile(NMT *bst1, AST *bst2, HashTable *table)
 {
 	ofstream outputFile;
 	outputFile.open(outfileName.c_str());
+	outputFile << "******************************\n";
 	outputFile << "List of robots sorted by name:\n";
+	outputFile << "******************************\n";
 	bst1->printItem(outputFile);
 	outputFile << endl;
-
+	outputFile << "******************************\n";
 	outputFile << "List of robots sorted by ASIN:\n";
+	outputFile << "******************************\n";
 	bst2->printItem(outputFile);
 	outputFile << endl;
-
-	outputFile << "Information of all the customers:\n";
+	outputFile << "*********************************\n";
+	outputFile << "Information on all the customers:\n";
+	outputFile << "*********************************\n";
+	//table->
 	table->printTable(outputFile);
 
 }
